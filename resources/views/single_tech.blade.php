@@ -164,7 +164,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 				<!-- Reviews -->
 				<section class="comments listing-reviews">
 
-          <div class="fb-comments" data-href="http://9demo.site/single_tech.html" data-numposts="10"></div>
+          <div class="fb-comments" data-href="http://9demo.site/single_tech" data-numposts="10"></div>
 				</section>
 
 
@@ -219,7 +219,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 
             <div class="text-center">
-              <a href="email_success.html" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
+              <a href="#" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
             </div>
 
 

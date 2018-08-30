@@ -33,7 +33,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<a href="index.html"><img src="assets/images/logo3.png" alt=""></a>
+					<a href="{{url('/')}}"><img src="assets/images/logo3.png" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -50,9 +50,9 @@
 				<nav id="navigation" class="style-1 visible-sm visible-xs">
 					<ul id="responsive" class="">
 
-						<li><a class="current" href="index.html">หน้าหลัก</a></li>
-						<li><a href="contact.html">เกี่ยวกับเรา</a></li>
-						<li><a href="contact.html">ติดต่อเรา</a></li>
+						<li><a class="current" href="{{url('/')}}">หน้าหลัก</a></li>
+						<li><a href="{{url('about')}}">เกี่ยวกับเรา</a></li>
+						<li><a href="{{url('contact')}}">ติดต่อเรา</a></li>
 
 					</ul>
 				</nav>
@@ -63,13 +63,28 @@
 			<!-- Left Side Content / End -->
 			<!-- Left Side Content / End -->
 
-      <!-- Right Side Content / End -->
+			<!-- Right Side Content / End -->
 			<div class="right-side">
 				<div class="header-widget">
-					<a href="index.html" class="sign-in hidden-sm hidden-xs"> หน้าหลัก</a>
-					<a href="contact.html" class="sign-in hidden-sm hidden-xs"> เกี่ยวกับเรา</a>
-					<a href="contact.html" class="sign-in hidden-sm hidden-xs"> ติดต่อเรา</a>
-					<a href="regis_tech.html" class="button with-icon" style="border-radius: 2px;font-size: 16px;"> สมัครเป็นผู้รับเหมา </a>
+					<a href="{{url('/')}}" class="sign-in hidden-sm hidden-xs"> หน้าหลัก</a>
+					<a href="{{url('about')}}" class="sign-in hidden-sm hidden-xs"> เกี่ยวกับเรา</a>
+					<a href="{{url('contact')}}" class="sign-in hidden-sm hidden-xs"> ติดต่อเรา</a>
+
+					@if (Auth::guest())
+					<a href="{{url('login')}}" class="sign-in hidden-sm hidden-xs"> Sign In</a>
+					@else
+
+					<!-- User Menu -->
+					<div class="user-menu">
+						<div class="user-name" style="color:#fff"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						<ul>
+
+							<li><a href="{{url('logout')}}"><i class="sl sl-icon-power"></i> Logout</a></li>
+						</ul>
+					</div>
+					@endif
+
+					<a href="{{url('regis_tech')}}" class="button with-icon" style="border-radius: 2px;font-size: 16px;"> สมัครเป็นผู้รับเหมา </a>
 				</div>
 			</div>
 			<!-- Right Side Content / End -->
@@ -546,16 +561,16 @@ if ($('.main-search-input-item')[0]) {
 
   // Locations
   var locations = [
-    [ locationData('single_tech.html','assets/images/1232718383.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '12'), 13.7085005, 100.3779119, 1, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech.html','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '23'), 13.81786925, 100.4489744, 2, '<img src="assets/images/user-avatar_2.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech.html','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '2.0', '17'), 13.7154553, 100.4063138, 3, '<img src="assets/images/user-avatar_3.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
-    [ locationData('single_tech.html','assets/images/275193-545b1cd211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.7188506, 100.5387318,     4, '<img src="assets/images/user-avatar_4.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
-    [ locationData('single_tech.html','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '46'), 13.7243693, 100.5393755,  5, '<img src="assets/images/user-avatar_5.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech.html','assets/images/1-3-750x498.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '4.5', '15'), 13.747118, 100.573986,  6, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech.html','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8158324, 100.5617, 7, '<img src="assets/images/user-avatar_7.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/1232718383.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '12'), 13.7085005, 100.3779119, 1, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '23'), 13.81786925, 100.4489744, 2, '<img src="assets/images/user-avatar_2.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '2.0', '17'), 13.7154553, 100.4063138, 3, '<img src="assets/images/user-avatar_3.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
+    [ locationData('single_tech','assets/images/275193-545b1cd211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.7188506, 100.5387318,     4, '<img src="assets/images/user-avatar_4.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
+    [ locationData('single_tech','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '46'), 13.7243693, 100.5393755,  5, '<img src="assets/images/user-avatar_5.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/1-3-750x498.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '4.5', '15'), 13.747118, 100.573986,  6, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8158324, 100.5617, 7, '<img src="assets/images/user-avatar_7.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
 
-    [ locationData('single_tech.html','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.841726, 100.5715835, 7, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech.html','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8573065, 100.6275371,  7, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.841726, 100.5715835, 7, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+    [ locationData('single_tech','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8573065, 100.6275371,  7, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
   ];
 
   // Chosen Rating Type
