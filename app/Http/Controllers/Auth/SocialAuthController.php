@@ -25,10 +25,7 @@ class SocialAuthController extends Controller
         'twitter'
     ];
 
-    public function show()
-    {
-        return view('auth.social');
-    }
+  
 
     public function redirectToProvider($driver)
     {
