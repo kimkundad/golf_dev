@@ -62,7 +62,7 @@ class SocialAuthController extends Controller
     }
     protected function sendFailedResponse($msg = null)
     {
-        return redirect()->route('auth.login')
+        return redirect()->intended('login')
             ->withErrors(['msg' => $msg ?: 'Unable to login, try with another provider to login.']);
     }
 
