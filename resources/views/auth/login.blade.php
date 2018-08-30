@@ -40,8 +40,8 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
       <div class="tab-content margin-top-35 margin-bottom-50" id="tab1" >
         <h4 class="headline ">Sign In</h4>
 
-        <a href="pages-booking.html" class="fb button book-now fullwidth margin-top-5"><i class="fa fa-facebook"></i>Sign In With Facebook</a>
-        <a href="pages-booking.html" class="google button book-now fullwidth margin-top-5"><i class="fa fa-google"></i> Sign In With Google</a>
+        <a href="{{ route('social.oauth', 'facebook') }}" class="fb button book-now fullwidth margin-top-5"><i class="fa fa-facebook"></i>Sign In With Facebook</a>
+        <a href="{{ route('social.oauth', 'google') }}" class="google button book-now fullwidth margin-top-5"><i class="fa fa-google"></i> Sign In With Google</a>
         <p class="text-center">
           OR
         </p>

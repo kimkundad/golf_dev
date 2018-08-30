@@ -28,6 +28,11 @@ Route::get('/single_tech', 'HomeController@single_tech')->name('single_tech');
 
 Route::get('/map_api', 'HomeController@map_api')->name('map_api');
 
+// Social Auth
+Route::get('auth/social', 'Auth\SocialAuthController@show')->name('social.login');
+Route::get('oauth/{driver}', 'Auth\SocialAuthController@redirectToProvider')->name('social.oauth');
+Route::get('oauth/{driver}/callback', 'Auth\SocialAuthController@handleProviderCallback')->name('social.callback');
+
 Route::group(['middleware' => 'auth'], function () {
 
   });
