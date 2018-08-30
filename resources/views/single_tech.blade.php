@@ -164,7 +164,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 				<!-- Reviews -->
 				<section class="comments listing-reviews">
 
-          <div class="fb-comments" data-href="http://9demo.site/single_tech" data-numposts="10"></div>
+          <div class="fb-comments" data-href="http://9demo.site/single_tech.html" data-numposts="10"></div>
 				</section>
 
 
@@ -219,7 +219,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 
             <div class="text-center">
-              <a href="#" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
+              <a href="email_success.html" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
             </div>
 
 
@@ -292,9 +292,10 @@ this.$('#booking-time').timeDropper({
 
 
 <!-- Maps -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&amp;language=en"></script>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="assets/scripts/infobox.min.js"></script>
 <script type="text/javascript" src="assets/scripts/markerclusterer.js"></script>
-
+<script type="text/javascript" src="assets/scripts/maps2.js"></script>
 
 @stop('scripts')
