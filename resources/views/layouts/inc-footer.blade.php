@@ -19,7 +19,7 @@
 				<p>สร้างบ้าน ต่อเติม รีโนเวท กับ ช่างดี เชื่อถือได้ เจ้าของบ้านวางใจ ค้นหาช่างที่มีคุณภาพ งานฝีมือและความประทับใจ ให้ เว็บไซต์... ช่วยค้นหาช่างให้คุณ ช่างรับเหมาจากทุกจังหวัด ทั่วทุกภูมิภาคของประเทศไทย
 คุณเลือกได้ตรงตามความต้องการ</p>
 
-		<a href="regis_tech.html" class="button  with-icon btn-lg pull-right" style="color: #fff;padding: 15px 28px;">อ่านเพิ่มเติม</a>
+		<a href="{{url('regis_tech')}}" class="button  with-icon btn-lg pull-right" style="color: #fff;padding: 15px 28px;">อ่านเพิ่มเติม</a>
 
 			</div>
 
@@ -37,8 +37,8 @@
 			</div>
 
 			<div class="col-md-6 text-right">
-				<a href="terms-conditions.html" class="sign-in" style="color:#fff; font-size:14px;"> เงื่อนไขและข้อตกลงในการใช้บริการ</a>
-				<a href="privacy.html" class="sign-in" style="color:#fff; font-size:14px;"> นโยบายความเป็นส่วนตัว</a>
+				<a href="{{url('terms_conditions')}}" class="sign-in" style="color:#fff; font-size:14px;"> เงื่อนไขและข้อตกลงในการใช้บริการ</a>
+				<a href="{{url('privacy')}}" class="sign-in" style="color:#fff; font-size:14px;"> นโยบายความเป็นส่วนตัว</a>
 			</div>
 
 		</div>

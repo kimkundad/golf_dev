@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยาย ภาพ อัดภาพระบบดิจิตอล กรอบลอย canvas FRAME กรอบรูป studio ร้านถ่ายรูป
+
 @stop
 
 @section('stylesheet')

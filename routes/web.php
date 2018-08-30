@@ -26,6 +26,10 @@ Route::get('/regis_tech', 'HomeController@regis_tech')->name('regis_tech');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/single_tech', 'HomeController@single_tech')->name('single_tech');
 
+Route::get('/terms_conditions', 'HomeController@terms_conditions')->name('terms_conditions');
+Route::get('/privacy', 'HomeController@privacy')->name('privacy');
+
+
 Route::get('/map_api', 'HomeController@map_api')->name('map_api');
 
 // Social Auth

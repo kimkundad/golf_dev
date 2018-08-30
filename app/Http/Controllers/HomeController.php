@@ -39,6 +39,16 @@ class HomeController extends Controller
       return view('search');
     }
 
+    public function privacy(){
+      return view('privacy');
+    }
+
+    public function terms_conditions(){
+      return view('terms_conditions');
+    }
+
+
+
     public function single_tech(){
       return view('single_tech');
     }
