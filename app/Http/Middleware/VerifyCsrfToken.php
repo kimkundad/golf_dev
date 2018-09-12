@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'file/post',
+        'admin/tech_list*'
     ];
 }

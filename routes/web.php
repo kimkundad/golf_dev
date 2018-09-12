@@ -23,14 +23,16 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/regis_tech', 'HomeController@regis_tech')->name('regis_tech');
+Route::post('/search', 'HomeController@search')->name('search');
 Route::get('/search', 'HomeController@search')->name('search');
-Route::get('/single_tech', 'HomeController@single_tech')->name('single_tech');
+Route::get('single_tech/{id}', 'HomeController@single_tech')->name('single_tech');
 
 Route::get('/terms_conditions', 'HomeController@terms_conditions')->name('terms_conditions');
 Route::get('/privacy', 'HomeController@privacy')->name('privacy');
-
+Route::post('/post_to_tech', 'HomeController@post_to_tech')->name('post_to_tech');
 
 Route::get('/map_api', 'HomeController@map_api')->name('map_api');
+Route::get('/email_success', 'HomeController@email_success')->name('email_success');
 
 // Social Auth
 
@@ -48,5 +50,10 @@ Route::group(['middleware' => 'admin'], function() {
   Route::resource('admin/tech_list', 'TechController');
   Route::get('admin/tech_gallery/{id}', 'TechController@tech_gallery');
   Route::post('admin/add_gallery/', 'TechController@add_gallery');
+  Route::post('api/api_tech_status', 'TechController@api_tech_status');
+  Route::post('admin/file/posts', 'TechController@imagess');
+  Route::resource('admin/contact_admin', 'ContactAdController');
+
+  Route::post('api/api_contact_status', 'ContactAdController@api_contact_status');
 
   });

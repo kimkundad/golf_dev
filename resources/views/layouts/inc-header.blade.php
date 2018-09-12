@@ -11,7 +11,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<a href="{{url('/')}}"><img src="assets/images/logo3.png" alt=""></a>
+					<a href="{{url('/')}}"><img src="{{url('assets/images/logo3.png')}}" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -54,7 +54,11 @@
 
 					<!-- User Menu -->
 					<div class="user-menu">
-						<div class="user-name" style="color:#fff"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@if(Auth::user()->provider == 'email')
+						<div class="user-name" style="color:#fff"><span><img src="{{url('assets/images/avatar/'.Auth::user()->avatar)}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@else
+						<div class="user-name" style="color:#fff"><span><img src="{{Auth::user()->avatar}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@endif
 						<ul>
 
 							<li><a href="{{url('logout')}}"><i class="sl sl-icon-power"></i> Logout</a></li>

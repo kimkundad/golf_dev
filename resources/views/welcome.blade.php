@@ -18,32 +18,38 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 			<div class="row">
 				<div class="col-md-12">
 
-
+					<form  method="POST" action="{{url('search')}}">
 					<div class="main-search-input text-center">
 
+
+							{{ csrf_field() }}
 						<div class="main-search-input-item">
-							<select data-placeholder="All Categories" class="chosen-select" >
-								<option>ประเภทงานรับเหมา</option>
-								<option>งานออกแบบบ้าน</option>
-								<option>งานปูน</option>
-								<option>งานไม้</option>
-								<option>งานเหล็ก</option>
-								<option>งานฝ้าเพดาน</option>
+							<select data-placeholder="All Categories" name="cat_id" class="chosen-select" >
+								@if($category)
+									@foreach($category as $u)
+								<option value="{{$u->id}}">{{$u->name_cat}}</option>
+									@endforeach
+								@endif
 							</select>
 						</div>
 
 						<div class="main-search-input-item location">
 							<div id="autocomplete-container ">
-								<input id="autocomplete-input" type="text" style="text-align:center" placeholder="อำเภอ, จังหวัด">
+								<input id="autocomplete-input" type="text" name="location" style="text-align:center" placeholder="อำเภอ, จังหวัด">
+								<input id="lat" type="hidden" name="lat" />
+								<input id="lng" type="hidden" name="lng" />
 							</div>
 
 						</div>
 
 
 
-						<button class="button" onclick="window.location.href='{{url('search')}}'">ค้นหา</button>
+						<button class="button" type="submit">ค้นหา</button>
+
+
 
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -125,78 +131,46 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 		<div class="fw-carousel-item">
 
 			<!-- this (first) box will be hidden under 1680px resolution -->
+			@if($cat_head)
+			@foreach($cat_head as $u)
 			<div class="category-box-container half">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech1.jpg">
+				<a href="{{url('search')}}" class="category-box" data-background-image="{{url('assets/category_img/'.$u->image_cat)}}">
 					<div class="category-box-content">
-						<h3>ช่างปะปา</h3>
-						<span>64 ผู้รับเหมา</span>
+						<h3>{{$u->name_cat}}</h3>
+						<span>{{$u->count}} ผู้รับเหมา</span>
 					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
+					<a href="{{url('search')}}" class="category-box-btn ">ค้นหา</a>
 				</a>
 			</div>
 
-			<div class="category-box-container half">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech1.jpg">
-					<div class="category-box-content">
-						<h3>ช่างปูกระเบื้อง</h3>
-						<span>14 ผู้รับเหมา</span>
-					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
-				</a>
-			</div>
+			@endforeach
+			@endif
+
 		</div>
 
 		<!-- Item -->
+		<!-- Item -->
+		@if($cat)
+		@foreach($cat as $u)
+
 		<div class="fw-carousel-item">
 			<div class="category-box-container">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech3.jpg">
+				<a href="{{url('search')}}" class="category-box" data-background-image="{{url('assets/category_img/'.$u->image_cat)}}">
 					<div class="category-box-content">
-						<h3>ช่างปูน</h3>
-						<span>67 ผู้รับเหมา</span>
+						<h3>{{$u->name_cat}}</h3>
+						<span>{{$u->count}} ผู้รับเหมา</span>
 					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
+					<a href="{{url('search')}}" class="category-box-btn ">ค้นหา</a>
 				</a>
 			</div>
 		</div>
 
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech4.jpg">
-					<div class="category-box-content">
-						<h3>ช่างทาสี</h3>
-						<span>27 ผู้รับเหมา</span>
-					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
-				</a>
-			</div>
-		</div>
 
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech5.jpg">
-					<div class="category-box-content">
-						<h3>ช่างจัดสวน</h3>
-						<span>22 ผู้รับเหมา</span>
-					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
-				</a>
-			</div>
-		</div>
 
-		<!-- Item -->
-		<div class="fw-carousel-item">
-			<div class="category-box-container">
-				<a href="search.html" class="category-box" data-background-image="assets/images/cat_tech6.jpg">
-					<div class="category-box-content">
-						<h3>พนังพิมพ์ลาย</h3>
-						<span>130 ผู้รับเหมา</span>
-					</div>
-					<a href="search.html" class="category-box-btn ">ค้นหา</a>
-				</a>
-			</div>
-		</div>
+		@endforeach
+		@endif
+
+
 
 	</div>
 </div>
@@ -222,175 +196,39 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 			<div class="col-md-12">
 				<div class="simple-slick-carousel dots-nav">
 
+					@if($tech)
+					@foreach($tech as $u)
 					<!-- Listing Item -->
 					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
+						<a href="{{url('single_tech/'.$u->id)}}" class="listing-item-container">
 							<div class="listing-item">
-								<img src="assets/images/1232718383.jpg" alt="">
+								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="">
 
 								<div class="listing-item-content">
-									<span class="tag">ช่างทาสี</span>
-									<h3>ทำสีภายในและรับเหมาก่อสร้าง </h3>
-									<span>ลาดพร้าว, กรุงเทพมหานคร </span>
+									@if($u->cat_tech)
+									@foreach($u->cat_tech as $j)
+									<span class="tag">{{$j->name_cat_for}}</span>
+									@endforeach
+									@endif
+									<h3 style="font-size: 16px; line-height: 21px;">{{$u->tech_detail}} </h3>
+									<span>{{$u->district}}, {{$u->tech_prov}} </span>
 								</div>
 								<span class="like-icon"></span>
 							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
+							<div class="star-rating" data-rating="{{$u->tech_rating}}.0" style="height: 90px; padding: 15px 5px 15px 15px;">
 								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_1.jpg" alt="" style="height: 60px;">
+									<img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="" style="height: 60px;">
 								</div>
-								<span>ช่างแพรวา สุธรรมพงษ์</span><br />
-								<div class="rating-counter">(23 รีวิว)</div>
+								<span>{{$u->tech_fname}} {{$u->tech_lname}}</span><br />
+								<div class="rating-counter">({{$u->tech_view}} รีวิว)</div>
 							</div>
 						</a>
 					</div>
 					<!-- Listing Item / End -->
+					@endforeach
+					@endif
 
 
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/1277113934.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างฝ้าเพดาน</span>
-									<h3>ช่างฝ้าเพดาน ช่างทำฝ้า รับติดตั้งผ้า </h3>
-									<span>ลาดพร้าว, กรุงเทพมหานคร </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_2.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>ช่างเฌอปราง อารีย์กุล</span><br />
-								<div class="rating-counter">(10 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/275193-545b1c211e003.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างปูน</span>
-									<h3>ช่างปูน งานก่ออิฐ-ฉาบปูน ปูกระเบื้อง </h3>
-									<span>คันนายาว, กรุงเทพมหานคร </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_2.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>ช่างเฌอปราง อารีย์กุล</span><br />
-								<div class="rating-counter">(10 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/275193-545b1cd211e003.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างหลังคา</span>
-									<h3>ทำสีภายในและรับเหมาก่อสร้าง </h3>
-									<span>ลาดพร้าว, กรุงเทพมหานคร </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_4.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>ช่างแพรวา สุธรรมพงษ์</span><br />
-								<div class="rating-counter">(120 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างทาสี</span>
-									<h3>ทำสีภายในและรับเหมาก่อสร้าง </h3>
-									<span>ลาดพร้าว, กรุงเทพมหานคร </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_5.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>มิลิน ดอกเทียน  </span><br />
-								<div class="rating-counter">(80 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/1-3-750x498.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างเหล็ก</span>
-									<h3>ช่างเหล็กเชียงใหม่ ทางเรายินดีให้บริการ </h3>
-									<span>หางดง, เชียงใหม่ </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_6.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>พัศชนันท์ เจียจิรโชติ</span><br />
-								<div class="rating-counter">(15 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
-
-					<!-- Listing Item -->
-					<div class="carousel-item">
-						<a href="{{url('single_tech')}}" class="listing-item-container">
-							<div class="listing-item">
-								<img src="assets/images/1232718383.jpg" alt="">
-
-								<div class="listing-item-content">
-									<span class="tag">ช่างทาสี</span>
-									<h3>ทำสีภายในและรับเหมาก่อสร้าง </h3>
-									<span>ลาดพร้าว, กรุงเทพมหานคร </span>
-								</div>
-								<span class="like-icon"></span>
-							</div>
-							<div class="star-rating" data-rating="5.0" style="height: 90px; padding: 15px 5px 15px 15px;">
-								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
-									<img src="assets/images/user-avatar_7.jpg" alt="" style="height: 60px;">
-								</div>
-								<span>ปัญสิกรณ์ ติยะกร  </span><br />
-								<div class="rating-counter">(5 รีวิว)</div>
-							</div>
-						</a>
-					</div>
-					<!-- Listing Item / End -->
 
 				</div>
 
@@ -419,7 +257,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 				<div class="col-lg-6 col-sm-8">
 					<h2>ร่วมเป็นผู้รับเหมากับเรา</h2>
 					<p>การเลือกวัสดุก่อสร้าง ทำเสร็จตามกำหนดสัญญา ใส่ใจทุกขั้นตอน ระบุจำนวนคนงาน ความสามารถในการรับงานพร้อมกัน เป็นต้น คุณสมบัติที่สำคัญ ของช่าง ช่าง ที่ดีควรทำข้อมูลอย่างละเอียด เพิ่มโอกาสรับงาน</p>
-					<a href="regis_tech.html" class="button margin-top-25">สมัครกับเรา</a>
+					<a href="{{url('regis_tech')}}" class="button margin-top-25">สมัครกับเรา</a>
 				</div>
 			</div>
 
@@ -445,10 +283,16 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
     autocomplete.addListener('place_changed', function() {
       var place = autocomplete.getPlace();
+			var lat = place.geometry.location.lat(),
+	        lng = place.geometry.location.lng();
       if (!place.geometry) {
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
+			console.log(lat);
+			console.log(lng);
+			document.getElementById('lat').value = lat;
+			document.getElementById('lng').value = lng;
     });
 
 	if ($('.main-search-input-item')[0]) {

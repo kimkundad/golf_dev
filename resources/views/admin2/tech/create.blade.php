@@ -1,8 +1,7 @@
 @extends('admin2.layouts.template')
 
-
-
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<link href="{{url('assets/text/dist/summernote.css')}}?v2" rel="stylesheet">
 <style>
 .note-editor.note-frame .note-editing-area .note-editable{
       padding: 30px;
@@ -22,6 +21,10 @@
     color: #000!important;
     padding: 0 4px;
     font-weight: bold;
+}
+.note-editor.note-frame .note-editing-area .note-editable {
+    padding-left: 50px;
+    padding-right: 50px;
 }
 </style>
 @section('admin2.content')
@@ -62,7 +65,7 @@
 
 
 
-            
+
 
 
                         <div class="col-md-12">
@@ -100,6 +103,20 @@
                                       <div class="col-md-4">
             														<input type="text" class="form-control" name="tech_phone" value="{{ old('tech_phone')}}" placeholder="081-100-775x">
             														</div>
+          												</div>
+
+                                  <hr />
+
+                                  <div class="form-group">
+          													<label class="col-md-3 control-label" for="profileFirstName">ช่างแนะนำ*</label>
+          													<div class="col-md-8">
+                                      <select name="tech_show" class="form-control mb-md" required>
+
+                                        <option value="0">ช่างธรรมดา</option>
+  								                      <option value="1">ช่างแนะนำ</option>
+  								                    </select>
+          														</div>
+
           												</div>
 
                                   <hr />
@@ -145,6 +162,24 @@
           														</div>
 
           												</div>
+
+
+
+              <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                <div class="col-sm-9">
+                  <div id="map_canvas" style="width:100%; border:0; height:316px;" frameborder="0">
+                  </div>
+                <br>
+                </div>
+                <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                <div class="col-sm-4">
+                    <input type="text" name="lat" id="lat" size="10" value="{{ old('lat') }}" class="form-control" required>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" name="lng" id="lng" size="10" value="{{ old('lng') }}" class="form-control" required>
+                </div>
+                </div>
 
 
 
@@ -304,15 +339,83 @@
 
 @section('scripts')
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-
-<script>
+<script src="{{URL::asset('assets/text/dist/summernote.js?v4')}}"></script>
+<script type="text/javascript">
 $(document).ready(function() {
+  $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
   $('#summernote').summernote({
-    placeholder: 'ผลงานที่ผ่านมา ของช่าง',
-    minHeight: 300
+
+    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+    disableDragAndDrop: true,            // set editor height
+    placeholder: 'เนื้อหาบทความ',
+    minHeight: 300,
+    focus: true                // set focus to editable area after initializing summernote
   });
 });
+var postForm = function() {
+var content = $('textarea[name="blog_detail"]').html($('#summernote').code());
+}
+</script>
+
+
+<script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places&sensor=false'></script>
+<script type="text/javascript">
+      var map;
+      var geocoder;
+      var mapOptions = { center: new google.maps.LatLng(0.0, 0.0), zoom: 2,
+        mapTypeId: google.maps.MapTypeId.ROADMAP };
+
+      function initialize() {
+var myOptions = {
+                center: new google.maps.LatLng(13.7211075, 100.5904873 ),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            geocoder = new google.maps.Geocoder();
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+
+            var marker;
+            function placeMarker(location) {
+                if(marker){ //on vérifie si le marqueur existe
+                    marker.setPosition(location); //on change sa position
+                }else{
+                    marker = new google.maps.Marker({ //on créé le marqueur
+                        position: location,
+                        map: map
+                    });
+                }
+                document.getElementById('lat').value=location.lat();
+                document.getElementById('lng').value=location.lng();
+                getAddress(location);
+            }
+
+      function getAddress(latLng) {
+        geocoder.geocode( {'latLng': latLng},
+          function(results, status) {
+            if(status == google.maps.GeocoderStatus.OK) {
+              if(results[0]) {
+                document.getElementById("address").value = results[0].formatted_address;
+              }
+              else {
+                document.getElementById("address").value = "No results";
+              }
+            }
+            else {
+              document.getElementById("address").value = status;
+            }
+          });
+        }
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 

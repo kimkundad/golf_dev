@@ -46,12 +46,7 @@
 
               <div class="panel-body">
 
-                <div class="col-md-12 " style="padding-left: 1px;">
 
-                  <a class="btn btn-primary " href="{{url('admin/tech_list/create')}}" >
-                      <i class="fa fa-plus"></i> เพิ่มช่างในระบบ</a>
-                </div>
-                <br><br>
 
 
 
@@ -59,44 +54,46 @@
                 <table class="table table-responsive-lg table-striped table-sm mb-0" id="datatable-default">
                   <thead>
                     <tr>
-
+                      <th>#</th>
+                      <th>ชื่อ-นามสกุล</th>
                       <th>ช่าง</th>
-                      <th>จังหวัด</th>
                       <th>เบอร์ติดต่อ</th>
-                      <th>สมัครวัน</th>
-                      <th>แนะนำ</th>
-                      <th>สถานะ</th>
+
+                      <th>email</th>
+                      <th>status</th>
                       <th>จัดการ</th>
                     </tr>
                   </thead>
                   <tbody>
              @if($objs)
                 @foreach($objs as $u)
-                    <tr id="{{$u->id_te}}">
+                    <tr id="{{$u->id_con}}">
+                      <td>{{$s}}</td>
+                      <td>{{$u->name}}</td>
+                      <td>
+                      <a href="{{url('admin/tech_list/'.$u->id_tech.'/edit')}}" target="_blank">
+                        <img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="{{$u->name}}" style="height:32px;" class="img-circle">
+                         {{$u->tech_fname}} {{$u->tech_lname}}
+                      </a></td>
+                      <td>{{$u->phone}}</td>
 
-                      <td>{{$u->tech_fname}} {{$u->tech_lname}}</td>
-                      <td>{{$u->province_name}}</td>
-                      <td>{{$u->tech_phone}}</td>
-                      <td>{{$u->created_at}}</td>
-
-                      <td>ช่างทั่วไป</td>
+                      <td>{{$u->email}}</td>
                       <td><div class="switch switch-sm switch-success">
                           <input type="checkbox" name="switch2" data-plugin-ios-switch
-                          @if($u->tech_status == 1)
+                          @if($u->m_status == 1)
                           checked="checked"
                           @endif
                           />
                         </div></td>
-
                       <td>
 
                         <div class="btn-group flex-wrap">
   												<button type="button" class="mb-1 mt-1 mr-1 btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">จัดการ <span class="caret"></span></button>
   												<div class="dropdown-menu" role="menu">
 
-  													<a class="dropdown-item text-1" href="{{url('admin/tech_list/'.$u->id_te.'/edit')}}">แก้ไข</a>
+  													<a class="dropdown-item text-1" href="{{url('admin/contact_admin/'.$u->id_con.'/edit')}}">ดูข้อมูล</a>
   												<!--	<a class="dropdown-item text-1 text-danger" href="">ลบ</a> -->
-                          <form  action="{{url('admin/tech_list/'.$u->id_te)}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
+                          <form  action="{{url('admin/contact_admin/'.$u->id_con)}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
                               <input type="hidden" name="_method" value="DELETE">
                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <button type="submit" title="ลบบทความ" class="dropdown-item text-1 text-danger"><i class="fa fa-times "></i> ลบ</button>
@@ -106,7 +103,7 @@
   											</div>
 
                       </td>
-                    </tr>
+                    </tr {{$s++}}>
                  @endforeach
               @endif
 
@@ -126,6 +123,7 @@
 @section('scripts')
 <script src="{{asset('/assets/javascripts/tables/examples.datatables.default.js')}}"></script>
 
+
 <script type="text/javascript">
 $(document).ready(function(){
   $("input:checkbox").change(function() {
@@ -133,7 +131,7 @@ $(document).ready(function(){
 
     $.ajax({
             type:'POST',
-            url:'{{url('api/api_tech_status')}}',
+            url:'{{url('api/api_contact_status')}}',
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
             data: { "user_id" : user_id },
             success: function(data){

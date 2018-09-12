@@ -11,6 +11,9 @@ use App\tech_skill;
 use App\cat_tech;
 use App\tech_gallery;
 use App\province_th;
+use Validator;
+use Response;
+use Redirect;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +69,7 @@ class TechController extends Controller
      */
     public function create()
     {
-      
+
         $category = category::all();
         $data['category'] = $category;
         $province_th = province_th::all();
@@ -85,6 +88,25 @@ class TechController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function api_tech_status(Request $request){
+
+      $user = tech::findOrFail($request->user_id);
+
+              if($user->tech_status == 1){
+                  $user->tech_status = 0;
+              } else {
+                  $user->tech_status = 1;
+              }
+
+
+      return response()->json([
+      'data' => [
+        'success' => $user->save(),
+      ]
+    ]);
+
+    }
     public function store(Request $request)
     {
         //
@@ -97,6 +119,7 @@ class TechController extends Controller
              'tech_email' => 'required',
              'tech_phone' => 'required',
              'tumbon' => 'required',
+             'tech_show' => 'required',
              'district' => 'required',
              'province_id' => 'required',
              'zip_code' => 'required',
@@ -107,28 +130,7 @@ class TechController extends Controller
          ]);
 
         $detail=$request->tech_project;
-        $dom = new \domdocument();
-        $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-        $images = $dom->getelementsbytagname('img');
-
-        foreach($images as $k => $img){
-            $data = $img->getattribute('src');
-
-            list($type, $data) = explode(';', $data);
-            list(, $data)      = explode(',', $data);
-
-            $data = base64_decode($data);
-            $image_name= time().$k.'.png';
-            $path = public_path() .'/assets/tech_img/'. $image_name;
-
-            file_put_contents($path, $data);
-
-            $img->removeattribute('src');
-            $img->setattribute('src', $image_name);
-        }
-
-        $detail = $dom->savehtml();
 
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
 
@@ -151,6 +153,9 @@ class TechController extends Controller
        $package->tech_detail = $request['tech_detail'];
        $package->tech_project = $detail;
        $package->tech_rating = $request['tech_rating'];
+       $package->tech_status_show = $request['tech_show'];
+       $package->lat = $request['lat'];
+       $package->lng = $request['lng'];
        $package->save();
 
        $the_id = $package->id;
@@ -306,6 +311,8 @@ class TechController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
         $image = $request->file('image');
         $this->validate($request, [
              'tech_fname' => 'required',
@@ -317,37 +324,35 @@ class TechController extends Controller
              'province_id' => 'required',
              'zip_code' => 'required',
              'tech_detail' => 'required',
+             'tech_show' => 'required',
              'tech_rating' => 'required',
              'category' => 'required',
              'option' => 'required'
          ]);
 
+         $res=cat_tech::where('tech_id',$id)->delete();
+
+
+         $category = $request['category'];
+
+         if (sizeof($category) > 0) {
+            for ($i = 0; $i < sizeof($category); $i++) {
+              $admin[] = [
+                  'cat_id' => $category[$i],
+                  'tech_id' => $id
+              ];
+            }
+            cat_tech::insert($admin);
+          }
+
+
+
 
          $detail=$request->tech_project;
-         $dom = new \domdocument();
-         $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-         $images = $dom->getelementsbytagname('img');
-         //dd(sizeof($images));
-         if (sizeof($images) > 1) {
-         foreach($images as $k => $img){
-             $data = $img->getattribute('src');
 
-             list($type, $data) = explode(';', $data);
-             list(, $data)      = explode(',', $data);
 
-             $data = base64_decode($data);
-             $image_name= time().$k.'.png';
-             $path = '/assets/tech_img/'. $image_name;
 
-             file_put_contents($path, $data);
-
-             $img->removeattribute('src');
-             $img->setattribute('src', $path);
-         }
-       }
-
-         $detail = $dom->savehtml();
 
         if($image == null){
 
@@ -363,6 +368,9 @@ class TechController extends Controller
           $package->tech_detail = $request['tech_detail'];
           $package->tech_project = $detail;
           $package->tech_rating = $request['tech_rating'];
+          $package->tech_status_show = $request['tech_show'];
+          $package->lat = $request['lat'];
+          $package->lng = $request['lng'];
           $package->save();
 
         }else{
@@ -388,12 +396,41 @@ class TechController extends Controller
           $package->tech_detail = $request['tech_detail'];
           $package->tech_project = $detail;
           $package->tech_rating = $request['tech_rating'];
+          $package->tech_status_show = $request['tech_show'];
+          $package->lat = $request['lat'];
+          $package->lng = $request['lng'];
           $package->save();
 
         }
 
         return redirect(url('admin/tech_list/'.$id.'/edit'))->with('edit_success','คุณทำการเพิ่มอสังหา สำเร็จ');
     }
+
+
+    public function imagess(Request $request) {
+
+        $data = array('image' => $request->file('files'));
+        $rules = array(
+            'image' => 'required|max:8048',
+            );
+
+        $validator = Validator::make($data,$rules);
+
+        if($validator->fails()) {
+            return Response::json($validator->errors()->first('image'), 400);
+        }
+
+        $file = $request->file('files');
+        $destinationPath = 'assets/image/tech'; // upload path
+        $extension = $file->getClientOriginalExtension(); // getting image extension
+        $fileName = sha1(time().time()).".{$extension}";
+        $file->move($destinationPath, $fileName); // uploading file to given path
+
+        return $fileName;
+
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

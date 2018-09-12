@@ -8,7 +8,7 @@
 
 
 			<div class="col-md-7 col-sm-6 ">
-				<img src="assets/images/popular-location-02.jpg" />
+				<img src="{{url('assets/images/popular-location-02.jpg')}}" />
 			</div>
 
 

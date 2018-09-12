@@ -76,7 +76,11 @@
 
 					<!-- User Menu -->
 					<div class="user-menu">
-						<div class="user-name" style="color:#fff"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@if(Auth::user()->provider == 'email')
+						<div class="user-name" style="color:#fff"><span><img src="{{url('assets/images/avatar/'.Auth::user()->avatar)}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@else
+						<div class="user-name" style="color:#fff"><span><img src="{{Auth::user()->avatar}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
+						@endif
 						<ul>
 
 							<li><a href="{{url('logout')}}"><i class="sl sl-icon-power"></i> Logout</a></li>
@@ -113,6 +117,9 @@
 				<div class="row">
 					<div class="col-md-12">
 
+
+						<form  method="POST" action="{{url('search')}}">
+							{{ csrf_field() }}
 							<!-- Row With Forms -->
 							<div class="row with-forms">
 
@@ -128,11 +135,14 @@
 								<div class="col-fs-6">
 									<div class="input-with-icon location">
 										<div id="autocomplete-container">
-											<input id="autocomplete-input" type="text" placeholder="อำเภอ, จังหวัด">
+											<input id="autocomplete-input" type="text" name="location" value="{{$location}}" placeholder="อำเภอ, จังหวัด">
+											<input id="lat" type="hidden" name="lat" value="{{$lat}}" />
+											<input id="lng" type="hidden" name="lng" value="{{$lon}}" />
 										</div>
 										<a href="#"><i class="fa fa-map-marker"></i></a>
 									</div>
 								</div>
+
 
 
 								<!-- Filters -->
@@ -145,34 +155,37 @@
 
 											<!-- Checkboxes -->
 											<div class="row">
-												<div class="col-md-6">
-													<input id="check-1" type="checkbox" name="check" checked class="all">
+												<div class="col-md-12">
+
+													<div class="col-md-6">
+													<input id="check-1" type="checkbox" name="check[]" value="0" checked class="all">
 													<label for="check-1">ค้นหาทั้งหมด</label>
+													</div>
 
-													<input id="check-2" type="checkbox" name="check">
-													<label for="check-2">ช่างปูน</label>
+													@if($category)
+														@foreach($category as $u)
 
-													<input id="check-3" type="checkbox" name="check">
-													<label for="check-3">ช่างไม้</label>
+														<div class="col-md-6">
+														<input id="check-{{$u->id}}" type="checkbox" name="check[]" value="{{$u->id}}">
+														<label for="check-{{$u->id}}">{{$u->name_cat}}</label>
+														</div>
+
+														@endforeach
+													@endif
+
+
+
+
+
+
+
 												</div>
 
-												<div class="col-md-6">
-													<input id="check-4" type="checkbox" name="check" >
-													<label for="check-4">ช่างไฟฟ้า</label>
 
-													<input id="check-5" type="checkbox" name="check">
-													<label for="check-5">ช่างทำท่อปะปา</label>
-
-													<input id="check-6" type="checkbox" name="check">
-													<label for="check-6">ช่างเหล็ก</label>
-												</div>
 											</div>
 
 											<!-- Buttons -->
-											<div class="panel-buttons">
-												<button class="panel-cancel">ยกเลิก</button>
-												<button class="panel-apply">ค้นหา</button>
-											</div>
+
 
 										</div>
 									</div>
@@ -182,7 +195,7 @@
 									<div class="panel-dropdown wide">
 										<a href="#">ระยะทางจากจุดค้นหา</a>
                     <div class="panel-dropdown-content">
-											<input class="distance-radius" type="range" min="1" max="100" step="1" value="50" data-title="Radius around selected destination">
+											<input class="distance-radius" name="radius" type="range" min="1" max="100" step="1" value="50" data-title="Radius around selected destination">
 											<div class="panel-buttons">
 												<button class="panel-cancel">Disable</button>
 												<button class="panel-apply">Apply</button>
@@ -191,14 +204,28 @@
 									</div>
 									<!-- Panel Dropdown / End -->
 
+									<div class="panel-dropdown" style="margin-bottom: -12px;">
+									<div class="panel-buttons">
+
+										<button class="panel-apply" type="submit">ค้นหา</button>
+									</div>
+									</div>
 
 
 
 								</div>
 								<!-- Filters / End -->
 
+
+
 							</div>
 							<!-- Row With Forms / End -->
+
+
+							</form>
+
+
+
 
 					</div>
 				</div>
@@ -222,33 +249,41 @@
 			<!-- Listings -->
 			<div class="row fs-listings">
 
+
+				@if($tech)
+					@foreach($tech as $u)
 				<!-- Listing Item -->
 				<div class="col-lg-12 col-md-12">
 					<div class="listing-item-container list-layout" data-marker-id="1">
-						<a href="{{url('single_tech')}}" class="listing-item">
+						<a href="{{url('single_tech/'.$u->id_tech)}}" class="listing-item">
 
 							<!-- Image -->
 							<div class="listing-item-image">
-								<img src="assets/images/1232718383.jpg" alt="">
-								<span class="tag">ช่างทาสี</span>
+								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="{{$u->tech_fname}} {{$u->tech_lname}}">
+								@if($u->cat_tech)
+								@foreach($u->cat_tech as $j)
+								<span class="tag">{{$j->name_cat_for}}</span>
+								@endforeach
+								@endif
 							</div>
 
 							<!-- Content -->
 							<div class="listing-item-content">
 
 								<div class="listing-item-inner">
-									<h3 style="line-height: 25px;">ทำสีภายในและรับเหมาก่อสร้าง ทั่วไป ทั้งในจังหวัด ทั่วประเทศ </h3>
-									<span style="font-size: 14px;">ลาดพร้าว, กรุงเทพมหานคร</span>
+									<h3 style="line-height: 25px;">{{$u->tech_detail}} </h3>
+									<span style="font-size: 14px;">{{$u->district}}, {{$u->tech_prov}}</span>
 
 								</div>
 
                 <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
-                  <div class="rating-counter" style="font-size:12px;">(12 รีวิว)</div>
+                  <div class="rating-counter" style="font-size:12px;">({{$u->tech_view}} วิว)</div>
                 </div>
 
                 <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
-									<img src="assets/images/user-avatar_1.jpg" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
-                  <span style="color:#000">ช่างแพรวา สุธรรมพงษ์</span><br />
+									<img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
+
+                  <span style="color:#000">{{$u->tech_fname}} {{$u->tech_lname}}</span><br />
 								</div>
 
 
@@ -257,155 +292,11 @@
 					</div>
 				</div>
 				<!-- Listing Item / End -->
+					@endforeach
+				@endif
 
 
 
-        <!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout" data-marker-id="1">
-						<a href="{{url('single_tech')}}" class="listing-item">
-
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="assets/images/1-3-750x498.jpg" alt="">
-								<span class="tag">ช่างทาสี</span>
-							</div>
-
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-									<h3 style="line-height: 25px;">ทำสีภายในและรับเหมาก่อสร้าง ทั่วไป ทั้งในจังหวัด ทั่วประเทศ </h3>
-									<span style="font-size: 14px;">ลาดพร้าว, กรุงเทพมหานคร</span>
-
-								</div>
-
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
-                  <div class="rating-counter" style="font-size:12px;">(12 รีวิว)</div>
-                </div>
-
-                <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
-									<img src="assets/images/user-avatar_2.jpg" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
-                  <span style="color:#000">ช่างแพรวา สุธรรมพงษ์</span><br />
-								</div>
-
-
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-
-        <!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout" data-marker-id="1">
-						<a href="{{url('single_tech')}}" class="listing-item">
-
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="assets/images/1277113934.jpg" alt="">
-								<span class="tag">ช่างทาสี</span>
-							</div>
-
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-									<h3 style="line-height: 25px;">ทำสีภายในและรับเหมาก่อสร้าง ทั่วไป ทั้งในจังหวัด ทั่วประเทศ </h3>
-									<span style="font-size: 14px;">ลาดพร้าว, กรุงเทพมหานคร</span>
-
-								</div>
-
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
-                  <div class="rating-counter" style="font-size:12px;">(12 รีวิว)</div>
-                </div>
-
-                <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
-									<img src="assets/images/user-avatar_3.jpg" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
-                  <span style="color:#000">ช่างแพรวา สุธรรมพงษ์</span><br />
-								</div>
-
-
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-
-        <!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout" data-marker-id="1">
-						<a href="{{url('single_tech')}}" class="listing-item">
-
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="assets/images/275193-545b1cd211e003.jpg" alt="">
-								<span class="tag">ช่างทาสี</span>
-							</div>
-
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-									<h3 style="line-height: 25px;">ทำสีภายในและรับเหมาก่อสร้าง ทั่วไป ทั้งในจังหวัด ทั่วประเทศ </h3>
-									<span style="font-size: 14px;">ลาดพร้าว, กรุงเทพมหานคร</span>
-
-								</div>
-
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
-                  <div class="rating-counter" style="font-size:12px;">(12 รีวิว)</div>
-                </div>
-
-                <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
-									<img src="assets/images/user-avatar_4.jpg" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
-                  <span style="color:#000">ช่างแพรวา สุธรรมพงษ์</span><br />
-								</div>
-
-
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-
-        <!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout" data-marker-id="1">
-						<a href="{{url('single_tech')}}" class="listing-item">
-
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="assets/images/275193-545b1c211e003.jpg" alt="">
-								<span class="tag">ช่างทาสี</span>
-							</div>
-
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-									<h3 style="line-height: 25px;">ทำสีภายในและรับเหมาก่อสร้าง ทั่วไป ทั้งในจังหวัด ทั่วประเทศ </h3>
-									<span style="font-size: 14px;">ลาดพร้าว, กรุงเทพมหานคร</span>
-
-								</div>
-
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
-                  <div class="rating-counter" style="font-size:12px;">(12 รีวิว)</div>
-                </div>
-
-                <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
-									<img src="assets/images/user-avatar_5.jpg" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
-                  <span style="color:#000">ช่างแพรวา สุธรรมพงษ์</span><br />
-								</div>
-
-
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
 
 
 
@@ -423,14 +314,7 @@
 						<div class="col-md-12">
 							<!-- Pagination -->
 							<div class="pagination-container margin-top-15 margin-bottom-40">
-								<nav class="pagination">
-									<ul>
-										<li><a href="#" class="current-page">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-									</ul>
-								</nav>
+								{{$tech->links()}}
 							</div>
 						</div>
 					</div>
@@ -500,6 +384,7 @@ function mainMap() {
 
 
 
+
   autocomplete.addListener('place_changed', function() {
     var bounds = new google.maps.LatLngBounds();
     var place = autocomplete.getPlace();
@@ -518,8 +403,11 @@ function mainMap() {
           map.fitBounds(bounds);
 
 
-          console.log(lat);
-          console.log(lng);
+
+					console.log(lat);
+					console.log(lng);
+					document.getElementById('lat').value = lat;
+					document.getElementById('lng').value = lng;
 
   });
 
@@ -608,7 +496,7 @@ if ($('.main-search-input-item')[0]) {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 11,
     scrollwheel: scrollEnabled,
-    center: new google.maps.LatLng(13.76751, 100.5064158),
+    center: new google.maps.LatLng({{ ( $lat ?: '13.7211075')}}, {{ ( $lon ?: '100.5904873') }} ),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: false,
     mapTypeControl: false,
