@@ -32,6 +32,8 @@ Route::get('/privacy', 'HomeController@privacy')->name('privacy');
 Route::post('/post_to_tech', 'HomeController@post_to_tech')->name('post_to_tech');
 Route::post('/regis_tech_submit', 'HomeController@regis_tech_submit')->name('regis_tech_submit');
 
+Route::post('/contact_us', 'HomeController@contact_us')->name('contact_us');
+
 Route::get('/map_api', 'HomeController@map_api')->name('map_api');
 Route::get('/email_success', 'HomeController@email_success')->name('email_success');
 
@@ -55,6 +57,8 @@ Route::group(['middleware' => 'admin'], function() {
   Route::post('admin/file/posts', 'TechController@imagess');
   Route::resource('admin/contact_admin', 'ContactAdController');
 
+  Route::post('api/api_contact_us_status', 'ContactContraller@api_contact_us_status');
   Route::post('api/api_contact_status', 'ContactAdController@api_contact_status');
+  Route::resource('admin/us_contact', 'ContactContraller');
 
   });

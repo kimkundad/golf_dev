@@ -7,14 +7,11 @@
 		<div class="row">
 
 
-			<div class="col-md-7 col-sm-6 ">
+			<div class="col-md-7 col-sm-6 {{ (Request::is('about') ? 'hidden' : '') }} {{ (Request::is('regis_tech') ? 'hidden' : '') }}">
 				<img src="{{url('assets/images/popular-location-02.jpg')}}" />
 			</div>
 
-
-
-
-			<div class="col-md-5 col-sm-6 text-right">
+			<div class="col-md-5 col-sm-6 text-right {{ (Request::is('about') ? 'hidden' : '') }} {{ (Request::is('regis_tech') ? 'hidden' : '') }}">
 				<h1>เรื่องราวเกี่ยวกับเรา<br>
 				<p>สร้างบ้าน ต่อเติม รีโนเวท กับ ช่างดี เชื่อถือได้ เจ้าของบ้านวางใจ ค้นหาช่างที่มีคุณภาพ งานฝีมือและความประทับใจ ให้ เว็บไซต์... ช่วยค้นหาช่างให้คุณ ช่างรับเหมาจากทุกจังหวัด ทั่วทุกภูมิภาคของประเทศไทย
 คุณเลือกได้ตรงตามความต้องการ</p>
@@ -22,6 +19,9 @@
 		<a href="{{url('regis_tech')}}" class="button  with-icon btn-lg pull-right" style="color: #fff;padding: 15px 28px;">อ่านเพิ่มเติม</a>
 
 			</div>
+
+
+
 
 		</div>
 

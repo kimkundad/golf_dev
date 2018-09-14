@@ -10,6 +10,7 @@ use App\category;
 use App\province_th;
 use App\tech;
 use App\cat_tech;
+use App\contact;
 
 class HomeController extends Controller
 {
@@ -202,6 +203,31 @@ class HomeController extends Controller
           $data['tech_cat'] = $tech_cat;
           $data['tech_img'] = $tech_img;
       return view('single_tech', $data);
+    }
+
+
+    public function contact_us(Request $request){
+
+      $this->validate($request, [
+           'name' => 'required',
+           'email' => 'required',
+           'subject' => 'required',
+           'comments' => 'required'
+       ]);
+
+       $package = new contact();
+       $package->name = $request['name'];
+       $package->email = $request['email'];
+       $package->subject = $request['subject'];
+       $package->comments = $request['comments'];
+       $package->save();
+
+      // dd($package);
+
+       return redirect(url('email_success'))->with('add_success','คุณทำการเพิ่มอสังหา สำเร็จ');
+
+
+
     }
 
 

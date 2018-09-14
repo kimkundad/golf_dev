@@ -153,28 +153,29 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 				<div id="contact-message"></div>
 
-					<form method="post" action="email_success.html" name="contactform" autocomplete="on">
+					<form method="post" action="{{url('contact_us')}}" name="contactform" autocomplete="on">
+						{{ csrf_field() }}
 
 					<div class="row">
 						<div class="col-md-6">
 							<div>
-								<input name="name" type="text" id="name" placeholder="ชื่อ-นามสกุล" required="required" />
+								<input name="name" type="text" id="name" value="{{ old('name') }}" placeholder="ชื่อ-นามสกุล" required="required" />
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div>
-								<input name="email" type="email" id="email" placeholder="อีเมล์" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required="required" />
+								<input name="email" type="email" id="email" value="{{ old('email') }}" placeholder="อีเมล์" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required="required" />
 							</div>
 						</div>
 					</div>
 
 					<div>
-						<input name="subject" type="text" id="subject" placeholder="เรื่องที่ต้องการติดต่อ" required="required" />
+						<input name="subject" type="text" id="subject" value="{{ old('subject') }}" placeholder="เรื่องที่ต้องการติดต่อ" required="required" />
 					</div>
 
 					<div>
-						<textarea name="comments" cols="40" rows="3" id="comments" placeholder="ข้อความ" spellcheck="true" required="required"></textarea>
+						<textarea name="comments" cols="40" rows="3" id="comments" placeholder="ข้อความ" spellcheck="true" required="required">{{ old('comments') }}</textarea>
 					</div>
 
 					<input type="submit" class="submit button" id="submit" value="ส่งข้อความ" />
@@ -197,7 +198,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA89Rb8Kz1ArY3ks6sSvz2cNrn66CHKDiA&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="assets/scripts/infobox.min.js"></script>
 <script type="text/javascript" src="assets/scripts/markerclusterer.js"></script>
-<script type="text/javascript" src="assets/scripts/maps.js"></script>
+<script type="text/javascript" src="assets/scripts/maps2.js"></script>
 
 
 @stop('scripts')

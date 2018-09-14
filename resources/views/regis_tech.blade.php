@@ -309,7 +309,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 												*รายละเอียด
 											</p>
 											@endif
-          						<textarea name="tech_detail" cols="40" rows="3" id="comments" placeholder="รายละเอียด" spellcheck="true" required="required">value="{{ old('tech_detail')}}"</textarea>
+          						<textarea name="tech_detail" cols="40" rows="3" id="comments" placeholder="รายละเอียด" spellcheck="true" required="required">{{ old('tech_detail')}}</textarea>
           					</div>
 
 

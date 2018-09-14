@@ -6,4 +6,15 @@
 .user-menu .user-name:after {
     color: #fff;
 }
+.address-container:before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background-color: #333;
+    opacity: 0;
+}
 </style>

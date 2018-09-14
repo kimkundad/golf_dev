@@ -70,6 +70,14 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 									</li>
 
 
+                  <li {{ (Request::is('admin/us_contact*') ? 'class=nav-expanded' : '') }} >
+										<a href="{{url('admin/us_contact/')}}"  >
+											<i class="fa fa-envelope-o" aria-hidden="true"></i>
+											<span>จัดการ contact</span>
+										</a>
+									</li>
+
+
 
 
 
