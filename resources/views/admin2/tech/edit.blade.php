@@ -83,6 +83,7 @@
           									<div id="edit" class="tab-pane active">
 
 
+
                               <form  method="POST" action="{{$url}}" enctype="multipart/form-data">
                                           {{ method_field($method) }}
                                           {{ csrf_field() }}
@@ -94,9 +95,17 @@
           													<label class="col-md-3 control-label" for="profileFirstName">ชื่อ-นามสกุล*</label>
           													<div class="col-md-4">
           														<input type="text" class="form-control" name="tech_fname" value="{{ $objs->tech_fname }}" placeholder="ชื่อจริง">
+                                      @if($errors->has('tech_fname'))
+                                      <span class="text-danger">**ชื่อจริง</span>
+                                      @endif
+
+
           														</div>
                                       <div class="col-md-4">
             														<input type="text" class="form-control" name="tech_lname" value="{{ $objs->tech_lname }}" placeholder="นามสกุล">
+                                        @if($errors->has('tech_lname'))
+                                        <span class="text-danger">**นามสกุล</span>
+                                        @endif
             														</div>
           												</div>
 
@@ -105,8 +114,14 @@
           													<label class="col-md-3 control-label" for="profileFirstName">Email-เบอร์โทร*</label>
           													<div class="col-md-4">
           														<input type="text" class="form-control" name="tech_email" value="{{ $objs->tech_email }}" placeholder="Example@gmail.com">
+                                      @if($errors->has('tech_email'))
+                                      <span class="text-danger">** Email ไม่มีข้อมูล</span>
+                                      @endif
           														</div>
                                       <div class="col-md-4">
+                                        @if($errors->has('tech_phone'))
+                                        <span class="text-danger">** เบอร์โทร ไม่มีข้อมูล</span>
+                                        @endif
             														<input type="text" class="form-control" name="tech_phone" value="{{ $objs->tech_phone }}" placeholder="081-100-775x">
             														</div>
           												</div>
@@ -133,6 +148,9 @@
           													<label class="col-md-3 control-label" for="profileFirstName">ตำบล*</label>
           													<div class="col-md-8">
           														<input type="text" class="form-control" name="tumbon" value="{{ $objs->tumbon }}" placeholder="ตำบลหนองไผ่">
+                                      @if($errors->has('tumbon'))
+                                      <span class="text-danger">** ตำบล ไม่มีข้อมูล</span>
+                                      @endif
           														</div>
 
           												</div>
@@ -141,6 +159,9 @@
           													<label class="col-md-3 control-label" for="profileFirstName">อำเภอ*</label>
           													<div class="col-md-8">
           														<input type="text" class="form-control" name="district" value="{{ $objs->district }}" placeholder="อำเภอแม่ปิง">
+                                      @if($errors->has('district'))
+                                      <span class="text-danger">** อำเภอ ไม่มีข้อมูล</span>
+                                      @endif
           														</div>
 
           												</div>
@@ -160,6 +181,9 @@
                                                >{{$x->province_name}}</option>
   													              @endforeach
   								                    </select>
+                                      @if($errors->has('province_id'))
+                                      <span class="text-danger">** จังหวัด ไม่มีข้อมูล</span>
+                                      @endif
 
           													</div>
           												</div>
@@ -172,6 +196,9 @@
           													<label class="col-md-3 control-label" for="profileFirstName">รหัสไปรษณีย์*</label>
           													<div class="col-md-8">
           														<input type="text" class="form-control" name="zip_code" value="{{ $objs->zip_code }}" placeholder="10310">
+                                      @if($errors->has('zip_code'))
+                                      <span class="text-danger">** จังหวัด ไม่มีข้อมูล</span>
+                                      @endif
           														</div>
 
           												</div>
@@ -188,9 +215,15 @@
                                     <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="lat" id="lat" size="10" value="{{$objs->lat}}" class="form-control" required>
+                                        @if($errors->has('lat'))
+                                        <span class="text-danger">** พิกัด lat ไม่มีข้อมูล</span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-4">
                                         <input type="text" name="lng" id="lng" size="10" value="{{$objs->lng}}" class="form-control" required>
+                                        @if($errors->has('lng'))
+                                        <span class="text-danger">** พิกัด lng ไม่มีข้อมูล</span>
+                                        @endif
                                     </div>
                                     </div>
 
@@ -218,6 +251,9 @@
                                  </div>
                                    </div>
                                   @endforeach
+                                  @if($errors->has('category'))
+                                  <span class="text-danger">** ประเภทช่าง ไม่มีข้อมูล</span>
+                                  @endif
                                   <br />
                                   <br />
 
@@ -263,6 +299,9 @@
           													<label class="col-md-3 control-label" for="profileFirstName">คำอธิบาย*</label>
           													<div class="col-md-8">
           														<textarea class="form-control" name="tech_detail" rows="5">{{ $objs->tech_detail }}</textarea>
+                                      @if($errors->has('tech_detail'))
+                                      <span class="text-danger">** คำอธิบาย ไม่มีข้อมูล</span>
+                                      @endif
           														</div>
           												</div>
                                   <br />
@@ -317,6 +356,9 @@
                                  </div>
                                    </div>
                                   @endforeach
+                                  @if($errors->has('option'))
+                                  <span class="text-danger">** ความเชี่ยวชาญ ไม่มีข้อมูล</span>
+                                  @endif
                                   <br />
                                   <br />
 
@@ -325,7 +367,7 @@
           													<div class="col-md-12">
                                       <label class="col-md-3 control-label" for="profileFirstName">ผลงานที่ผ่านมา*</label>
                                       <br /><br />
-          														<textarea class="form-control" id="summernote" name="tech_project" rows="6">{{$objs->tech_project}}</textarea>
+          														<textarea class="form-control" id="summernote" name="tech_project" rows="6">{{$objs->tech_project}}..</textarea>
           														</div>
           												</div>
 
@@ -475,8 +517,7 @@ $(document).ready(function() {
     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
     disableDragAndDrop: true,            // set editor height
     placeholder: 'เนื้อหาบทความ',
-    minHeight: 300,
-    focus: true                // set focus to editable area after initializing summernote
+    minHeight: 300             // set focus to editable area after initializing summernote
   });
 });
 var postForm = function() {

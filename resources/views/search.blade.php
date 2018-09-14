@@ -136,12 +136,15 @@
 									<div class="input-with-icon location">
 										<div id="autocomplete-container">
 											<input id="autocomplete-input" type="text" name="location" value="{{$location}}" placeholder="อำเภอ, จังหวัด">
-											<input id="lat" type="hidden" name="lat" value="{{$lat}}" />
-											<input id="lng" type="hidden" name="lng" value="{{$lon}}" />
+											<input id="lat" type="hidden" name="lat" value="{{ ( $lat ?: '13.7211075')}}" />
+											<input id="lng" type="hidden" name="lng" value="{{ ( $lon ?: '100.5904873') }}" />
 										</div>
 										<a href="#"><i class="fa fa-map-marker"></i></a>
 									</div>
 								</div>
+
+
+
 
 
 
@@ -199,7 +202,7 @@
 									<div class="panel-dropdown wide">
 										<a href="#">ระยะทางจากจุดค้นหา</a>
                     <div class="panel-dropdown-content">
-											<input class="distance-radius" name="radius" type="range" min="1" max="100" step="1" value="50" data-title="Radius around selected destination">
+											<input class="distance-radius" name="radius" type="range" min="1" max="100" step="1" value="{{$radius}}" data-title="Radius around selected destination">
 											<div class="panel-buttons">
 												<button class="panel-cancel">Disable</button>
 												<button class="panel-apply">Apply</button>

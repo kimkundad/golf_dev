@@ -326,6 +326,8 @@ class TechController extends Controller
              'tech_detail' => 'required',
              'tech_show' => 'required',
              'tech_rating' => 'required',
+             'lat' => 'required',
+             'lng' => 'required',
              'category' => 'required',
              'option' => 'required'
          ]);
@@ -402,6 +404,18 @@ class TechController extends Controller
           $package->save();
 
         }
+
+        $res1=tech_skill::where('tech_id',$id)->delete();
+        $option = $request['option'];
+        if (sizeof($option) > 0) {
+           for ($i = 0; $i < sizeof($option); $i++) {
+             $admins[] = [
+                 'skill_id' => $option[$i],
+                 'tech_id' => $id
+             ];
+           }
+           tech_skill::insert($admins);
+         }
 
         return redirect(url('admin/tech_list/'.$id.'/edit'))->with('edit_success','คุณทำการเพิ่มอสังหา สำเร็จ');
     }

@@ -117,7 +117,7 @@
 				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">ตำแหน่งช่าง</h3>
 
 				<div id="singleListingMap-container">
-					<div id="singleListingMap" data-latitude="{{$tech->province_ths->province_lat}}" data-longitude="{{$tech->province_ths->province_lon}}" data-map-icon="im im-icon-Cool"></div>
+					<div id="singleListingMap" data-latitude="{{$tech->lat}}" data-longitude="{{$tech->lng}}" data-map-icon="im im-icon-Cool"></div>
 					<a href="#" id="streetView">Street View</a>
 				</div>
 			</div>

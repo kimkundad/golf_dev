@@ -79,7 +79,13 @@ class HomeController extends Controller
             }
 
         $u->tech_prov = $tech_prov->province_name;
-        $u->tech_imgs = $tech_img->image;
+
+        if(empty($tech_img->image)){
+          $u->tech_imgs = 'listing-item-03.jpg';
+        }else{
+          $u->tech_imgs = $tech_img->image;
+        }
+
         $u->cat_tech = $tech_cat;
       }
 
@@ -154,6 +160,7 @@ class HomeController extends Controller
           )
           ->where('tech_status_show', 1)
           ->where('tech_status', 1)
+          ->where('id', $id)
           ->first();
 
 
@@ -376,22 +383,20 @@ class HomeController extends Controller
               'teches.lat',
               'teches.lng',
               'teches.id as id_tech',
-              'teches.tech_status',
-              'cat_teches.tech_id'
+              'teches.tech_status'
               )
-              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
               ->where('teches.tech_status', 1)
               ->paginate(10);
 
 
               $tech_count = DB::table('teches')
                 ->select(
-                'teches.id',
-                'cat_teches.tech_id'
+                'teches.id'
                 )
-                ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
                 ->where('teches.tech_status', 1)
                 ->count();
+
+            //   dd($tech);
 
         }else{
 
@@ -411,12 +416,12 @@ class HomeController extends Controller
               'teches.lat',
               'teches.lng',
               'teches.id as id_tech',
-              'teches.tech_status',
-              'cat_teches.tech_id'
+              'teches.tech_status'
               )
-              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+              ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
               ->whereIn('cat_teches.cat_id', [$cat_id])
               ->where('teches.tech_status', 1)
+              ->groupBy('teches.id')
               ->paginate(10);
 
 
@@ -425,10 +430,13 @@ class HomeController extends Controller
                 'teches.id',
                 'cat_teches.tech_id'
                 )
-                ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
                 ->whereIn('cat_teches.cat_id', [$cat_id])
                 ->where('teches.tech_status', 1)
+                ->groupBy('teches.id')
                 ->count();
+
+            //    dd($tech);
 
         }
 
@@ -468,7 +476,7 @@ class HomeController extends Controller
             ->where('teches.tech_status', 1)
             ->count();
 
-
+          //  dd($tech_count);
         }else{
 
           $tech = DB::table('teches')
@@ -494,6 +502,7 @@ class HomeController extends Controller
               ->whereBetween('teches.lat', [$min_lat, $max_lat])
               ->whereBetween('teches.lng', [$min_lon, $max_lon])
               ->where('teches.tech_status', 1)
+              ->groupBy('teches.id')
               ->paginate(10);
 
               $tech_count = DB::table('teches')
@@ -506,9 +515,10 @@ class HomeController extends Controller
                 ->whereBetween('teches.lat', [$min_lat, $max_lat])
                 ->whereBetween('teches.lng', [$min_lon, $max_lon])
                 ->where('teches.tech_status', 1)
+                ->groupBy('teches.id')
                 ->count();
 
-
+          //      dd($tech_count);
 
         }
 
@@ -553,7 +563,15 @@ class HomeController extends Controller
               }
 
           $u->tech_prov = $tech_prov->province_name;
-          $u->tech_imgs = $tech_img->image;
+
+
+          if(empty($tech_img->image)){
+            $u->tech_imgs = 'listing-item-03.jpg';
+          }else{
+            $u->tech_imgs = $tech_img->image;
+          }
+
+
           $u->cat_tech = $tech_cat;
         }
 
@@ -562,6 +580,7 @@ class HomeController extends Controller
           $data['lat'] = $lat;
           $data['lon'] = $lon;
           $data['tech'] = $tech;
+          $data['radius'] = $radius;
           $data['tech_count'] = $tech_count;
           $data['location'] = $location;
       return view('search', $data);
