@@ -24,7 +24,8 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 							{{ csrf_field() }}
 						<div class="main-search-input-item">
-							<select data-placeholder="All Categories" name="cat_id" class="chosen-select" >
+							<select data-placeholder="All Categories" name="cat_id[]" class="chosen-select" >
+								<option value="0">ค้าหาทั้งหมด</option>
 								@if($category)
 									@foreach($category as $u)
 								<option value="{{$u->id}}">{{$u->name_cat}}</option>

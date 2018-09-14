@@ -30,6 +30,7 @@ Route::get('single_tech/{id}', 'HomeController@single_tech')->name('single_tech'
 Route::get('/terms_conditions', 'HomeController@terms_conditions')->name('terms_conditions');
 Route::get('/privacy', 'HomeController@privacy')->name('privacy');
 Route::post('/post_to_tech', 'HomeController@post_to_tech')->name('post_to_tech');
+Route::post('/regis_tech_submit', 'HomeController@regis_tech_submit')->name('regis_tech_submit');
 
 Route::get('/map_api', 'HomeController@map_api')->name('map_api');
 Route::get('/email_success', 'HomeController@email_success')->name('email_success');

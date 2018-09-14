@@ -112,21 +112,26 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 			<div class="col-md-10 col-md-offset-1">
 
 
+				<form action="{{url('regis_tech_submit')}}" id="my_form" method="post" enctype="multipart/form-data">
+				{{ csrf_field() }}
 
         <div class="dashboard-list-box margin-top-0">
 					<h4 class="gray"><i class="fa fa-info-circle"></i> ข้อมูลทั่วไป</h4>
 					<div class="dashboard-list-box-static">
 
             <div class="row">
+
+
             <div class="col-md-4">
 
               <!-- Avatar -->
   						<div class="edit-profile-photo">
-  							<img src="assets/images/user-avatar_7.jpg" alt="">
-  							<div class="change-photo-btn">
+								<label for="imgAvatar"></label>
+  							<img id="imgAvatar" name="imgAvatar" src="{{url('assets/image/thumb_upload.png')}}" alt="">
+  							<div class="change-photo-btn" style="color: #fff; background-color: #00a948;">
   								<div class="photoUpload">
   								    <span><i class="fa fa-upload"></i> Upload Photo</span>
-  								    <input type="file" class="upload" />
+  								    <input id="fileAvatar" name="image" type="file" class="upload" />
   								</div>
   							</div>
   						</div>
@@ -141,23 +146,44 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
                 <div class="row">
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="ชื่อ" required="required" />
+											@if($errors->has('tech_fname'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*กรอก ชื่อ
+											</p>
+											@endif
+                      <input name="tech_fname" type="text"  placeholder="ชื่อ" value="{{ old('tech_fname')}}" required="required" />
+
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="นามสกุล" required="required" />
+											@if($errors->has('tech_lname'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*กรอก นามสกุล
+											</p>
+											@endif
+                      <input name="tech_lname" type="text"  placeholder="นามสกุล" value="{{ old('tech_lname')}}" required="required" />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <input name="subject" type="text" id="subject" placeholder="เบอร์โทรติดต่อ" required="required" />
+									@if($errors->has('tech_phone'))
+									<p class="text-danger" style="margin-bottom: 0px;">
+										*กรอก เบอร์โทรติดต่อ
+									</p>
+									@endif
+                  <input name="tech_phone" type="text" placeholder="เบอร์โทรติดต่อ" value="{{ old('tech_phone')}}" required="required" />
                 </div>
 
                 <div>
-                  <input name="email" type="email" id="email" placeholder="อีเมล์" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required="required" />
+									@if($errors->has('tech_phone'))
+									<p class="text-danger" style="margin-bottom: 0px;">
+										*กรอก อีเมล์
+									</p>
+									@endif
+                  <input name="tech_email" type="email" placeholder="อีเมล์" value="{{ old('tech_email')}}" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required="required" />
                 </div>
 
               </div>
@@ -188,25 +214,53 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
                 <div class="row">
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="ตำบล" required="required" />
+											@if($errors->has('tumbon'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*กรอก ตำบล
+											</p>
+											@endif
+                      <input name="tumbon" type="text" value="{{ old('tumbon')}}" placeholder="ตำบล" required="required" />
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="อำเภอ" required="required" />
+											@if($errors->has('district'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*กรอก อำเภอ
+											</p>
+											@endif
+                      <input name="district" type="text" value="{{ old('district')}}" placeholder="อำเภอ" required="required" />
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="จังหวัด" required="required" />
+
+											@if($errors->has('province_id'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*เลือกจังหวัด
+											</p>
+											@endif
+
+											<select  name="province_id" data-placeholder="เลือกจังหวัด" class="chosen-select" >
+
+												@foreach($province_th as $x)
+													 <option value="{{$x->id}}">{{$x->province_name}}</option>
+												@endforeach
+
+                			</select>
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div>
-                      <input name="name" type="text" id="name" placeholder="รหัสไปรษณีย์" required="required" />
+											@if($errors->has('zip_code'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*รหัสไปรษณีย์
+											</p>
+											@endif
+                      <input name="zip_code" type="text" value="{{ old('zip_code')}}" placeholder="รหัสไปรษณีย์" required="required" />
                     </div>
                   </div>
                 </div>
@@ -237,19 +291,25 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
                 <div class="row">
                   <div class="col-md-12">
                     <div>
-                      <select data-placeholder="เลือกประเภทงาน" class="chosen-select" multiple>
-                				<option>งานปู</option>
-                				<option>งานไม้</option>
-                				<option>งานเหล็ก</option>
-                				<option>งานฝ้าเพดาน</option>
-                        <option>งานท่อปะปา</option>
-                        <option>งานโครงสร้างบ้าน</option>
-                        <option>งานออกแบบบ้าน</option>
+											@if($errors->has('category'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*เลือกประเภทงาน
+											</p>
+											@endif
+                      <select data-placeholder="เลือกประเภทงาน" name="category[]" class="chosen-select" multiple>
+												@foreach($category as $categorys)
+                				<option value="{{$categorys->id}}">{{$categorys->name_cat}}</option>
+                				@endforeach
                 			</select>
                     </div>
                     <br />
                     <div>
-          						<textarea name="comments" cols="40" rows="3" id="comments" placeholder="รายละเอียด" spellcheck="true" required="required"></textarea>
+											@if($errors->has('tech_detail'))
+											<p class="text-danger" style="margin-bottom: 0px;">
+												*รายละเอียด
+											</p>
+											@endif
+          						<textarea name="tech_detail" cols="40" rows="3" id="comments" placeholder="รายละเอียด" spellcheck="true" required="required">value="{{ old('tech_detail')}}"</textarea>
           					</div>
 
 
@@ -271,8 +331,23 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
         <!-- info / End -->
 
         <div class="text-center margin-top-30">
-          <a href="#" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
+          <a href="javascript:{}" onclick="document.getElementById('my_form').submit();" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
         </div>
+
+
+
+
+
+
+
+				</form>
+
+
+
+
+
+
+
 
 
 
@@ -290,7 +365,30 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 @section('scripts')
 
+<script>
+        $(document).ready(function () {
+            $("#fileAvatar").on("change", previewFile);
+            $('#btn_submit').click(() => {
+                const file = document.querySelector('#fileAvatar').files[0];
+                if (file) {
+                    window.location = 'step-4.html';
+                }
+            });
+        });
 
+        function previewFile() {
+            const file = document.querySelector('#fileAvatar').files[0];
+            const preview = document.querySelector('#imgAvatar');
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+            if (file) {
+                reader.readAsDataURL(file); //reads the data as a URL
+            }
+        }
+    </script>
 
 
 @stop('scripts')

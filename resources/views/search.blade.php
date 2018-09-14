@@ -158,15 +158,19 @@
 												<div class="col-md-12">
 
 													<div class="col-md-6">
-													<input id="check-1" type="checkbox" name="check[]" value="0" checked class="all">
-													<label for="check-1">ค้นหาทั้งหมด</label>
+													<input id="check-0" type="checkbox" name="cat_id[]" value="0" @if($cat_id[0] == 0) checked @endif class="all">
+													<label for="check-0">ค้นหาทั้งหมด</label>
 													</div>
 
 													@if($category)
 														@foreach($category as $u)
 
 														<div class="col-md-6">
-														<input id="check-{{$u->id}}" type="checkbox" name="check[]" value="{{$u->id}}">
+														<input id="check-{{$u->id}}" type="checkbox" name="cat_id[]" value="{{$u->id}}"
+														@if(isset($u->option))
+														checked
+														@endif
+														>
 														<label for="check-{{$u->id}}">{{$u->name_cat}}</label>
 														</div>
 
@@ -240,7 +244,7 @@
 
 				<div class="col-md-6">
 					<!-- Showing Results -->
-					<p class="showing-results">14 ผลการค้นหา </p>
+					<p class="showing-results">{{$tech_count}} ผลการค้นหา </p>
 				</div>
 
 			</div>
@@ -276,7 +280,7 @@
 
 								</div>
 
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="3.5">
+                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="{{$u->tech_rating}}">
                   <div class="rating-counter" style="font-size:12px;">({{$u->tech_view}} วิว)</div>
                 </div>
 
@@ -449,16 +453,14 @@ if ($('.main-search-input-item')[0]) {
 
   // Locations
   var locations = [
-    [ locationData('single_tech','assets/images/1232718383.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '12'), 13.7085005, 100.3779119, 1, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '23'), 13.81786925, 100.4489744, 2, '<img src="assets/images/user-avatar_2.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '2.0', '17'), 13.7154553, 100.4063138, 3, '<img src="assets/images/user-avatar_3.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
-    [ locationData('single_tech','assets/images/275193-545b1cd211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.7188506, 100.5387318,     4, '<img src="assets/images/user-avatar_4.jpg" style="height: 36px; width:36px; border-radius: 50%;">' ],
-    [ locationData('single_tech','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '3.5', '46'), 13.7243693, 100.5393755,  5, '<img src="assets/images/user-avatar_5.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech','assets/images/1-3-750x498.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '4.5', '15'), 13.747118, 100.573986,  6, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech','assets/images/275193-545b1c211e003.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8158324, 100.5617, 7, '<img src="assets/images/user-avatar_7.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
 
-    [ locationData('single_tech','assets/images/1277113934.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.841726, 100.5715835, 7, '<img src="assets/images/user-avatar_6.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
-    [ locationData('single_tech','assets/images/E453052AF9FF4CDE9B296EDDAC010000.jpg',"ช่างแพรวา สุธรรมพงษ์",'ทำสีภายในและรับเหมาก่อสร้าง', '5.0', '31'), 13.8573065, 100.6275371,  7, '<img src="assets/images/user-avatar_1.jpg" style="height: 36px; width:36px; border-radius: 50%;">'],
+		@if($tech)
+			@foreach($tech as $u)
+    [ locationData('single_tech/{{$u->id_tech}}','{{url('assets/tech_img/'.$u->tech_imgs)}}',"{{$u->tech_fname}} {{$u->tech_lname}}",'{{$u->tech_detail}}', '{{$u->tech_rating}}', '{{$u->tech_view}}'),
+		{{$u->lat}}, {{$u->lng}}, {{$u->id_tech}}, '<img src="{{url('assets/tech_img/'.$u->tech_image)}}" style="height: 36px; width:36px; border-radius: 50%;">'],
+			@endforeach
+		@endif
+
   ];
 
   // Chosen Rating Type

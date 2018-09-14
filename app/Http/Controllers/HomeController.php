@@ -7,6 +7,9 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 use App\text_to_tech;
 use App\category;
+use App\province_th;
+use App\tech;
+use App\cat_tech;
 
 class HomeController extends Controller
 {
@@ -40,8 +43,8 @@ class HomeController extends Controller
           'teches.district',
           'teches.tech_status'
           )
-          ->where('tech_status_show', 1)
-          ->where('tech_status', 1)
+          ->where('teches.tech_status_show', 1)
+          ->where('teches.tech_status', 1)
           ->get();
 
       foreach($tech as $u){
@@ -218,6 +221,66 @@ class HomeController extends Controller
 
     }
 
+
+    public function regis_tech_submit(Request $request){
+
+      $image = $request->file('image');
+      $this->validate($request, [
+           'image' => 'required|max:8048',
+           'tech_fname' => 'required',
+           'tech_lname' => 'required',
+           'tech_phone' => 'required',
+           'tech_email' => 'required',
+           'tumbon' => 'required',
+           'district' => 'required',
+           'category' => 'required',
+           'province_id' => 'required',
+           'zip_code' => 'required',
+           'tech_detail' => 'required'
+       ]);
+
+       $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+
+       $destinationPath = asset('assets/tech_img/');
+       $img = Image::make($image->getRealPath());
+       $img->resize(800, 533, function ($constraint) {
+       $constraint->aspectRatio();
+     })->save('assets/tech_img/'.$input['imagename']);
+
+
+     $package = new tech();
+     $package->tech_fname = $request['tech_fname'];
+     $package->tech_lname = $request['tech_lname'];
+     $package->tech_phone = $request['tech_phone'];
+     $package->tech_email = $request['tech_email'];
+     $package->tech_image = $input['imagename'];
+     $package->tumbon = $request['tumbon'];
+     $package->district = $request['district'];
+     $package->province_id = $request['province_id'];
+     $package->zip_code = $request['zip_code'];
+     $package->tech_detail = $request['tech_detail'];
+     $package->lat = '13.7211075';
+     $package->lng = '100.5904873';
+     $package->save();
+
+     $the_id = $package->id;
+     $category = $request['category'];
+
+     if (sizeof($category) > 0) {
+        for ($i = 0; $i < sizeof($category); $i++) {
+          $admin[] = [
+              'cat_id' => $category[$i],
+              'tech_id' => $the_id
+          ];
+        }
+        cat_tech::insert($admin);
+      }
+
+      return redirect(url('email_success'))->with('add_success','คุณทำการเพิ่มอสังหา สำเร็จ');
+
+
+    }
+
     public function about(){
       return view('about');
     }
@@ -231,22 +294,48 @@ class HomeController extends Controller
     }
 
     public function regis_tech(){
-      return view('regis_tech');
-    }
-
-    public function search(Request $request){
 
       $category = category::all();
       $data['category'] = $category;
 
-    //  dd($request['radius']);
+      $province_th = province_th::all();
+      $data['province_th'] = $province_th;
+      return view('regis_tech', $data);
+    }
+
+    public function search(Request $request){
       $cat_id = $request['cat_id'];
+
+
+
+      $category = DB::table('categories')
+          ->get();
+
+      foreach ($category as $k) {
+
+        for($s = 0; $s < count($cat_id); $s++ ){
+
+          if($k->id == $cat_id[$s]){
+            $k->option = 1;
+          }
+        }
+        // code...
+
+      }
+
+    //  dd($category);
+
+      $data['category'] = $category;
+
+    //  dd($request['radius']);
+
       $lat = $request['lat'];
       $lon = $request['lng'];
       $check = $request['check'];
       $location = $request['location'];
 
-    //  dd($check);
+
+
 
       if($request['radius'] == null){
         $radius = 50; // Km
@@ -255,35 +344,181 @@ class HomeController extends Controller
       }
 
 
+
+
       $angle_radius = $radius / ( 111 * cos( $lat ) ); // Every lat|lon degree° is ~ 111Km
       $min_lat = $lat - $angle_radius;
       $max_lat = $lat + $angle_radius;
       $min_lon = $lon - $angle_radius;
       $max_lon = $lon + $angle_radius;
 
-      $tech = DB::table('teches')
-          ->select(
-          'teches.id',
-          'teches.tech_fname',
-          'teches.tech_lname',
-          'teches.tech_image',
-          'teches.tech_status_show',
-          'teches.tech_view',
-          'teches.tech_view',
-          'teches.tech_rating',
-          'teches.tech_detail',
-          'teches.province_id',
-          'teches.district',
-          'teches.lat',
-          'teches.lng',
-          'teches.id as id_tech',
-          'teches.tech_status'
-          )
-          ->whereBetween('lat', [$min_lat, $max_lat])
-          ->whereBetween('lng', [$min_lon, $max_lon])
-          ->paginate(10);
 
-        //  dd($tech);
+      if($lat == null || $lon == null ){
+
+        $location = "กรุงเทพมหานคร ประเทศไทย";
+
+
+        if($cat_id[0] == 0){
+
+          $tech = DB::table('teches')
+              ->select(
+              'teches.id',
+              'teches.tech_fname',
+              'teches.tech_lname',
+              'teches.tech_image',
+              'teches.tech_status_show',
+              'teches.tech_view',
+              'teches.tech_view',
+              'teches.tech_rating',
+              'teches.tech_detail',
+              'teches.province_id',
+              'teches.district',
+              'teches.lat',
+              'teches.lng',
+              'teches.id as id_tech',
+              'teches.tech_status',
+              'cat_teches.tech_id'
+              )
+              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+              ->where('teches.tech_status', 1)
+              ->paginate(10);
+
+
+              $tech_count = DB::table('teches')
+                ->select(
+                'teches.id',
+                'cat_teches.tech_id'
+                )
+                ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                ->where('teches.tech_status', 1)
+                ->count();
+
+        }else{
+
+          $tech = DB::table('teches')
+              ->select(
+              'teches.id',
+              'teches.tech_fname',
+              'teches.tech_lname',
+              'teches.tech_image',
+              'teches.tech_status_show',
+              'teches.tech_view',
+              'teches.tech_view',
+              'teches.tech_rating',
+              'teches.tech_detail',
+              'teches.province_id',
+              'teches.district',
+              'teches.lat',
+              'teches.lng',
+              'teches.id as id_tech',
+              'teches.tech_status',
+              'cat_teches.tech_id'
+              )
+              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+              ->whereIn('cat_teches.cat_id', [$cat_id])
+              ->where('teches.tech_status', 1)
+              ->paginate(10);
+
+
+              $tech_count = DB::table('teches')
+                ->select(
+                'teches.id',
+                'cat_teches.tech_id'
+                )
+                ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                ->whereIn('cat_teches.cat_id', [$cat_id])
+                ->where('teches.tech_status', 1)
+                ->count();
+
+        }
+
+
+
+      }else{
+
+
+        if($cat_id[0] == 0){
+
+          $tech = DB::table('teches')
+              ->select(
+              'teches.id',
+              'teches.tech_fname',
+              'teches.tech_lname',
+              'teches.tech_image',
+              'teches.tech_status_show',
+              'teches.tech_view',
+              'teches.tech_view',
+              'teches.tech_rating',
+              'teches.tech_detail',
+              'teches.province_id',
+              'teches.district',
+              'teches.lat',
+              'teches.lng',
+              'teches.id as id_tech',
+              'teches.tech_status'
+              )
+              ->whereBetween('lat', [$min_lat, $max_lat])
+              ->whereBetween('lng', [$min_lon, $max_lon])
+              ->where('teches.tech_status', 1)
+              ->paginate(10);
+
+          $tech_count = DB::table('teches')
+            ->whereBetween('lat', [$min_lat, $max_lat])
+            ->whereBetween('lng', [$min_lon, $max_lon])
+            ->where('teches.tech_status', 1)
+            ->count();
+
+
+        }else{
+
+          $tech = DB::table('teches')
+              ->select(
+              'teches.id',
+              'teches.tech_fname',
+              'teches.tech_lname',
+              'teches.tech_image',
+              'teches.tech_status_show',
+              'teches.tech_view',
+              'teches.tech_view',
+              'teches.tech_rating',
+              'teches.tech_detail',
+              'teches.province_id',
+              'teches.district',
+              'teches.lat',
+              'teches.lng',
+              'teches.id as id_tech',
+              'teches.tech_status',
+              'cat_teches.tech_id'
+              )
+              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+              ->whereBetween('teches.lat', [$min_lat, $max_lat])
+              ->whereBetween('teches.lng', [$min_lon, $max_lon])
+              ->where('teches.tech_status', 1)
+              ->paginate(10);
+
+              $tech_count = DB::table('teches')
+                ->select(
+                'teches.id',
+                'cat_teches.tech_id'
+                )
+                ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                ->whereIn('cat_teches.cat_id', [$cat_id])
+                ->whereBetween('teches.lat', [$min_lat, $max_lat])
+                ->whereBetween('teches.lng', [$min_lon, $max_lon])
+                ->where('teches.tech_status', 1)
+                ->count();
+
+
+
+        }
+
+
+
+      }
+
+
+
+      //    dd($tech);
 
 
         foreach($tech as $u){
@@ -322,9 +557,12 @@ class HomeController extends Controller
           $u->cat_tech = $tech_cat;
         }
 
+      //  dd($cat_id);
+          $data['cat_id'] = $cat_id;
           $data['lat'] = $lat;
           $data['lon'] = $lon;
           $data['tech'] = $tech;
+          $data['tech_count'] = $tech_count;
           $data['location'] = $location;
       return view('search', $data);
     }
