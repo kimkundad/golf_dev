@@ -61,7 +61,7 @@
 						@endif
 						<ul>
 							@if(Auth::user()->is_admin == 1)
-							<li><a href="{{url('admin/dashboard')}}"><i class="im im-icon-Alien-2"></i> Admin Controller</a></li>
+							<li><a href="{{url('admin/dashboard')}}"><i class="im im-icon-Alien-2"></i>Controller</a></li>
 							@endif
 							<li><a href="{{url('logout')}}"><i class="sl sl-icon-power"></i> Logout</a></li>
 						</ul>
