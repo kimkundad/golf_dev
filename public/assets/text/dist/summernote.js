@@ -6730,13 +6730,13 @@
 			var data = new FormData();
 		    data.append('files', files[0]);
 		    $.ajax({
-		        url: 'http://localhost/golf_dev/public/admin/file/posts',
+		        url: 'https://eatmatter.com/admin/file/posts',
 		        method: 'POST',
 		        data: data,
 		        processData: false,
 		        contentType: false,
 		        success: function(response) {
-              var image1 = 'http://localhost/golf_dev/public/assets/image/tech/'+response;
+              var image1 = 'https://eatmatter.com/assets/image/tech/'+response;
 		          $editor.summernote('insertImage', image1);
 		        }
 		    });
