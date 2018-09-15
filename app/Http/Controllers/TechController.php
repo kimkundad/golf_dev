@@ -10,10 +10,12 @@ use App\skill;
 use App\tech_skill;
 use App\cat_tech;
 use App\tech_gallery;
-use App\province_th;
 use Validator;
 use Response;
 use Redirect;
+use App\province_th;
+use App\tech_job_img;
+use App\tech_job;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -116,20 +118,16 @@ class TechController extends Controller
              'image' => 'required|max:8048',
              'tech_fname' => 'required',
              'tech_lname' => 'required',
-             'tech_email' => 'required',
              'tech_phone' => 'required',
-             'tumbon' => 'required',
              'tech_show' => 'required',
-             'district' => 'required',
              'province_id' => 'required',
-             'zip_code' => 'required',
              'tech_detail' => 'required',
              'tech_rating' => 'required',
              'category' => 'required',
              'option' => 'required'
          ]);
 
-        $detail=$request->tech_project;
+
 
 
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
@@ -146,12 +144,8 @@ class TechController extends Controller
        $package->tech_phone = $request['tech_phone'];
        $package->tech_email = $request['tech_email'];
        $package->tech_image = $input['imagename'];
-       $package->tumbon = $request['tumbon'];
-       $package->district = $request['district'];
        $package->province_id = $request['province_id'];
-       $package->zip_code = $request['zip_code'];
        $package->tech_detail = $request['tech_detail'];
-       $package->tech_project = $detail;
        $package->tech_rating = $request['tech_rating'];
        $package->tech_status_show = $request['tech_show'];
        $package->lat = $request['lat'];
@@ -190,16 +184,184 @@ class TechController extends Controller
 
 
     public function tech_gallery($id){
+
+      $proocess = 0;
+      $img_count = DB::table('tech_galleries')->select(
+            'tech_galleries.*'
+            )
+            ->where('tech_id', $id)
+            ->count();
+
+            $job_count = DB::table('tech_jobs')->select(
+                  'tech_jobs.*'
+                  )
+                  ->where('tech_id', $id)
+                  ->count();
+
+            $data['img_count'] = $img_count;
+            $data['job_count'] = $job_count;
+
+            if($img_count > 0){
+              $proocess += 33;
+            }
+            if($job_count > 0){
+              $proocess = 100;
+            }
+
+            $success = 0;
+            if($proocess > 70){
+              $success = 1;
+            }else{
+              $success = 0;
+            }
+            $data['success'] = $success;
+
+            $data['proocess'] = $proocess;
+
+
+            $img_all = DB::table('tech_galleries')->select(
+                  'tech_galleries.*'
+                  )
+                  ->where('tech_id', $id)
+                  ->get();
+      $data['img_all'] = $img_all;
+      //dd($img_all);
       $data['id'] = $id;
-      $data['datahead'] = "เพิ่มรูปประกอบสินค้า";
+      $data['datahead'] = "เพิ่มรูปประกอบ";
       return view('admin2.tech.tech_gallery', $data);
+    }
+
+
+    public function tech_image_del(Request $request){
+
+      $gallary = $request->get('product_image');
+      $pro_id = $request['pro_id'];
+
+      if (sizeof($gallary) > 0) {
+
+       for ($i = 0; $i < sizeof($gallary); $i++) {
+
+         $objs = DB::table('tech_galleries')
+           ->where('id', $gallary[$i])
+           ->first();
+
+           $file_path = 'assets/tech_img/'.$objs->image;
+           unlink($file_path);
+
+           DB::table('tech_galleries')->where('id', $objs->id)->delete();
+
+       }
+
+
+      }
+      //dd($objs);
+      return redirect(url('admin/tech_gallery/'.$pro_id))->with('del_success_img','คุณทำการแก้ไขอสังหา สำเร็จ');
+
+      }
+
+
+    public function tech_job($id){
+
+      $proocess = 0;
+      $img_count = DB::table('tech_galleries')->select(
+            'tech_galleries.*'
+            )
+            ->where('tech_id', $id)
+            ->count();
+
+            $job_count = DB::table('tech_jobs')->select(
+                  'tech_jobs.*'
+                  )
+                  ->where('tech_id', $id)
+                  ->count();
+
+            $data['img_count'] = $img_count;
+            $data['job_count'] = $job_count;
+
+            if($img_count > 0){
+              $proocess += 33;
+            }
+            if($job_count > 0){
+              $proocess = 100;
+            }
+
+            $success = 0;
+            if($proocess > 70){
+              $success = 1;
+            }else{
+              $success = 0;
+            }
+            $data['success'] = $success;
+
+            $data['proocess'] = $proocess;
+
+            $job_all = DB::table('tech_jobs')->select(
+                  'tech_jobs.*'
+                  )
+                  ->where('tech_id', $id)
+                  ->get();
+
+                  foreach ($job_all as $u) {
+
+                    $job_img = DB::table('tech_job_imgs')->select(
+                          'tech_job_imgs.*'
+                          )
+                          ->where('job_id', $u->id)
+                          ->get();
+
+                        $u->img = $job_img;
+                    // code...
+                  }
+
+                //  dd($job_all);
+
+            $data['job_all'] = $job_all;
+
+      $data['id'] = $id;
+      $data['datahead'] = "เพิ่มรูปผลงานของช่าง";
+      return view('admin2.tech.tech_job', $data);
+    }
+
+    public function add_jobs_tech(Request $request){
+
+      $gallary = $request->file('product_image');
+      $this->validate($request, [
+           'name_job' => 'required',
+           'pro_id' => 'required'
+       ]);
+
+       $package = new tech_job();
+       $package->tech_id = $request['pro_id'];
+       $package->name_job = $request['name_job'];
+       $package->detail_job = $request['detail_job'];
+       $package->save();
+
+       $the_id = $package->id;
+
+
+
+       if (sizeof($gallary) > 0) {
+        for ($i = 0; $i < sizeof($gallary); $i++) {
+          $path = 'assets/job_img/';
+          $filename = time()."-".$gallary[$i]->getClientOriginalName();
+          $gallary[$i]->move($path, $filename);
+          $admins[] = [
+              'image' => $filename,
+              'job_id' => $the_id
+          ];
+        }
+        tech_job_img::insert($admins);
+      }
+
+       return redirect(url('admin/tech_job/'.$request['pro_id']))->with('add_success_img','คุณทำการแก้ไขอสังหา สำเร็จ');
+
     }
 
 
     public function add_gallery(Request $request){
 
 
-      $gallary = $request->file('product_image');
+        $gallary = $request->file('product_image');
         $this->validate($request, [
              'product_image' => 'required|max:8048',
              'pro_id' => 'required'
@@ -218,7 +380,7 @@ class TechController extends Controller
           tech_gallery::insert($admins);
         }
 
-        return redirect(url('admin/tech/'.$request['pro_id'].'/edit'))->with('add_success_img','คุณทำการแก้ไขอสังหา สำเร็จ');
+        return redirect(url('admin/tech_gallery/'.$request['pro_id']))->with('add_success_img','คุณทำการแก้ไขอสังหา สำเร็จ');
 
     }
 
@@ -241,6 +403,38 @@ class TechController extends Controller
      */
     public function edit($id)
     {
+
+      $proocess = 0;
+      $img_count = DB::table('tech_galleries')->select(
+            'tech_galleries.*'
+            )
+            ->where('tech_id', $id)
+            ->count();
+
+            $job_count = DB::table('tech_jobs')->select(
+                  'tech_jobs.*'
+                  )
+                  ->where('tech_id', $id)
+                  ->count();
+
+            $data['img_count'] = $img_count;
+            $data['job_count'] = $job_count;
+
+            if($img_count > 0){
+              $proocess += 33;
+            }
+            if($job_count > 0){
+              $proocess = 100;
+            }
+
+            $success = 0;
+            if($proocess > 70){
+              $success = 1;
+            }else{
+              $success = 0;
+            }
+            $data['success'] = $success;
+            $data['proocess'] = $proocess;
 
       $img_all = DB::table('tech_galleries')->select(
             'tech_galleries.*'
@@ -317,12 +511,8 @@ class TechController extends Controller
         $this->validate($request, [
              'tech_fname' => 'required',
              'tech_lname' => 'required',
-             'tech_email' => 'required',
              'tech_phone' => 'required',
-             'tumbon' => 'required',
-             'district' => 'required',
              'province_id' => 'required',
-             'zip_code' => 'required',
              'tech_detail' => 'required',
              'tech_show' => 'required',
              'tech_rating' => 'required',
@@ -350,7 +540,7 @@ class TechController extends Controller
 
 
 
-         $detail=$request->tech_project;
+
 
 
 
@@ -363,12 +553,8 @@ class TechController extends Controller
           $package->tech_lname = $request['tech_lname'];
           $package->tech_phone = $request['tech_phone'];
           $package->tech_email = $request['tech_email'];
-          $package->tumbon = $request['tumbon'];
-          $package->district = $request['district'];
           $package->province_id = $request['province_id'];
-          $package->zip_code = $request['zip_code'];
           $package->tech_detail = $request['tech_detail'];
-          $package->tech_project = $detail;
           $package->tech_rating = $request['tech_rating'];
           $package->tech_status_show = $request['tech_show'];
           $package->lat = $request['lat'];
@@ -391,12 +577,8 @@ class TechController extends Controller
           $package->tech_phone = $request['tech_phone'];
           $package->tech_email = $request['tech_email'];
           $package->tech_image = $input['imagename'];
-          $package->tumbon = $request['tumbon'];
-          $package->district = $request['district'];
           $package->province_id = $request['province_id'];
-          $package->zip_code = $request['zip_code'];
           $package->tech_detail = $request['tech_detail'];
-          $package->tech_project = $detail;
           $package->tech_rating = $request['tech_rating'];
           $package->tech_status_show = $request['tech_show'];
           $package->lat = $request['lat'];

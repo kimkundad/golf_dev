@@ -32,6 +32,10 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+html .wizard-progress.wizard-progress-lg ul li a, html.dark .wizard-progress.wizard-progress-lg ul li a:hover {
+    text-decoration: none;
+    background: none;
+}
 </style>
 @section('admin2.content')
 
@@ -83,12 +87,41 @@
           									<div id="edit" class="tab-pane active">
 
 
+                              <div class="wizard-progress wizard-progress-lg">
+																	<div class="steps-progress">
+																		<div class="progress-indicator" style="width: {{$proocess}}%;"></div>
+																	</div>
+																	<ul class="nav wizard-steps">
+																		<li class="nav-item active completed">
+																			<a class="nav-link" href="{{url('admin/tech_list/'.$objs->id_te.'/edit')}}"><span>1</span>ข้อมูลช่าง</a>
+																		</li>
+																		<li class="nav-item
+                                    @if($img_count > 0)
+                                    active
+                                    @endif
+                                    ">
+																			<a class="nav-link" href="{{url('admin/tech_gallery/'.$objs->id_te)}}"><span>2</span>รูปภาพประกอบ</a>
+																		</li>
+																		<li class="nav-item   @if($job_count > 0)
+                                      active
+                                      @endif">
+																			<a class="nav-link " href="{{url('admin/tech_job/'.$objs->id_te)}}"><span>3</span>ผลงานช่าง</a>
+																		</li>
+																		<li class="nav-item @if($success > 0)
+                                    active
+                                    @endif">
+																			<a class="nav-link" ><span>4</span>สำเร็จ</a>
+																		</li>
+																	</ul>
+																</div>
+
+
 
                               <form  method="POST" action="{{$url}}" enctype="multipart/form-data">
                                           {{ method_field($method) }}
                                           {{ csrf_field() }}
 
-          											<h4 class="mb-xlg">แก้ไข ช่างใหม่</h4>
+          											<h4 class="mb-xlg">แก้ไข ข้อมูลช่าง</h4>
 
           											<fieldset>
                                   <div class="form-group">
@@ -111,7 +144,7 @@
 
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">Email-เบอร์โทร*</label>
+          													<label class="col-md-3 control-label" for="profileFirstName">เบอร์โทร <span class="text-danger">**</span><br /> Email ไม่มีก็ได้ แต่ต้องใส่ เบอร์โทรติดต่อ</label>
           													<div class="col-md-4">
           														<input type="text" class="form-control" name="tech_email" value="{{ $objs->tech_email }}" placeholder="Example@gmail.com">
                                       @if($errors->has('tech_email'))
@@ -144,27 +177,7 @@
           												</div>
 
                                   <hr />
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">ตำบล*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="tumbon" value="{{ $objs->tumbon }}" placeholder="ตำบลหนองไผ่">
-                                      @if($errors->has('tumbon'))
-                                      <span class="text-danger">** ตำบล ไม่มีข้อมูล</span>
-                                      @endif
-          														</div>
 
-          												</div>
-
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">อำเภอ*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="district" value="{{ $objs->district }}" placeholder="อำเภอแม่ปิง">
-                                      @if($errors->has('district'))
-                                      <span class="text-danger">** อำเภอ ไม่มีข้อมูล</span>
-                                      @endif
-          														</div>
-
-          												</div>
 
 
                                   <div class="form-group">
@@ -192,27 +205,18 @@
 
 
 
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">รหัสไปรษณีย์*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="zip_code" value="{{ $objs->zip_code }}" placeholder="10310">
-                                      @if($errors->has('zip_code'))
-                                      <span class="text-danger">** จังหวัด ไม่มีข้อมูล</span>
-                                      @endif
-          														</div>
 
-          												</div>
 
 
 
                                   <div class="form-group">
-                                    <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                                    <label for="name" class="col-sm-3 control-label">ให้คลิกจุิ้มที่ map <br />ด้านบนเพื่อดึงว่า lat long มา <span class="text-danger">**</span><br /> จิ้มสุ่มๆ ในแผนที่ ตรงจังหวัดของที่ช่าง นั้นๆอยู่ ไม่ต้องพิกัดจริงๆก็ได้</label>
                                     <div class="col-sm-9">
                                       <div id="map_canvas" style="width:100%; border:0; height:316px;" frameborder="0">
                                       </div>
                                     <br>
                                     </div>
-                                    <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                                    <label for="name" class="col-sm-3 control-label"></label>
                                     <div class="col-sm-4">
                                         <input type="text" name="lat" id="lat" size="10" value="{{$objs->lat}}" class="form-control" required>
                                         @if($errors->has('lat'))
@@ -362,14 +366,7 @@
                                   <br />
                                   <br />
 
-                                  <div class="form-group">
 
-          													<div class="col-md-12">
-                                      <label class="col-md-3 control-label" for="profileFirstName">ผลงานที่ผ่านมา*</label>
-                                      <br /><br />
-          														<textarea class="form-control" id="summernote" name="tech_project" rows="6">{{$objs->tech_project}}..</textarea>
-          														</div>
-          												</div>
 
 
 

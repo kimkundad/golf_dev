@@ -144,6 +144,28 @@ class HomeController extends Controller
             $k->option_skill = $skill->skill_name;
           }
 
+          $job_all = DB::table('tech_jobs')->select(
+                'tech_jobs.*'
+                )
+                ->where('tech_id', $id)
+                ->get();
+
+                foreach ($job_all as $u) {
+
+                  $job_img = DB::table('tech_job_imgs')->select(
+                        'tech_job_imgs.*'
+                        )
+                        ->where('job_id', $u->id)
+                        ->get();
+
+                      $u->img = $job_img;
+                  // code...
+                }
+
+              //  dd($job_all);
+
+          $data['job_all'] = $job_all;
+
         //  dd($tech_skill);
       $data['tech_skill'] = $tech_skill;
 
@@ -159,7 +181,6 @@ class HomeController extends Controller
           'teches.*',
           'teches.id as id_tech'
           )
-          ->where('tech_status_show', 1)
           ->where('tech_status', 1)
           ->where('id', $id)
           ->first();

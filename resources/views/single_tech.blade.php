@@ -100,7 +100,23 @@
 						<h4>รายการ</h4>
             <br />
 						<ul>
-							{!!$tech->tech_project!!}
+
+							@if($job_all)
+							@foreach($job_all as $job)
+							<h5>{{$job->name_job}}</h5>
+                <p style="font-size:14px; line-height: 24px;">
+                  {{$job->detail_job}}
+                </p>
+                <div class="review-images mfp-gallery-container">
+									@if($job->img)
+									@foreach($job->img as $job_img)
+  									      <a href="{{url('assets/job_img/'.$job_img->image)}}" class="mfp-gallery"><img src="{{url('assets/job_img/'.$job_img->image)}}" alt=""></a>
+													@endforeach
+                          @endif
+  								</div>
+                  <hr />
+									@endforeach
+																	@endif
 						</ul>
 
 

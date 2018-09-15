@@ -52,11 +52,14 @@ Route::group(['middleware' => 'admin'], function() {
   Route::resource('admin/category', 'CategoryController');
   Route::resource('admin/tech_list', 'TechController');
   Route::get('admin/tech_gallery/{id}', 'TechController@tech_gallery');
+  Route::get('admin/tech_job/{id}', 'TechController@tech_job');
   Route::post('admin/add_gallery/', 'TechController@add_gallery');
   Route::post('api/api_tech_status', 'TechController@api_tech_status');
   Route::post('admin/file/posts', 'TechController@imagess');
   Route::resource('admin/contact_admin', 'ContactAdController');
 
+  Route::post('admin/add_jobs_tech/', 'TechController@add_jobs_tech');
+  Route::post('admin/tech_image_del/', 'TechController@tech_image_del');
   Route::post('api/api_contact_us_status', 'ContactContraller@api_contact_us_status');
   Route::post('api/api_contact_status', 'ContactAdController@api_contact_status');
   Route::resource('admin/us_contact', 'ContactContraller');

@@ -1,7 +1,7 @@
 @extends('admin2.layouts.template')
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<link href="{{url('assets/text/dist/summernote.css')}}?v2" rel="stylesheet">
+
 <style>
 .note-editor.note-frame .note-editing-area .note-editable{
       padding: 30px;
@@ -25,6 +25,10 @@
 .note-editor.note-frame .note-editing-area .note-editable {
     padding-left: 50px;
     padding-right: 50px;
+}
+html .wizard-progress.wizard-progress-lg ul li a, html.dark .wizard-progress.wizard-progress-lg ul li a:hover {
+    text-decoration: none;
+    background: none;
 }
 </style>
 @section('admin2.content')
@@ -77,15 +81,39 @@
           									<div id="edit" class="tab-pane active">
 
 
+                              <div class="wizard-progress wizard-progress-lg">
+																	<div class="steps-progress">
+																		<div class="progress-indicator" style="width: 0%;"></div>
+																	</div>
+																	<ul class="nav wizard-steps">
+																		<li class="nav-item active ">
+																			<a class="nav-link" ><span>1</span>ข้อมูลช่าง</a>
+																		</li>
+																		<li class="nav-item ">
+																			<a class="nav-link "  ><span>2</span>รูปภาพประกอบ</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" ><span>3</span>ผลงานช่าง</a>
+																		</li>
+																		<li class="nav-item">
+																			<a class="nav-link" ><span>4</span>สำเร็จ</a>
+																		</li>
+																	</ul>
+																</div>
+
+
                               <form  method="POST" action="{{$url}}" enctype="multipart/form-data">
                                           {{ method_field($method) }}
                                           {{ csrf_field() }}
 
-          											<h4 class="mb-xlg">เพิ่ม ช่างใหม่</h4>
 
           											<fieldset>
+                                  <div class="col-md-12">
+                                  <h4 class="mb-xlg">เพิ่ม ช่างใหม่</h4>
+                                  </div>
+                                  <hr />
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">ชื่อ-นามสกุล*</label>
+          													<label class="col-md-3 control-label" for="profileFirstName">ชื่อ-นามสกุล <span class="text-danger">**</span></label>
           													<div class="col-md-4">
           														<input type="text" class="form-control" name="tech_fname" value="{{ old('tech_fname')}}" placeholder="ชื่อจริง">
           														</div>
@@ -96,7 +124,7 @@
 
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">Email-เบอร์โทร*</label>
+          													<label class="col-md-3 control-label" for="profileFirstName">เบอร์โทร <span class="text-danger">**</span><br /> Email ไม่มีก็ได้ แต่ต้องใส่ เบอร์โทรติดต่อ</label>
           													<div class="col-md-4">
           														<input type="text" class="form-control" name="tech_email" value="{{ old('tech_email')}}" placeholder="Example@gmail.com">
           														</div>
@@ -108,7 +136,7 @@
                                   <hr />
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">ช่างแนะนำ*</label>
+          													<label class="col-md-3 control-label" for="profileFirstName">ช่างแนะน <span class="text-danger">*</span></label>
           													<div class="col-md-8">
                                       <select name="tech_show" class="form-control mb-md" required>
 
@@ -120,25 +148,11 @@
           												</div>
 
                                   <hr />
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">ตำบล*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="tumbon" value="{{ old('tumbon')}}" placeholder="ตำบลหนองไผ่">
-          														</div>
 
-          												</div>
-
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">อำเภอ*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="district" value="{{ old('district')}}" placeholder="อำเภอแม่ปิง">
-          														</div>
-
-          												</div>
 
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileAddress">จังหวัด*</label>
+          													<label class="col-md-3 control-label" for="profileAddress">จังหวัด <span class="text-danger">*</span></label>
           													<div class="col-md-8">
           														<select name="province_id" class="form-control mb-md" required>
 
@@ -155,29 +169,23 @@
 
 
 
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">รหัสไปรษณีย์*</label>
-          													<div class="col-md-8">
-          														<input type="text" class="form-control" name="zip_code" value="{{ old('zip_code')}}" placeholder="10310">
-          														</div>
 
-          												</div>
 
 
 
               <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                <label for="name" class="col-sm-3 control-label">ให้คลิกจุิ้มที่ map <br />ด้านบนเพื่อดึงว่า lat long มา <span class="text-danger">**</span><br /> จิ้มสุ่มๆ ในแผนที่ ตรงจังหวัดของที่ช่าง นั้นๆอยู่ ไม่ต้องพิกัดจริงๆก็ได้</label>
                 <div class="col-sm-9">
                   <div id="map_canvas" style="width:100%; border:0; height:316px;" frameborder="0">
                   </div>
                 <br>
                 </div>
-                <label for="name" class="col-sm-3 control-label">Location <span class="text-danger">*</span></label>
+                <label for="name" class="col-sm-3 control-label"> </label>
                 <div class="col-sm-4">
-                    <input type="text" name="lat" id="lat" size="10" value="{{ old('lat') }}" class="form-control" required>
+                    <input type="text" name="lat" id="lat" size="10" value="{{ old('lat') }}" class="form-control" placeholder="ไม่ต้องใส่เอง" required>
                 </div>
                 <div class="col-sm-4">
-                    <input type="text" name="lng" id="lng" size="10" value="{{ old('lng') }}" class="form-control" required>
+                    <input type="text" name="lng" id="lng" size="10" value="{{ old('lng') }}" class="form-control" placeholder="ไม่ต้องใส่เอง" required>
                 </div>
                 </div>
 
@@ -187,7 +195,7 @@
                                   <hr />
                                   <div class="col-md-12">
                                     <p>
-                                      เลือก ประเภทช่าง ได้มากกว่า 1 ทางเลือก
+                                      เลือก ประเภทช่าง ได้มากกว่า 1 ทางเลือก <span class="text-danger">*</span>
                                       <br />
                                     </p>
                                   </div>
@@ -211,7 +219,7 @@
 
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileAddress">ระดับดาวของช่าง*</label>
+          													<label class="col-md-3 control-label" for="profileAddress">ระดับดาวของช่าง<span class="text-danger">*</span></label>
           													<div class="col-md-8">
           														<select name="tech_rating" class="form-control mb-md" required>
 
@@ -227,7 +235,7 @@
           												</div>
 
                                   <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">คำอธิบาย*</label>
+          													<label class="col-md-3 control-label" for="profileFirstName">คำอธิบาย<span class="text-danger">**</span></label>
           													<div class="col-md-8">
           														<textarea class="form-control" name="tech_detail" rows="5">{{ old('tech_detail') }}</textarea>
           														</div>
@@ -237,7 +245,7 @@
 
 
                                   <div class="form-group">
-                                    <label class="col-md-3 control-label" for="exampleInputEmail1">รูปหลักช่าง*</label>
+                                    <label class="col-md-3 control-label" for="exampleInputEmail1">รูปหลักช่าง<span class="text-danger">**</span></label>
                                     <div class="col-md-8">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                               <div class="input-append">
@@ -259,7 +267,7 @@
                                   <hr />
                                   <div class="col-md-12">
                                     <p>
-                                      เลือก ความเชี่ยวชาญ ได้มากกว่า 1 ทางเลือก
+                                      เลือก ความเชี่ยวชาญ ได้มากกว่า 1 ทางเลือก <span class="text-danger">**</span>
                                       <br />
                                     </p>
                                   </div>
@@ -280,12 +288,7 @@
                                   <br />
                                   <br />
 
-                                  <div class="form-group">
-          													<label class="col-md-3 control-label" for="profileFirstName">ผลงานที่ผ่านมา*</label>
-          													<div class="col-md-8">
-          														<textarea class="form-control" id="summernote" name="tech_project" rows="6">{{ old('tech_project') }}</textarea>
-          														</div>
-          												</div>
+
 
 
 
@@ -339,27 +342,7 @@
 
 @section('scripts')
 
-<script src="{{URL::asset('assets/text/dist/summernote.js?v4')}}"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-  $('#summernote').summernote({
 
-    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-    disableDragAndDrop: true,            // set editor height
-    placeholder: 'เนื้อหาบทความ',
-    minHeight: 300,
-    focus: true                // set focus to editable area after initializing summernote
-  });
-});
-var postForm = function() {
-var content = $('textarea[name="blog_detail"]').html($('#summernote').code());
-}
-</script>
 
 
 <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places&sensor=false'></script>

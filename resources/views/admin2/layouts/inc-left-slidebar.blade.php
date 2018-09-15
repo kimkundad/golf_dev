@@ -35,12 +35,7 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 									</li>
 
 
-                  <li {{ (Request::is('admin/user*') ? 'class=nav-expanded' : '') }} >
-										<a href="{{url('admin/user/')}}"  >
-											<i class="fa fa-user" aria-hidden="true"></i>
-											<span>รายชื่อสมาชิก</span>
-										</a>
-									</li>
+
 
                   <li {{ (Request::is('admin/category*') ? 'class=nav-expanded' : '') }} >
 										<a href="{{url('admin/category/')}}"  >
@@ -51,7 +46,7 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 
 
 
-                  <li {{ (Request::is('admin/tech_list*') ? 'class=nav-expanded' : '') }} >
+                  <li {{ (Request::is('admin/tech_list*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_gallery*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_job*') ? 'class=nav-expanded' : '') }}>
 										<a href="{{url('admin/tech_list/')}}"  >
 											<i class="fa fa-cube" aria-hidden="true"></i>
 											<span>ช่างในระบบ</span>
@@ -64,8 +59,8 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 
                   <li {{ (Request::is('admin/contact_admin*') ? 'class=nav-expanded' : '') }} >
 										<a href="{{url('admin/contact_admin/')}}"  >
-											<i class="fa fa-envelope-o" aria-hidden="true"></i>
-											<span>จัดการข้อความ</span>
+											<i class="fa fa-user" aria-hidden="true"></i>
+											<span>ข้อความถึงช่าง</span>
 										</a>
 									</li>
 
