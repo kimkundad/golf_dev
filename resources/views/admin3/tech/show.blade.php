@@ -219,7 +219,7 @@ return "$strDay $strMonthThai $strYear";
                <div id="lightgallery" class="row lightGallery">
                @if($img_all)
                @foreach($img_all as $img_u)
-               <a  class="image-tile"><img src="{{url('assets/tech_img/'.$img_u->image)}}" alt="image small" style="max-height:170px;">
+               <a  class="image-tile"><img src="{{url('assets/tech_img/'.$img_u->image)}}" alt="image small" >
                  <div class="form-check form-check-primary">
                    <label class="form-check-label">
                      <input type="checkbox" name="product_image[]" value="{{$img_u->id}}" class="form-check-input">
