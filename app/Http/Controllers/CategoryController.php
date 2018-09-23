@@ -23,12 +23,23 @@ class CategoryController extends Controller
             'categories.*'
             )
             ->get();
+
+            foreach($cat as $u){
+
+              $count = DB::table('cat_teches')->select(
+                    'cat_teches.*'
+                    )
+                    ->where('cat_id', $u->id)
+                    ->count();
+
+                    $u->option = $count;
+            }
         //
         $s = 1;
         $data['s'] = $s;
         $data['objs'] = $cat;
         $data['datahead'] = "ประเภทงาน";
-        return view('admin2.category.index', $data);
+        return view('admin3.category.index', $data);
     }
 
     /**
@@ -42,7 +53,7 @@ class CategoryController extends Controller
       $data['method'] = "post";
       $data['url'] = url('admin/category');
       $data['datahead'] = "สร้างประเภทงาน ";
-      return view('admin2.category.create', $data);
+      return view('admin3.category.create', $data);
     }
 
     /**
@@ -101,7 +112,7 @@ class CategoryController extends Controller
       $data['datahead'] = "แก้ไขประเภทงาน";
       $data['method'] = "put";
       $data['objs'] = $obj;
-      return view('admin2.category.edit', $data);
+      return view('admin3.category.edit', $data);
     }
 
     /**

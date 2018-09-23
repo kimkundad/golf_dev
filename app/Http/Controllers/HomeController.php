@@ -285,12 +285,8 @@ class HomeController extends Controller
            'tech_lname' => 'required',
            'tech_phone' => 'required',
            'tech_email' => 'required',
-           'tumbon' => 'required',
-           'district' => 'required',
            'category' => 'required',
-           'province_id' => 'required',
-           'zip_code' => 'required',
-           'tech_detail' => 'required'
+           'province_id' => 'required'
        ]);
 
        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
@@ -308,11 +304,7 @@ class HomeController extends Controller
      $package->tech_phone = $request['tech_phone'];
      $package->tech_email = $request['tech_email'];
      $package->tech_image = $input['imagename'];
-     $package->tumbon = $request['tumbon'];
-     $package->district = $request['district'];
      $package->province_id = $request['province_id'];
-     $package->zip_code = $request['zip_code'];
-     $package->tech_detail = $request['tech_detail'];
      $package->lat = '13.7211075';
      $package->lng = '100.5904873';
      $package->save();

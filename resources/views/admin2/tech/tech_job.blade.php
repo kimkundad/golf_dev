@@ -185,11 +185,18 @@ html .wizard-progress.wizard-progress-lg ul li a, html.dark .wizard-progress.wiz
 
     		                </div>
                         </div>
+												<hr />
+												<div class="col-md-4 col-md-offset-4">
+	  		                    <a href="{{url('admin/edit_job/'.$job->id)}}" style="float:left" class="btn btn-info">แก้ไขข้อมูล</a>
 
-    		                <div class="col-md-4 col-md-offset-4">
+														<form  action="{{url('admin/del_job_tech/')}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
+	                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+																 <input type="hidden" name="id_job" value="{{$job->id}}">
+																 <input type="hidden" name="id_tech" value="{{$id}}">
+	                              <button type="submit" class="btn btn-danger"><i class="fa fa-times "></i> ลบข้อมูล</button>
+	                          </form>
 
-
-    		                </div>
+	  		                </div>
 
 
     		                </div>
@@ -227,5 +234,20 @@ html .wizard-progress.wizard-progress-lg ul li a, html.dark .wizard-progress.wiz
           });
 </script>
 @endif
+
+@if ($message = Session::get('del_success_img'))
+<script type="text/javascript">
+
+  var stack_topleft = {"dir1": "down", "dir2": "right", "push": "top"};
+      var notice = new PNotify({
+            title: 'ทำรายการสำเร็จ',
+            text: 'ยินดีด้วย ได้ทำการลบข้อมูล สำเร็จเรียบร้อยแล้วค่ะ',
+            type: 'success',
+            addclass: 'stack-topright'
+          });
+</script>
+@endif
+
+
 
 @stop('scripts')

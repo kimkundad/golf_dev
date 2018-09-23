@@ -46,7 +46,7 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 
 
 
-                  <li {{ (Request::is('admin/tech_list*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_gallery*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_job*') ? 'class=nav-expanded' : '') }}>
+                  <li {{ (Request::is('admin/tech_list*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/edit_job*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_gallery*') ? 'class=nav-expanded' : '') }} {{ (Request::is('admin/tech_job*') ? 'class=nav-expanded' : '') }}>
 										<a href="{{url('admin/tech_list/')}}"  >
 											<i class="fa fa-cube" aria-hidden="true"></i>
 											<span>ช่างในระบบ</span>
@@ -69,6 +69,13 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 										<a href="{{url('admin/us_contact/')}}"  >
 											<i class="fa fa-envelope-o" aria-hidden="true"></i>
 											<span>จัดการ contact</span>
+										</a>
+									</li>
+
+                  <li {{ (Request::is('admin/setting*') ? 'class=nav-expanded' : '') }} >
+										<a href="{{url('admin/setting/')}}"  >
+											<i class="fa fa-envelope-o" aria-hidden="true"></i>
+											<span>ตั้งค่าระบบ</span>
 										</a>
 									</li>
 

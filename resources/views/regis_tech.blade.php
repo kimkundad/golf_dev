@@ -203,7 +203,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
 
         <div class="dashboard-list-box margin-top-30">
-					<h4 class="gray"><i class="fa fa-map-marker"></i> ตำแหน่งที่อยู่</h4>
+					<h4 class="gray"><i class="fa fa-map-marker"></i> ตำแหน่งที่อยู่, ละเอียดงาน</h4>
 					<div class="dashboard-list-box-static">
 
 
@@ -212,29 +212,11 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
               <div class="my-profile">
 
                 <div class="row">
-                  <div class="col-md-6">
-                    <div>
-											@if($errors->has('tumbon'))
-											<p class="text-danger" style="margin-bottom: 0px;">
-												*กรอก ตำบล
-											</p>
-											@endif
-                      <input name="tumbon" type="text" value="{{ old('tumbon')}}" placeholder="ตำบล" required="required" />
-                    </div>
-                  </div>
 
-                  <div class="col-md-6">
-                    <div>
-											@if($errors->has('district'))
-											<p class="text-danger" style="margin-bottom: 0px;">
-												*กรอก อำเภอ
-											</p>
-											@endif
-                      <input name="district" type="text" value="{{ old('district')}}" placeholder="อำเภอ" required="required" />
-                    </div>
-                  </div>
 
-                  <div class="col-md-6">
+
+
+                  <div class="col-md-12">
                     <div>
 
 											@if($errors->has('province_id'))
@@ -251,46 +233,8 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 
                 			</select>
                     </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div>
-											@if($errors->has('zip_code'))
-											<p class="text-danger" style="margin-bottom: 0px;">
-												*รหัสไปรษณีย์
-											</p>
-											@endif
-                      <input name="zip_code" type="text" value="{{ old('zip_code')}}" placeholder="รหัสไปรษณีย์" required="required" />
-                    </div>
-                  </div>
-                </div>
-
-
-
-              </div>
-
-
-
-
-
-
-					</div>
-				</div>
-        <!-- info / End -->
-
-
-        <div class="dashboard-list-box margin-top-30">
-					<h4 class="gray"><i class="fa fa-file-text"></i> รายละเอียดงาน</h4>
-					<div class="dashboard-list-box-static">
-
-
-
-              <!-- Details -->
-              <div class="my-profile">
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div>
+										<br />
+										<div>
 											@if($errors->has('category'))
 											<p class="text-danger" style="margin-bottom: 0px;">
 												*เลือกประเภทงาน
@@ -302,18 +246,10 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
                 				@endforeach
                 			</select>
                     </div>
-                    <br />
-                    <div>
-											@if($errors->has('tech_detail'))
-											<p class="text-danger" style="margin-bottom: 0px;">
-												*รายละเอียด
-											</p>
-											@endif
-          						<textarea name="tech_detail" cols="40" rows="3" id="comments" placeholder="รายละเอียด" spellcheck="true" required="required">{{ old('tech_detail')}}</textarea>
-          					</div>
-
-
                   </div>
+
+
+
 
                 </div>
 
@@ -329,6 +265,9 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 					</div>
 				</div>
         <!-- info / End -->
+
+
+
 
         <div class="text-center margin-top-30">
           <a href="javascript:{}" onclick="document.getElementById('my_form').submit();" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>

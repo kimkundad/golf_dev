@@ -58,10 +58,17 @@ Route::group(['middleware' => 'admin'], function() {
   Route::post('admin/file/posts', 'TechController@imagess');
   Route::resource('admin/contact_admin', 'ContactAdController');
 
+  Route::get('admin/edit_job/{id}', 'TechController@edit_job');
   Route::post('admin/add_jobs_tech/', 'TechController@add_jobs_tech');
-  Route::post('admin/tech_image_del/', 'TechController@tech_image_del');
+  Route::post('admin/jobs_tech_edit/', 'TechController@jobs_tech_edit');
+  Route::post('admin/job_image_del/', 'TechController@job_image_del');
+
+  Route::post('admin/del_job_tech/', 'TechController@del_job_tech');
+
+  Route::post('admin/tech_image_del', 'TechController@tech_image_del');
   Route::post('api/api_contact_us_status', 'ContactContraller@api_contact_us_status');
   Route::post('api/api_contact_status', 'ContactAdController@api_contact_status');
   Route::resource('admin/us_contact', 'ContactContraller');
+
 
   });
