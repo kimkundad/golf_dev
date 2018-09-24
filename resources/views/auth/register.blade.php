@@ -41,7 +41,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
             <h4 class="headline ">Sign Up</h4>
 
             <a href="{{ route('social.oauth', 'facebook') }}" class="fb button book-now fullwidth margin-top-5"><i class="fa fa-facebook"></i>Sign Up With Facebook</a>
-            <a href="{{ route('social.oauth', 'google') }}" class="google button book-now fullwidth margin-top-5"><i class="fa fa-google"></i> Sign Up With Google</a>
+      
             <p class="text-center">
               OR
             </p>

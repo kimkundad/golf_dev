@@ -9,6 +9,7 @@ use App\tech;
 use App\skill;
 use App\tech_skill;
 use App\cat_tech;
+use App\text_to_tech;
 use App\tech_gallery;
 use Validator;
 use Response;
@@ -930,6 +931,38 @@ class TechController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function delete_text(Request $request, $id){
+      $tech_id = $request['tech_id'];
+      $obj = text_to_tech::find($id);
+      $obj->delete();
+      return redirect(url('admin/tech_list/'.$tech_id))->with('delete_text','คุณทำการลบอสังหา สำเร็จ');
+    }
+
+
+    public function ่job_tech_del(Request $request, $id){
+
+      $image_all =   $objs = DB::table('tech_job_imgs')
+            ->select(
+               'tech_job_imgs.*'
+               )
+            ->where('job_id', $id)
+            ->get();
+
+        foreach ($image_all as $user) {
+        $file_path = 'assets/job_img/'.$user->image;
+        unlink($file_path);
+      }
+
+
+      $tech_id = $request['tech_id'];
+      $obj = tech_job::find($id);
+      $obj->delete();
+      return redirect(url('admin/tech_list/'.$tech_id))->with('delete_job','คุณทำการลบอสังหา สำเร็จ');
+
+    }
+
+
     public function destroy($id)
     {
         //

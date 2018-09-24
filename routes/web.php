@@ -69,6 +69,11 @@ Route::group(['middleware' => 'admin'], function() {
   Route::post('api/api_contact_us_status', 'ContactContraller@api_contact_us_status');
   Route::post('api/api_contact_status', 'ContactAdController@api_contact_status');
   Route::resource('admin/us_contact', 'ContactContraller');
+  Route::post('admin/text_tech/{id}', 'TechController@delete_text');
 
+  Route::post('admin/่job_tech_del/{id}', 'TechController@่job_tech_del');
+
+  Route::resource('admin/setting', 'SettingController');
+  Route::post('admin/setting/update', 'SettingController@update');
 
   });

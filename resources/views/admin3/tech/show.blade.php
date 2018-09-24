@@ -181,12 +181,19 @@ return "$strDay $strMonthThai $strYear";
                           </div>
                           <div class="d-flex align-items-center mb-2 justify-content-between">
                             <h5 class="mb-0">{{$texts->name}}, <span class="u-name"><label class="badge badge-warning"><i class="icon-phone"></i> {{$texts->phone}}</label>,
-                              <label class="badge badge-success"><i class="icon-envelope-open"></i> {{$texts->email}}</label></span></h5>
+                              <label class="badge badge-success"><i class="icon-envelope-open"></i> {{$texts->email}}</label></span>
+
+                            </h5>
                             <small class="text-muted"><?php echo DateThai($texts->created_at); ?></small>
                           </div>
                           <p>
                             {{$texts->comments}}
                           </p>
+                          <form  action="{{url('admin/text_tech/'.$texts->id)}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
+                              <input type="hidden" name="tech_id" value="{{$objs->id_te}}">
+                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                              <button type="submit" style="margin-left: 10px;float: right; margin-top: -40px;" class="btn btn-icons btn-rounded btn-outline-secondary"><i class="icon-trash"></i></button>
+                          </form>
                         </div>
 
                         @endforeach
@@ -312,6 +319,13 @@ return "$strDay $strMonthThai $strYear";
 
                           @endforeach
                           @endif
+
+
+                          <form  action="{{url('admin/่job_tech_del/'.$job->id)}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
+                              <input type="hidden" name="tech_id" value="{{$objs->id_te}}">
+                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                              <button type="submit" style="margin-left: 10px;float: right; margin-top: -40px;" class="btn btn-icons btn-rounded btn-outline-secondary"><i class="icon-trash"></i></button>
+                          </form>
 
 
                         </div>
@@ -559,5 +573,38 @@ var myOptions = {
 
 </script>
 @endif
+
+@if ($message = Session::get('delete_text'))
+<script>
+
+  $.toast({
+    heading: 'ทำรายการสำเร็จ',
+    text: 'ยินดีด้วย ได้ทำการลบข้อมูล สำเร็จเรียบร้อยแล้วค่ะ.',
+    showHideTransition: 'slide',
+    icon: 'success',
+    loaderBg: '#f96868',
+    position: 'top-right'
+  })
+
+</script>
+@endif
+
+
+@if ($message = Session::get('delete_job'))
+<script>
+
+  $.toast({
+    heading: 'ทำรายการสำเร็จ',
+    text: 'ยินดีด้วย ได้ทำการลบข้อมูล สำเร็จเรียบร้อยแล้วค่ะ.',
+    showHideTransition: 'slide',
+    icon: 'success',
+    loaderBg: '#f96868',
+    position: 'top-right'
+  })
+
+</script>
+@endif
+
+
 
 @stop('scripts')

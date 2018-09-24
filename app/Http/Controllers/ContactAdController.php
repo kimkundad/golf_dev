@@ -30,8 +30,8 @@ class ContactAdController extends Controller
         $s = 1;
         $data['s'] = $s;
         $data['objs'] = $cat;
-        $data['datahead'] = "จัดการข้อความ";
-        return view('admin2.contact_admin.index', $data);
+        $data['datahead'] = "จัดการข้อความถึงช่าง";
+        return view('admin3.contact_admin.index', $data);
 
     }
 
@@ -103,18 +103,22 @@ class ContactAdController extends Controller
               'text_to_teches.*',
               'text_to_teches.id as id_con',
               'teches.*',
+              'province_ths.*',
               'teches.id as id_tech'
               )
               ->leftjoin('teches', 'teches.id',  'text_to_teches.tech_id')
+              ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
               ->where('text_to_teches.id', $id)
               ->first();
+
+            //  dd($cat);
 
         $data['tech'] = $tech;
         $data['objs'] = $cat;
         $data['method'] = "put";
         $data['url'] = url('admin/contact_admin/'.$id);
         $data['datahead'] = "แก้ไขข้อความ ";
-        return view('admin2.contact_admin.edit', $data);
+        return view('admin3.contact_admin.edit', $data);
     }
 
     /**
@@ -129,7 +133,7 @@ class ContactAdController extends Controller
         //
 
         $this->validate($request, [
-             'tech_id' => 'required',
+             'note' => 'required',
              'name' => 'required',
              'phone' => 'required',
              'email' => 'required',
@@ -141,7 +145,7 @@ class ContactAdController extends Controller
          $package->phone = $request['phone'];
          $package->email = $request['email'];
          $package->comments = $request['comments'];
-         $package->tech_id = $request['tech_id'];
+         $package->note = $request['note'];
          $package->save();
 
         // dd($package);

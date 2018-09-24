@@ -25,7 +25,7 @@ class ContactContraller extends Controller
       $data['s'] = $s;
       $data['objs'] = $cat;
       $data['datahead'] = "จัดการ contact";
-      return view('admin2.contact.index', $data);
+      return view('admin3.contact.index', $data);
     }
 
     /**
@@ -97,9 +97,10 @@ class ContactContraller extends Controller
 
         $data['objs'] = $cat;
 
-
+        $data['method'] = "put";
+        $data['url'] = url('admin/us_contact/'.$id);
         $data['datahead'] = "ข้อความ ติดต่อ";
-        return view('admin2.contact.show', $data);
+        return view('admin3.contact.edit', $data);
     }
 
     /**
@@ -112,6 +113,24 @@ class ContactContraller extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $this->validate($request, [
+             'subject' => 'required',
+             'name' => 'required',
+             'email' => 'required',
+             'comments' => 'required'
+         ]);
+
+         $package = contact::find($id);
+         $package->name = $request['name'];
+         $package->email = $request['email'];
+         $package->comments = $request['comments'];
+         $package->subject = $request['subject'];
+         $package->save();
+
+        // dd($package);
+
+         return redirect(url('admin/us_contact/'.$id.'/edit'))->with('edit_success','คุณทำการเพิ่มอสังหา สำเร็จ');
     }
 
     /**
