@@ -4,6 +4,19 @@
 {{$tech->tech_fname}} {{$tech->tech_lname}}
 @stop
 
+
+@section('og_tag')
+<meta property="og:url" content="{{url('/')}}">
+<meta property="og:title" content="สนใจติดต่อช่าง {{$tech->tech_fname}} {{$tech->tech_lname}}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{url('assets/tech_img/'.$tech_imgห)}}">
+<meta property="og:description" content="{{$tech->tech_detail}}">
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="314" />
+<meta property="fb:admins" content="100002037238809">
+<meta property="fb:app_id" content="306775720112722">
+@stop
+
 @section('stylesheet')
 
 @stop('stylesheet')

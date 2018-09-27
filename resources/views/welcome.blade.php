@@ -4,6 +4,18 @@
 ช่างตกแต่งคอนกรีต เว็บไซต์ ที่รวบรวมช่างฝีมือดีทั่วฟ้าเมืองไทย
 @stop
 
+@section('og_tag')
+<meta property="og:url" content="{{url('/')}}">
+<meta property="og:title" content="{{fb_title()}}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{url('assets/category_img/'.facebook_img())}}">
+<meta property="og:description" content="{{fb_detail()}}">
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="314" />
+<meta property="fb:admins" content="100002037238809">
+<meta property="fb:app_id" content="306775720112722">
+@stop
+
 @section('stylesheet')
 @stop('stylesheet')
 @section('content')
@@ -203,7 +215,7 @@
 					<div class="carousel-item">
 						<a href="{{url('single_tech/'.$u->id)}}" class="listing-item-container">
 							<div class="listing-item">
-								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="">
+								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="{{$u->tech_fname}} {{$u->tech_lname}}">
 
 								<div class="listing-item-content">
 									@if($u->cat_tech)

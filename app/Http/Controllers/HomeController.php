@@ -241,6 +241,15 @@ class HomeController extends Controller
 
           //dd($tech_cat);
 
+          $tech_img = DB::table('tech_galleries')
+              ->select(
+              'image'
+              )
+              ->where('tech_id', $u->id)
+              ->first();
+
+          $data['tech_imgs'] = $tech_img;
+
           $data['tech_cat_count'] = $tech_cat_count;
           $data['tech_prov'] = $tech_prov->province_name;
           $data['tech'] = $tech;
