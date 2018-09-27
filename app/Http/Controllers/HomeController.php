@@ -215,21 +215,30 @@ class HomeController extends Controller
               ->where('id', $tech->province_id)
               ->first();
 
+              $tech_cat_count = DB::table('cat_teches')
+                  ->where('tech_id', $u->id)
+                  ->count();
+
 
               $tech_cat = DB::table('cat_teches')
                   ->where('tech_id', $id)
                   ->get();
 
-                  foreach($tech_cat as $j){
+                  if($tech_cat_count > 0){
 
-                    $cat_for = DB::table('categories')
-                        ->select(
-                        'categories.name_cat'
-                        )
-                        ->where('id', $j->cat_id)
-                        ->first();
-                    $j->name_cat_for = $cat_for->name_cat;
+                    foreach($tech_cat as $j){
+
+                      $cat_for = DB::table('categories')
+                          ->select(
+                          'categories.name_cat'
+                          )
+                          ->where('id', $j->cat_id)
+                          ->first();
+                      $j->name_cat_for = $cat_for->name_cat;
+                    }
+
                   }
+
           //dd($tech_cat);
           $data['tech_prov'] = $tech_prov->province_name;
           $data['tech'] = $tech;
@@ -602,6 +611,11 @@ class HomeController extends Controller
               ->where('tech_id', $u->id)
               ->get();
 
+              $tech_cat_count = DB::table('cat_teches')
+                  ->where('tech_id', $u->id)
+                  ->count();
+
+                  if($tech_cat_count > 0){
               foreach($tech_cat as $j){
 
                 $cat_for = DB::table('categories')
@@ -612,6 +626,7 @@ class HomeController extends Controller
                     ->first();
                 $j->name_cat_for = $cat_for->name_cat;
               }
+            }
 
           $u->tech_prov = $tech_prov->province_name;
 
