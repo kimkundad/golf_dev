@@ -240,6 +240,8 @@ class HomeController extends Controller
                   }
 
           //dd($tech_cat);
+
+          $data['tech_cat_count'] = $tech_cat_count;
           $data['tech_prov'] = $tech_prov->province_name;
           $data['tech'] = $tech;
           $data['tech_cat'] = $tech_cat;

@@ -36,9 +36,11 @@
 					<h2>{{$tech->tech_fname}} {{$tech->tech_lname}}
 
 						@if($tech_cat)
+							@if($tech_cat_count > 0)
 							@foreach($tech_cat as $j)
 								<span class="listing-tag">{{$j->name_cat_for}}</span>
 							@endforeach
+							@endif
 						@endif
 
 
