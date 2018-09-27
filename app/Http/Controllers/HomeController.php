@@ -245,7 +245,7 @@ class HomeController extends Controller
               ->select(
               'image'
               )
-              ->where('tech_id', $u->id)
+              ->where('tech_id', $id)
               ->first();
 
           $data['tech_imgs'] = $tech_img;
