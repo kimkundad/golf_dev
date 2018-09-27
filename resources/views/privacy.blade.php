@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-
+นโยบายความเป็นส่วนตัว
 @stop
 
 @section('stylesheet')

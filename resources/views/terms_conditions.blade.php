@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-
+เงื่อนไขและข้อตกลงในการใช้บริการ
 @stop
 
 @section('stylesheet')

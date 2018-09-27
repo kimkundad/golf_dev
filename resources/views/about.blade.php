@@ -1,10 +1,17 @@
 @extends('layouts.template')
 
 @section('title')
-
+เกี่ยวกับเรา ช่างตกแต่งคอนกรีต
 @stop
 
 @section('stylesheet')
+
+<style>
+.office-address ul {
+    padding: 10px 30px 10px 30px;
+
+}
+</style>
 @stop('stylesheet')
 @section('content')
 
@@ -95,7 +102,7 @@
 
 	<!-- Google Maps -->
 	<div id="singleListingMap-container">
-		<div id="singleListingMap" data-latitude="13.7085005" data-longitude="100.4063138" data-map-icon="im im-icon-Map2"></div>
+		<div id="singleListingMap" data-latitude="{{get_lat()}}" data-longitude="{{get_lng()}}" data-map-icon="im im-icon-Map2"></div>
 		<a href="#" id="streetView">Street View</a>
 	</div>
 	<!-- Google Maps / End -->
@@ -104,11 +111,10 @@
 	<div class="address-box-container">
 		<div class="address-container" data-background-image="assets/images/bg_green.png">
 			<div class="office-address">
-				<h3>Concreate Decor Thailand</h3>
-				<ul>
-					<li>3/6 ม.6 ต.คอกกระบือ </li>
-					<li>อ.เมืองสมุทรสาคร จ.สมุทรสาคร</li>
-					<li>โทร 081 899 9006 </li>
+				<h3>{{get_compony()}}</h3>
+				<ul style="padding: 10px 30px 10px 30px;">
+					<li>{{get_address()}} </li>
+					<li>{{get_phone()}} </li>
 				</ul>
 			</div>
 		</div>
@@ -133,13 +139,13 @@
 			<!-- Contact Details -->
 			<div class="sidebar-textbox">
 				<p> เรายินดีให้บริการ
-เพื่อพัฒนาสังคมการก่อสร้าง ที่มีคุณภาพ เรารวบรวมช่างรับเหมาจากทุกจังหวัด ทั่วทุกภูมิภาคของประเทศไทย</p>
+{{title_company()}}</p>
 
 				<ul class="contact-details">
-					<li><i class="im im-icon-Phone-2"></i> <strong>Phone:</strong> <span>(123) 123-456 </span></li>
-					<li><i class="im im-icon-Fax"></i> <strong>Fax:</strong> <span>(123) 123-456 </span></li>
-					<li><i class="im im-icon-Globe"></i> <strong>Web:</strong> <span><a href="#">www.example.com</a></span></li>
-					<li><i class="im im-icon-Envelope"></i> <strong>E-Mail:</strong> <span><a href="#">office@example.com</a></span></li>
+					<li><i class="im im-icon-Phone-2"></i> <strong>Phone:</strong> <span>{{get_phone()}} </span></li>
+					<li><i class="im im-icon-Fax"></i> <strong>Fax:</strong> <span>{{get_fax()}} </span></li>
+					<li><i class="im im-icon-Globe"></i> <strong>Web:</strong> <span><a href="#">{{get_website()}}</a></span></li>
+					<li><i class="im im-icon-Envelope"></i> <strong>E-Mail:</strong> <span><a href="#">{{get_emial()}}</a></span></li>
 				</ul>
 			</div>
 
@@ -198,7 +204,153 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA89Rb8Kz1ArY3ks6sSvz2cNrn66CHKDiA&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="assets/scripts/infobox.min.js"></script>
 <script type="text/javascript" src="assets/scripts/markerclusterer.js"></script>
-<script type="text/javascript" src="assets/scripts/maps2.js"></script>
+<script type="text/javascript" >
+
+function singleListingMap() {
+
+	var myLatlng = new google.maps.LatLng({lng: $( '#singleListingMap' ).data('longitude'),lat: $( '#singleListingMap' ).data('latitude'), });
+
+	var single_map = new google.maps.Map(document.getElementById('singleListingMap'), {
+		zoom: 11,
+		center: myLatlng,
+		scrollwheel: false,
+		zoomControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		panControl: false,
+		navigationControl: false,
+		streetViewControl: false,
+		styles:  [{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#747474"},{"lightness":"23"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"color":"#f38eb0"}]},{"featureType":"poi.government","elementType":"geometry.fill","stylers":[{"color":"#ced7db"}]},{"featureType":"poi.medical","elementType":"geometry.fill","stylers":[{"color":"#ffa5a8"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#c7e5c8"}]},{"featureType":"poi.place_of_worship","elementType":"geometry.fill","stylers":[{"color":"#d6cbc7"}]},{"featureType":"poi.school","elementType":"geometry.fill","stylers":[{"color":"#c4c9e8"}]},{"featureType":"poi.sports_complex","elementType":"geometry.fill","stylers":[{"color":"#b1eaf1"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":"100"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"},{"lightness":"100"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffd4a5"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffe9d2"}]},{"featureType":"road.local","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"weight":"3.00"}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"weight":"0.30"}]},{"featureType":"road.local","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#747474"},{"lightness":"36"}]},{"featureType":"road.local","elementType":"labels.text.stroke","stylers":[{"color":"#e9e5dc"},{"lightness":"30"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":"100"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#d2e7f7"}]}]
+	});
+
+	// Steet View Button
+	$('#streetView').click(function(e){
+		 e.preventDefault();
+		 single_map.getStreetView().setOptions({visible:true,position:myLatlng});
+		 // $(this).css('display', 'none')
+	});
+
+
+	// Custom zoom buttons
+	var zoomControlDiv = document.createElement('div');
+	var zoomControl = new ZoomControl(zoomControlDiv, single_map);
+
+	function ZoomControl(controlDiv, single_map) {
+
+		zoomControlDiv.index = 1;
+		single_map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(zoomControlDiv);
+
+		controlDiv.style.padding = '5px';
+
+		var controlWrapper = document.createElement('div');
+		controlDiv.appendChild(controlWrapper);
+
+		var zoomInButton = document.createElement('div');
+		zoomInButton.className = "custom-zoom-in";
+		controlWrapper.appendChild(zoomInButton);
+
+		var zoomOutButton = document.createElement('div');
+		zoomOutButton.className = "custom-zoom-out";
+		controlWrapper.appendChild(zoomOutButton);
+
+		google.maps.event.addDomListener(zoomInButton, 'click', function() {
+			single_map.setZoom(single_map.getZoom() + 1);
+		});
+
+		google.maps.event.addDomListener(zoomOutButton, 'click', function() {
+			single_map.setZoom(single_map.getZoom() - 1);
+		});
+
+	}
+
+
+	// Marker
+	var singleMapIco =  "<i class='"+$('#singleListingMap').data('map-icon')+"'></i>";
+
+	new CustomMarker(
+		myLatlng,
+		single_map,
+		{
+			marker_id: '1'
+		},
+		singleMapIco
+	);
+
+
+}
+
+// Single Listing Map Init
+var single_map =  document.getElementById('singleListingMap');
+if (typeof(single_map) != 'undefined' && single_map != null) {
+	google.maps.event.addDomListener(window, 'load',  singleListingMap);
+}
+
+
+function CustomMarker(latlng, map, args, markerIco) {
+	this.latlng = latlng;
+	this.args = args;
+	this.markerIco = markerIco;
+	this.setMap(map);
+}
+
+CustomMarker.prototype = new google.maps.OverlayView();
+
+CustomMarker.prototype.draw = function() {
+
+	var self = this;
+
+	var div = this.div;
+
+	if (!div) {
+
+		div = this.div = document.createElement('div');
+		div.className = 'map-marker-container';
+
+		div.innerHTML = '<div class="marker-container">'+
+												'<div class="marker-card">'+
+													 '<div class="front face">' + self.markerIco + '</div>'+
+													 '<div class="back face">' + self.markerIco + '</div>'+
+													 '<div class="marker-arrow"></div>'+
+												'</div>'+
+											'</div>'
+
+
+		// Clicked marker highlight
+		google.maps.event.addDomListener(div, "click", function(event) {
+				$('.map-marker-container').removeClass('clicked infoBox-opened');
+				google.maps.event.trigger(self, "click");
+				$(this).addClass('clicked infoBox-opened');
+		});
+
+
+		if (typeof(self.args.marker_id) !== 'undefined') {
+			div.dataset.marker_id = self.args.marker_id;
+		}
+
+		var panes = this.getPanes();
+		panes.overlayImage.appendChild(div);
+	}
+
+	var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
+
+	if (point) {
+		div.style.left = (point.x) + 'px';
+		div.style.top = (point.y) + 'px';
+	}
+};
+
+CustomMarker.prototype.remove = function() {
+	if (this.div) {
+		this.div.parentNode.removeChild(this.div);
+		this.div = null; $(this).removeClass('clicked');
+	}
+};
+
+CustomMarker.prototype.getPosition = function() { return this.latlng; };
+
+// -------------- Custom Map Marker / End -------------- //
+
+</script>
 
 
 @stop('scripts')
