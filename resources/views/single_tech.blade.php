@@ -61,7 +61,7 @@
 					<span>
 						<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
-							{{$tech->district}}, {{$tech->province_ths->province_name}}
+							จังหวัด : {{$tech->province_ths->province_name}}
 						</a>
 					</span>
 					<div class="star-rating" data-rating="5">
