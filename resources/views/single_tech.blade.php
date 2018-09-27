@@ -6,7 +6,7 @@
 
 
 @section('og_tag')
-<meta property="og:url" content="{{url('/')}}">
+<meta property="og:url" content="{{url('/single_tech/'.$tech->id_tech)}}">
 <meta property="og:title" content="สนใจติดต่อช่าง {{$tech->tech_fname}} {{$tech->tech_lname}}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="{{url('assets/tech_img/'.$tech_imgs->image)}}">
