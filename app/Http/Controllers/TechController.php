@@ -642,6 +642,8 @@ class TechController extends Controller
 
           }
 
+        //  dd($category);
+
           $img_all = DB::table('tech_galleries')->select(
                 'tech_galleries.*'
                 )

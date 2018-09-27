@@ -11,7 +11,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<a href="{{url('/')}}"><img src="{{url('assets/images/logo3.png')}}" alt=""></a>
+					<a href="{{url('/')}}"><img src="{{url('assets/image/logo_website/'.get_logo())}}" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->

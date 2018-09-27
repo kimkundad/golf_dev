@@ -2,7 +2,7 @@
   <div class="nav-top flex-grow-1">
     <div class="container d-flex flex-row h-100 align-items-center">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center">
-        <a class="navbar-brand brand-logo" href="{{url('admin/dashboard')}}"><img src="{{url('back/assets/images/logo.svg')}}" alt="logo"/></a>
+        <a class="navbar-brand brand-logo" href="{{url('admin/dashboard')}}"><img src="{{url('assets/image/logo_website/'.get_logo())}}" alt="logo"/></a>
         <a class="navbar-brand brand-logo-mini" href="{{url('admin/dashboard')}}"><img src="{{url('back/assets/images/logo-mini.svg')}}" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between flex-grow-1">
@@ -41,6 +41,10 @@
         </li>
         <li class="nav-item {{ (Request::is('admin/category*') ? 'mega-menu active' : '') }}">
           <a href="{{url('admin/category/')}}" class="nav-link"><i class="link-icon icon-disc"></i><span class="menu-title">ประเภทงาน</span></a>
+        </li>
+
+        <li class="nav-item {{ (Request::is('admin/skill*') ? 'mega-menu active' : '') }}">
+          <a href="{{url('admin/skill/')}}" class="nav-link"><i class="link-icon icon-calculator"></i><span class="menu-title">ความเชี่ยวชาญ</span></a>
         </li>
 
         <li class="nav-item {{ (Request::is('admin/tech_list*') ? 'mega-menu active' : '') }}">

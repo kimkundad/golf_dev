@@ -134,7 +134,9 @@ return "$strDay $strMonthThai $strYear";
 
                       <p>
                         <strong>ประเภทช่าง : </strong>@foreach($category as $categorys)
+                        @if($categorys->options == 1)
                         <div class="badge badge-outline-warning badge-pill" style="margin:5px;">{{$categorys->name_cat}}</div>
+                        @endif
                         @endforeach
                       </p>
 

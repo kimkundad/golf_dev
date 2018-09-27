@@ -8,14 +8,14 @@
 
 
     <title> @yield('title')</title>
-    <meta name="description" content="MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยาย ภาพ อัดภาพระบบดิจิตอล กรอบลอย canvas FRAME กรอบรูป studio ร้านถ่ายรูป ร้านอัดรูป ร้านอัดภาพ การ์ดแต่งงาน Photobook กรอบวิทยาศาสตร์ ">
-    <meta name="author" content="MASTER PHOTO NETWORK">
+    <meta name="description" content="{{title_company()}}">
+    <meta name="author" content="Idea vivat">
 
     <meta property="og:url" content="#">
-    <meta property="og:title" content=" มาสเตอร์  Master Photo Network">
+    <meta property="og:title" content="{{fb_title()}}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="#">
-    <meta property="og:description" content="ผู้นำด้านการอัดรูปสี, Digital Offset Print (นามบัตร การ์ด โบร์ชัวร์ แผ่นพับ ใบปลิว ฯลฯ), กรอบ, อัลบั้ม, Photobook และ Photo Gift">
+    <meta property="og:image" content="{{url('assets/category_img/'.facebook_img())}}">
+    <meta property="og:description" content="{{fb_detail()}}">
     <meta property="fb:admins" content="100002037238809">
     <meta property="fb:app_id" content="1063323960509612">
 

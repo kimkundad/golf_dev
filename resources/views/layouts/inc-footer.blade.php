@@ -13,8 +13,7 @@
 
 			<div class="col-md-5 col-sm-6 text-right {{ (Request::is('about') ? 'hidden' : '') }} {{ (Request::is('regis_tech') ? 'hidden' : '') }}">
 				<h1>เรื่องราวเกี่ยวกับเรา<br>
-				<p>สร้างบ้าน ต่อเติม รีโนเวท กับ ช่างดี เชื่อถือได้ เจ้าของบ้านวางใจ ค้นหาช่างที่มีคุณภาพ งานฝีมือและความประทับใจ ให้ เว็บไซต์... ช่วยค้นหาช่างให้คุณ ช่างรับเหมาจากทุกจังหวัด ทั่วทุกภูมิภาคของประเทศไทย
-คุณเลือกได้ตรงตามความต้องการ</p>
+				<p>{{title_company()}}</p>
 
 		<a href="{{url('regis_tech')}}" class="button  with-icon btn-lg pull-right" style="color: #fff;padding: 15px 28px;">อ่านเพิ่มเติม</a>
 
@@ -29,11 +28,11 @@
 		<div class="row" style="margin-top: 320px;">
 
 			<div class="text-center" style="margin-top: -80px;">
-        <p style="color:#fff; font-size:13px;">Concreate Decor Thailand 3-6 ม.6 ต.คอกกระบือ อ.เมืองสมุทรสาคร จ.สมุทรสาคร โทร 081 899 9006</p>
+        <p style="color:#fff; font-size:13px;">{{get_compony()}} {{get_address()}} {{get_phone()}}</p>
       </div>
 
 			<div class="col-md-6 text-left">
-				<p style="color:#fff; font-size:13px;">© 2017 Listeo. All Rights Reserved.</p>
+				<p style="color:#fff; font-size:13px;">© 2019 Listeo. All Rights Reserved.</p>
 			</div>
 
 			<div class="col-md-6 text-right">

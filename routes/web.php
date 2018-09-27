@@ -50,6 +50,7 @@ Route::group(['middleware' => 'admin'], function() {
   Route::resource('admin/user', 'StudentController');
   Route::get('admin/dashboard', 'DashboardController@index')->name('dashboard');
   Route::resource('admin/category', 'CategoryController');
+  Route::resource('admin/skill', 'SkillController');
   Route::resource('admin/tech_list', 'TechController');
   Route::get('admin/tech_gallery/{id}', 'TechController@tech_gallery');
   Route::get('admin/tech_job/{id}', 'TechController@tech_job');

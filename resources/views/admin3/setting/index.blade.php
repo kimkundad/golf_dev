@@ -91,9 +91,29 @@
             <label for="exampleInputEmail1">รูปภาพ</label>
             <img src="{{url('assets/category_img/'.$objs->facebook_img)}}" style="border: 1px solid #ece9e9;" class=" img-fluid rounded">
           </div>
+
           <div class="form-group">
             <label>แก้ไขรูปภาพ facebook</label>
             <input type="file" name="image" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+          <br />
+
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">LOGO website</label>
+            <img src="{{url('assets/image/logo_website/'.$objs->logo_img)}}" style="border: 1px solid #ece9e9;" class=" img-fluid rounded">
+          </div>
+
+
+          <div class="form-group">
+            <label>แก้ไข LOGO website ()</label>
+            <input type="file" name="image_logo" class="file-upload-default">
             <div class="input-group col-xs-12">
               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
               <span class="input-group-append">
@@ -136,11 +156,11 @@
 @section('scripts')
 <script src="{{url('back/assets/js/data-table.js')}}"></script>
 
-<script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places&sensor=false'></script>
+<script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places'></script>
 <script type="text/javascript">
       var map;
       var geocoder;
-      var mapOptions = { center: new google.maps.LatLng(0.0, 0.0), zoom: 2,
+      var mapOptions = { center: new google.maps.LatLng({{$objs->lat}}, {{$objs->lat}}), zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP };
 
       function initialize() {
@@ -153,6 +173,21 @@ var myOptions = {
             geocoder = new google.maps.Geocoder();
             var map = new google.maps.Map(document.getElementById("map_canvas"),
             myOptions);
+
+
+            var myLatlng = new google.maps.LatLng({{$objs->lat}},{{$objs->lng}});
+            var myOptions = {
+                zoom: 10,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+             var marker = new google.maps.Marker({
+                 position: myLatlng,
+                 map: map
+            });
+
+
             google.maps.event.addListener(map, 'click', function(event) {
                 placeMarker(event.latLng);
             });
@@ -171,6 +206,15 @@ var myOptions = {
                 document.getElementById('lng').value=location.lng();
                 getAddress(location);
             }
+
+
+
+
+
+
+
+
+
 
       function getAddress(latLng) {
         geocoder.geocode( {'latLng': latLng},

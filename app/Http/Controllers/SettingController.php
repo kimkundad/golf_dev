@@ -7,6 +7,8 @@ use App\setting;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
 
+
+
 class SettingController extends Controller
 {
     /**
@@ -17,6 +19,7 @@ class SettingController extends Controller
     public function index()
     {
         //
+
 
         $cat = DB::table('settings')->select(
               'settings.*'
@@ -32,6 +35,8 @@ class SettingController extends Controller
         $data['datahead'] = "ตั้งค่าเว็บไซต์";
         return view('admin3.setting.index', $data);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -87,6 +92,8 @@ class SettingController extends Controller
     {
         //
         $image = $request->file('image');
+
+        $image_logo = $request->file('image_logo');
         $id = 1;
         $this->validate($request, [
              'phone' => 'required',
@@ -102,7 +109,7 @@ class SettingController extends Controller
              'fb_detail' => 'required'
          ]);
 
-         if($image == null){
+         if($image == null && $image_logo == null){
 
            $package = setting::find($id);
            $package->phone = $request['phone'];
@@ -116,6 +123,67 @@ class SettingController extends Controller
            $package->lng = $request['lng'];
            $package->fb_title = $request['fb_title'];
            $package->fb_detail = $request['fb_detail'];
+           $package->save();
+
+         }elseif($image != null && $image_logo == null){
+
+           $objs = DB::table('settings')
+           ->select(
+              'settings.*'
+              )
+           ->where('id', 1)
+           ->first();
+
+           $file_path = 'assets/category_img/'.$objs->facebook_img;
+           unlink($file_path);
+
+
+           $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+             $img = Image::make($image->getRealPath());
+             $img->resize(600, 314, function ($constraint) {
+             $constraint->aspectRatio();
+           })->save('assets/category_img/'.$input['imagename']);
+
+
+
+           $package = setting::find($id);
+           $package->phone = $request['phone'];
+           $package->fax = $request['fax'];
+           $package->website = $request['website'];
+           $package->email = $request['email'];
+           $package->compony = $request['compony'];
+           $package->address = $request['address'];
+           $package->title_company = $request['title_company'];
+           $package->lat = $request['lat'];
+           $package->lng = $request['lng'];
+           $package->fb_title = $request['fb_title'];
+           $package->fb_detail = $request['fb_detail'];
+           $package->facebook_img = $input['imagename'];
+           $package->save();
+
+         }elseif($image == null && $image_logo != null){
+
+
+
+
+
+           $input['logo_website'] = time().'.'.$image_logo->getClientOriginalExtension();
+             $img = Image::make($image_logo->getRealPath());
+             $img->save('assets/image/logo_website/'.$input['logo_website']);
+
+           $package = setting::find($id);
+           $package->phone = $request['phone'];
+           $package->fax = $request['fax'];
+           $package->website = $request['website'];
+           $package->email = $request['email'];
+           $package->compony = $request['compony'];
+           $package->address = $request['address'];
+           $package->title_company = $request['title_company'];
+           $package->lat = $request['lat'];
+           $package->lng = $request['lng'];
+           $package->fb_title = $request['fb_title'];
+           $package->fb_detail = $request['fb_detail'];
+           $package->logo_img = $input['logo_website'];
            $package->save();
 
          }else{
@@ -133,12 +201,14 @@ class SettingController extends Controller
 
 
            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-
-             $destinationPath = asset('assets/category_img/');
              $img = Image::make($image->getRealPath());
              $img->resize(600, 314, function ($constraint) {
              $constraint->aspectRatio();
            })->save('assets/category_img/'.$input['imagename']);
+
+           $input['logo_website'] = time().'.'.$image_logo->getClientOriginalExtension();
+             $img = Image::make($image_logo->getRealPath());
+             $img->save('assets/image/logo_website/'.$input['logo_website']);
 
            $package = setting::find($id);
            $package->phone = $request['phone'];
@@ -153,6 +223,7 @@ class SettingController extends Controller
            $package->fb_title = $request['fb_title'];
            $package->fb_detail = $request['fb_detail'];
            $package->facebook_img = $input['imagename'];
+           $package->logo_img = $input['logo_website'];
            $package->save();
 
          }
