@@ -40,11 +40,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
           <div class="tab-content margin-top-35 margin-bottom-35" id="tab1" >
             <h4 class="headline ">Sign Up</h4>
 
-            <a href="{{ route('social.oauth', 'facebook') }}" class="fb button book-now fullwidth margin-top-5"><i class="fa fa-facebook"></i>Sign Up With Facebook</a>
-      
-            <p class="text-center">
-              OR
-            </p>
+          
             <form class="form-horizontal" id="my_form_register" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 

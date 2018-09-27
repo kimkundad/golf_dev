@@ -40,11 +40,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
       <div class="tab-content margin-top-35 margin-bottom-50" id="tab1" >
         <h4 class="headline ">Sign In</h4>
 
-        <a href="{{ route('social.oauth', 'facebook') }}" class="fb button book-now fullwidth margin-top-5"><i class="fa fa-facebook"></i>Sign In With Facebook</a>
-    
-        <p class="text-center">
-          OR
-        </p>
+        
         <form class="form-horizontal" id="my_form_login" role="form" method="POST" action="{{ url('/login') }}">
           {{ csrf_field() }}
 
