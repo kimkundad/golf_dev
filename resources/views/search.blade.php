@@ -33,7 +33,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<a href="{{url('/')}}"><img src="assets/images/logo3.png" alt=""></a>
+					<a href="{{url('/')}}"><img src="{{url('assets/image/logo_website/'.get_logo())}}" alt="{{get_compony()}}"></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -329,7 +329,7 @@
 					<!-- Pagination / End -->
 
 					<!-- Copyrights -->
-					<div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
+					<div class="copyrights margin-top-0">© 2019 Listeo. All Rights Reserved.</div>
 
 				</div>
 			</div>
