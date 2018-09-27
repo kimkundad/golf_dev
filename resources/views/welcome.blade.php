@@ -212,7 +212,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
 									@endforeach
 									@endif
 									<h3 style="font-size: 16px; line-height: 21px;">{{$u->tech_detail}} </h3>
-									<span>{{$u->district}}, {{$u->tech_prov}} </span>
+									<span>{{$u->tech_prov}} </span>
 								</div>
 								<span class="like-icon"></span>
 							</div>
