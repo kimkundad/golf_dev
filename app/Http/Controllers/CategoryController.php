@@ -178,6 +178,8 @@ class CategoryController extends Controller
     {
         //
 
+        $skill_tech = DB::table('cat_teches')->where('cat_id',$id)->delete();
+
         $objs = DB::table('categories')
         ->select(
            'categories.*'

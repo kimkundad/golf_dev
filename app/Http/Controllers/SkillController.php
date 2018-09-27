@@ -132,6 +132,8 @@ class SkillController extends Controller
     public function destroy($id)
     {
         //
+        $skill_tech = DB::table('tech_skills')->where('skill_id',$id)->delete();
+
 
         $obj = skill::find($id);
         $obj->delete();
