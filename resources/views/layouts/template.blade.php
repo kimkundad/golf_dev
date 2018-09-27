@@ -11,13 +11,13 @@
     <meta name="description" content="{{title_company()}}">
     <meta name="author" content="Idea vivat">
 
-    <meta property="og:url" content="#">
+    <meta property="og:url" content="{{url('/')}}">
     <meta property="og:title" content="{{fb_title()}}">
     <meta property="og:type" content="website">
     <meta property="og:image" content="{{url('assets/category_img/'.facebook_img())}}">
     <meta property="og:description" content="{{fb_detail()}}">
     <meta property="fb:admins" content="100002037238809">
-    <meta property="fb:app_id" content="1063323960509612">
+    <meta property="fb:app_id" content="306775720112722">
 
 
 
