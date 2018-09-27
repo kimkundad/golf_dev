@@ -68,16 +68,28 @@ class HomeController extends Controller
             ->where('tech_id', $u->id)
             ->get();
 
-            foreach($tech_cat as $j){
+            $tech_cat_count = DB::table('cat_teches')
+                ->where('tech_id', $u->id)
+                ->count();
 
-              $cat_for = DB::table('categories')
-                  ->select(
-                  'categories.name_cat'
-                  )
-                  ->where('id', $j->cat_id)
-                  ->first();
-              $j->name_cat_for = $cat_for->name_cat;
+            if($tech_cat_count > 0){
+
+              foreach($tech_cat as $j){
+
+                $cat_for = DB::table('categories')
+                    ->select(
+                    'categories.name_cat'
+                    )
+                    ->where('id', $j->cat_id)
+                    ->first();
+                $j->name_cat_for = $cat_for->name_cat;
+              }
+
             }
+
+
+
+
 
         $u->tech_prov = $tech_prov->province_name;
 
