@@ -216,7 +216,7 @@ class HomeController extends Controller
               ->first();
 
               $tech_cat_count = DB::table('cat_teches')
-                  ->where('tech_id', $u->id)
+                  ->where('tech_id', $id)
                   ->count();
 
 
@@ -247,6 +247,8 @@ class HomeController extends Controller
               )
               ->where('tech_id', $id)
               ->first();
+
+              dd($tech_img);
 
           $data['tech_imgs'] = $tech_img;
 
