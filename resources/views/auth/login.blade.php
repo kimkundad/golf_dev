@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยาย ภาพ อัดภาพระบบดิจิตอล กรอบลอย canvas FRAME กรอบรูป studio ร้านถ่ายรูป
+Login | ช่างตกแต่งคอนกรีต เว็บไซต์ ที่รวบรวมช่างฝีมือดีทั่วฟ้าเมืองไทย
 @stop
 
 @section('stylesheet')
@@ -40,7 +40,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
       <div class="tab-content margin-top-35 margin-bottom-50" id="tab1" >
         <h4 class="headline ">Sign In</h4>
 
-        
+
         <form class="form-horizontal" id="my_form_login" role="form" method="POST" action="{{ url('/login') }}">
           {{ csrf_field() }}
 
@@ -57,7 +57,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
               <input class="input-text" type="password" name="password" id="password"/>
             </label>
             <span class="lost_password">
-              <a href="#" >Lost Your Password?</a>
+              <a href="{{url('password/reset')}}" >Lost Your Password?</a>
             </span>
           </p>
 

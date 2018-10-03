@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยาย ภาพ อัดภาพระบบดิจิตอล กรอบลอย canvas FRAME กรอบรูป studio ร้านถ่ายรูป
+Register | ช่างตกแต่งคอนกรีต เว็บไซต์ ที่รวบรวมช่างฝีมือดีทั่วฟ้าเมืองไทย
 @stop
 
 @section('stylesheet')
@@ -40,7 +40,7 @@ MASTER PHOTO NETWORK: ร้านมาสเตอร์ อัด ขยา�
           <div class="tab-content margin-top-35 margin-bottom-35" id="tab1" >
             <h4 class="headline ">Sign Up</h4>
 
-          
+
             <form class="form-horizontal" id="my_form_register" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
