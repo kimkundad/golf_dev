@@ -38,7 +38,7 @@ Login | ช่างตกแต่งคอนกรีต เว็บไซ�
 
       <!-- Login -->
       <div class="tab-content margin-top-35 margin-bottom-50" id="tab1" >
-        <h4 class="headline ">Sign In</h4>
+        <h4 class="headline ">เข้าสู่ระบบ</h4>
 
 
         <form class="form-horizontal" id="my_form_login" role="form" method="POST" action="{{ url('/login') }}">
@@ -57,7 +57,7 @@ Login | ช่างตกแต่งคอนกรีต เว็บไซ�
               <input class="input-text" type="password" name="password" id="password"/>
             </label>
             <span class="lost_password">
-              <a href="{{url('password/reset')}}" >Lost Your Password?</a>
+              <a href="{{url('password/reset')}}" >รีเซ็ต Password ผู้ใช้?</a>
             </span>
           </p>
 
@@ -65,7 +65,7 @@ Login | ช่างตกแต่งคอนกรีต เว็บไซ�
 
             <div class="checkboxes margin-top-10">
               <input id="remember-me" type="checkbox" name="check">
-              <label for="remember-me">Remember Me</label>
+              <label for="remember-me">จดจำฉันไว้ในระบบ</label>
             </div>
             <br />
 
@@ -73,7 +73,7 @@ Login | ช่างตกแต่งคอนกรีต เว็บไซ�
           </div>
           <br />
           <p>
-            Don't have an account yet? <a href="{{url('register')}}"><span style="color:#00a948; float:right">Create new account</span> </a>
+            ยังไม่มีบัญชีผู้ใช้? <a href="{{url('register')}}"><span style="color:#00a948; float:right">สร้างบัญชีผู้ใช้งานใหม่</span> </a>
           </p>
         </form>
       </div>
