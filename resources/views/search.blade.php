@@ -279,11 +279,13 @@
 							<!-- Image -->
 							<div class="listing-item-image">
 								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="{{$u->tech_fname}} {{$u->tech_lname}}">
+								<span class="tag">
 								@if($u->cat_tech)
 								@foreach($u->cat_tech as $j)
-								<span class="tag">{{$j->name_cat_for}}</span>
+								{{$j->name_cat_for}},
 								@endforeach
 								@endif
+								</span>
 							</div>
 
 							<!-- Content -->
@@ -331,7 +333,7 @@
 					border-radius: 50%;
 			}
 			.fs-listings .pagination ul li a.disabled, .fs-listings .pagination .disabled, .fs-listings .pagination ul li a:hover, .fs-listings .pagination-next-prev ul li a:hover {
-			    
+
 					width: 52px;
 			    height: 52px;
 					border-radius: 50%;

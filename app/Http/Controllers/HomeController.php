@@ -417,10 +417,16 @@ class HomeController extends Controller
 
 
 
+
+
       if($request['radius'] == null){
         $radius = 50; // Km
       }else{
         $radius = $request['radius'];
+      }
+
+      if($location == null){
+        $radius = 5000;
       }
 
 
@@ -431,6 +437,9 @@ class HomeController extends Controller
       $max_lat = $lat + $angle_radius;
       $min_lon = $lon - $angle_radius;
       $max_lon = $lon + $angle_radius;
+
+
+
 
     //  dd($angle_radius);
 
@@ -461,7 +470,7 @@ class HomeController extends Controller
               'teches.tech_status'
               )
               ->where('teches.tech_status', 1)
-              ->paginate(3);
+              ->paginate(20);
 
 
               $tech_count = DB::table('teches')
@@ -496,10 +505,12 @@ class HomeController extends Controller
               'teches.tech_status'
               )
               ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
-              ->whereIn('cat_teches.cat_id', [$cat_id])
+              ->whereIn('cat_teches.cat_id', $cat_id)
               ->where('teches.tech_status', 1)
               ->groupBy('teches.id')
-              ->paginate(10);
+              ->paginate(20);
+
+
 
 
               $tech_count = DB::table('teches')
@@ -508,7 +519,7 @@ class HomeController extends Controller
                 'cat_teches.tech_id'
                 )
                 ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
-                ->whereIn('cat_teches.cat_id', [$cat_id])
+                ->whereIn('cat_teches.cat_id', $cat_id)
                 ->where('teches.tech_status', 1)
                 ->groupBy('teches.id')
                 ->count();
@@ -524,13 +535,46 @@ class HomeController extends Controller
       }else{
 
 
+        $tech_1 = tech::select( DB::raw('id, ( 6367 * acos( cos( radians('.$lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$lon.') ) + sin( radians('.$lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
+        ->having('distance', '<', $radius)
+        ->orderBy('distance')
+        ->where('tech_status', 1)
+        ->get();
+
+        $get_id = [];
+        foreach($tech_1 as $u){
+        $get_id[] = $u->id;
+        }
+
+
         if($cat_id[0] == 0){
 
-    $tech = tech::select(DB::raw('*, ( 6367 * acos( cos( radians('.$lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$lon.') ) + sin( radians('.$lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
-    ->where('tech_status', 1)
-    ->where('distance', '<', 30)
-    ->orderBy('distance')
-    ->paginate(10);
+
+
+
+
+
+    $tech = DB::table('teches')
+          ->select(
+          'teches.id',
+          'teches.tech_fname',
+          'teches.tech_lname',
+          'teches.tech_image',
+          'teches.tech_status_show',
+          'teches.tech_view',
+          'teches.tech_view',
+          'teches.tech_rating',
+          'teches.tech_detail',
+          'teches.province_id',
+          'teches.district',
+          'teches.lat',
+          'teches.lng',
+          'teches.id as id_tech',
+          'teches.tech_status'
+          )
+          ->whereIn('id', $get_id)
+          ->where('teches.tech_status', 1)
+          ->paginate(20);
 
         /*  $tech = DB::table('teches')  7.3287780772285
               ->select(
@@ -553,15 +597,14 @@ class HomeController extends Controller
               ->whereBetween('lat', [$min_lat, $max_lat])
               ->whereBetween('lng', [$min_lon, $max_lon])
               ->where('teches.tech_status', 1)
-              ->paginate(10);
+              ->paginate(10); */
 
           $tech_count = DB::table('teches')
-            ->whereBetween('lat', [$min_lat, $max_lat])
-            ->whereBetween('lng', [$min_lon, $max_lon])
+            ->whereIn('id', $get_id)
             ->where('teches.tech_status', 1)
-            ->count(); */
+            ->count();
 
-              dd($tech);
+          //    dd($lat);
 
           //  dd($tech_count);
         }else{
@@ -586,26 +629,30 @@ class HomeController extends Controller
               'cat_teches.tech_id'
               )
               ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
-              ->whereBetween('teches.lat', [$min_lat, $max_lat])
-              ->whereBetween('teches.lng', [$min_lon, $max_lon])
+              ->whereIn('teches.id', $get_id)
+              ->whereIn('cat_teches.cat_id', $cat_id)
               ->where('teches.tech_status', 1)
               ->groupBy('teches.id')
-              ->paginate(10);
+              ->paginate(20);
 
-              $tech_count = DB::table('teches')
+              $tech_count1 = DB::table('teches')
                 ->select(
                 'teches.id',
-                'cat_teches.tech_id'
+                'teches.tech_status',
+                'cat_teches.tech_id',
+                'cat_teches.cat_id'
                 )
                 ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
-                ->whereIn('cat_teches.cat_id', [$cat_id])
-                ->whereBetween('teches.lat', [$min_lat, $max_lat])
-                ->whereBetween('teches.lng', [$min_lon, $max_lon])
+                ->whereIn('cat_teches.cat_id', $cat_id)
+                ->whereIn('teches.id', $get_id)
+
                 ->where('teches.tech_status', 1)
                 ->groupBy('teches.id')
-                ->count();
+                ->get();
 
-          //     dd($tech_count);
+              $tech_count = sizeof($tech_count1);
+
+          //    dd($tech_count);
 
         }
 
