@@ -288,19 +288,21 @@
 								<div class="listing-item-inner">
 									<h3 style="line-height: 25px;">{{$u->tech_detail}} </h3>
 									<span style="font-size: 14px;"> {{$u->tech_prov}}</span>
-									<div style="margin-top:10px;">
-										@if($u->cat_tech)
-										@foreach($u->cat_tech as $j)
-										<span class="tag" style="position: static; bottom: 0px; left: 0px;">{{$j->name_cat_for}}</span>
-										@endforeach
-										@endif
-									</div>
+
 
 								</div>
 
                 <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="{{$u->tech_rating}}">
                   <div class="rating-counter" style="font-size:12px;">({{$u->tech_view}} วิว)</div>
                 </div>
+
+								<div style="margin-top:10px;">
+									@if($u->cat_tech)
+									@foreach($u->cat_tech as $j)
+									<span class="tag" style="position: static; bottom: 0px; margin: 2px; left: 0px;">{{$j->name_cat_for}}</span>
+									@endforeach
+									@endif
+								</div>
 
                 <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
 									<img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
