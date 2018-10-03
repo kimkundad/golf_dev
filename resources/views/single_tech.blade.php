@@ -202,7 +202,7 @@
 
 
 			<!-- Verified Badge -->
-			<div class="verified-badge with-tip" data-tip-content="Listing has been verified and belongs the business owner or manager.">
+			<div class="verified-badge with-tip" >
 				 ติดต่อช่าง
 			</div>
 
