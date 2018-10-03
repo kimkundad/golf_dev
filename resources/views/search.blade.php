@@ -273,7 +273,7 @@
 					@foreach($tech as $u)
 				<!-- Listing Item -->
 				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout" data-marker-id="1">
+					<div class="listing-item-container list-layout" data-marker-id="{{$u->id_tech}}">
 						<a href="{{url('single_tech/'.$u->id_tech)}}" class="listing-item">
 
 							<!-- Image -->
