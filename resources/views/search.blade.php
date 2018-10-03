@@ -296,7 +296,7 @@
                   <div class="rating-counter" style="font-size:12px;">({{$u->tech_view}} วิว)</div>
                 </div>
 
-								<div style="margin-top:10px;">
+								<div style="margin-left: 30px; margin-top: 80px;">
 									@if($u->cat_tech)
 									@foreach($u->cat_tech as $j)
 									<span class="tag" style="position: static; bottom: 0px; margin: 2px; left: 0px;">{{$j->name_cat_for}}</span>
