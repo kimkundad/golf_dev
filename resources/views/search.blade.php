@@ -538,7 +538,7 @@ if ($('.main-search-input-item')[0]) {
 
   // Main Map
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 11,
+    zoom: 8,
     scrollwheel: scrollEnabled,
     center: new google.maps.LatLng({{ ( $lat ?: '13.7211075')}}, {{ ( $lon ?: '100.5904873') }} ),
     mapTypeId: google.maps.MapTypeId.ROADMAP,

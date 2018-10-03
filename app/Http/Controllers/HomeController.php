@@ -427,8 +427,8 @@ class HomeController extends Controller
 
       if($location == null){
         $radius = 5000;
-        $lat = 15.870032;
-        $lon = 100.99254100000007;
+        $lat = 13.7211075;
+        $lon = 100.5904873;
       }
 
 
