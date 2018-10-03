@@ -59,6 +59,10 @@
           <a href="{{url('admin/us_contact/')}}" class="nav-link"><i class="link-icon icon-envelope-open"></i><span class="menu-title">contact us</span></a>
         </li>
 
+        <li class="nav-item {{ (Request::is('admin/user*') ? 'mega-menu active' : '') }}">
+          <a href="{{url('admin/user/')}}" class="nav-link"><i class="link-icon icon-user"></i><span class="menu-title">จัดการ User</span></a>
+        </li>
+
         <li class="nav-item {{ (Request::is('admin/setting*') ? 'mega-menu active' : '') }}">
           <a href="{{url('admin/setting/')}}" class="nav-link"><i class="link-icon icon-settings"></i><span class="menu-title">ตั้งค่าระบบ</span></a>
         </li>

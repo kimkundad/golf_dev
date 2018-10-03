@@ -48,6 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'admin'], function() {
   Route::resource('admin/user', 'StudentController');
+
+  Route::post('api/api_user_status', 'StudentController@api_user_status');
+
   Route::get('admin/dashboard', 'DashboardController@index')->name('dashboard');
   Route::resource('admin/category', 'CategoryController');
   Route::resource('admin/skill', 'SkillController');
