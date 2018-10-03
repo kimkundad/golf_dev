@@ -49,7 +49,7 @@
 					<a href="{{url('contact')}}" class="sign-in hidden-sm hidden-xs"> ติดต่อเรา</a>
 
 					@if (Auth::guest())
-					<a href="{{url('login')}}" class="sign-in hidden-sm hidden-xs"> Sign In</a>
+					
 					@else
 
 					<!-- User Menu -->
