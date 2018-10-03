@@ -291,7 +291,7 @@
 
 								<div class="listing-item-inner">
 									<h3 style="line-height: 25px;">{{$u->tech_detail}} </h3>
-									<span style="font-size: 14px;">{{$u->district}}, {{$u->tech_prov}}</span>
+									<span style="font-size: 14px;"> {{$u->tech_prov}}</span>
 
 								</div>
 
