@@ -202,7 +202,7 @@
 
 
 			<!-- Verified Badge -->
-			<div class="verified-badge with-tip" >
+			<div class="verified-badge " >
 				 ติดต่อช่าง
 			</div>
 
