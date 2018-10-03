@@ -333,7 +333,10 @@
 						<div class="col-md-12">
 							<!-- Pagination -->
 							<div class="pagination-container margin-top-15 margin-bottom-40">
-								{{$tech->links()}}
+								<nav class="pagination">
+									{{$tech->links()}}
+								</nav>
+
 							</div>
 						</div>
 					</div>
