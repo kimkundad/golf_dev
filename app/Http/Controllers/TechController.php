@@ -43,7 +43,7 @@ class TechController extends Controller
               'teches.id as id_te'
               )
               ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
-              ->paginate(12);
+              ->get();
 
           foreach ($cat as $obj) {
 
