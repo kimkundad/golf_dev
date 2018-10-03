@@ -426,11 +426,13 @@ class HomeController extends Controller
 
 
 
-      $angle_radius = $radius / ( 111 * cos( $lat ) ); // Every lat|lon degree° is ~ 111Km
+      $angle_radius = $radius / ( 80 * cos( $lat ) ); // Every lat|lon degree° is ~ 111Km
       $min_lat = $lat - $angle_radius;
       $max_lat = $lat + $angle_radius;
       $min_lon = $lon - $angle_radius;
       $max_lon = $lon + $angle_radius;
+
+    //  dd($angle_radius);
 
 
       if($lat == null || $lon == null ){
@@ -459,7 +461,7 @@ class HomeController extends Controller
               'teches.tech_status'
               )
               ->where('teches.tech_status', 1)
-              ->paginate(10);
+              ->paginate(3);
 
 
               $tech_count = DB::table('teches')
@@ -468,6 +470,8 @@ class HomeController extends Controller
                 )
                 ->where('teches.tech_status', 1)
                 ->count();
+
+
 
             //   dd($tech);
 
@@ -509,6 +513,8 @@ class HomeController extends Controller
                 ->groupBy('teches.id')
                 ->count();
 
+            //   dd($tech);
+
             //    dd($tech);
 
         }
@@ -520,7 +526,13 @@ class HomeController extends Controller
 
         if($cat_id[0] == 0){
 
-          $tech = DB::table('teches')
+    $tech = tech::select(DB::raw('*, ( 6367 * acos( cos( radians('.$lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$lon.') ) + sin( radians('.$lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
+    ->where('tech_status', 1)
+    ->where('distance', '<', 30)
+    ->orderBy('distance')
+    ->paginate(10);
+
+        /*  $tech = DB::table('teches')  7.3287780772285
               ->select(
               'teches.id',
               'teches.tech_fname',
@@ -547,7 +559,9 @@ class HomeController extends Controller
             ->whereBetween('lat', [$min_lat, $max_lat])
             ->whereBetween('lng', [$min_lon, $max_lon])
             ->where('teches.tech_status', 1)
-            ->count();
+            ->count(); */
+
+              dd($tech);
 
           //  dd($tech_count);
         }else{
@@ -591,7 +605,7 @@ class HomeController extends Controller
                 ->groupBy('teches.id')
                 ->count();
 
-          //      dd($tech_count);
+          //     dd($tech_count);
 
         }
 

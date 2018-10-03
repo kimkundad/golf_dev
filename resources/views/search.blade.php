@@ -322,6 +322,28 @@
 			</div>
 			<!-- Listings Container / End -->
 
+			<style>
+			.fs-listings .pagination ul li a.active, .fs-listings .pagination .active, .fs-listings .pagination ul li a:hover, .fs-listings .pagination-next-prev ul li a:hover {
+			    background-color: #e8e8e8;
+			    color: #333;
+					width: 52px;
+			    height: 52px;
+					border-radius: 50%;
+			}
+			.fs-listings .pagination ul li a.disabled, .fs-listings .pagination .disabled, .fs-listings .pagination ul li a:hover, .fs-listings .pagination-next-prev ul li a:hover {
+			    
+					width: 52px;
+			    height: 52px;
+					border-radius: 50%;
+			}
+			.pagination ul li span{
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    line-height: 52px;
+}
+			</style>
 
 			<!-- Pagination Container -->
 			<div class="row fs-listings" >
