@@ -279,11 +279,7 @@
 							<!-- Image -->
 							<div class="listing-item-image">
 								<img src="{{url('assets/tech_img/'.$u->tech_imgs)}}" alt="{{$u->tech_fname}} {{$u->tech_lname}}">
-								@if($u->cat_tech)
-								@foreach($u->cat_tech as $j)
-								<span class="tag">{{$j->name_cat_for}}</span>
-								@endforeach
-								@endif
+
 							</div>
 
 							<!-- Content -->
@@ -292,6 +288,13 @@
 								<div class="listing-item-inner">
 									<h3 style="line-height: 25px;">{{$u->tech_detail}} </h3>
 									<span style="font-size: 14px;"> {{$u->tech_prov}}</span>
+									<div style="margin-top:10px;">
+										@if($u->cat_tech)
+										@foreach($u->cat_tech as $j)
+										<span class="tag" style="position: static; bottom: 0px; left: 0px;">{{$j->name_cat_for}}</span>
+										@endforeach
+										@endif
+									</div>
 
 								</div>
 
