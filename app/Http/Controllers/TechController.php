@@ -1115,5 +1115,147 @@ class TechController extends Controller
     public function destroy($id)
     {
         //
+        $tech = DB::table('teches')->select(
+              'teches.*'
+              )
+              ->where('id', $id)
+              ->first();
+
+              DB::table('cat_teches')->select(
+                    'cat_teches.*'
+                    )
+                    ->where('tech_id', $tech->id)
+                    ->delete();
+
+                    DB::table('tech_skills')->select(
+                          'tech_skills.*'
+                          )
+                          ->where('tech_id', $tech->id)
+                          ->delete();
+
+
+                          DB::table('text_to_teches')->select(
+                                'text_to_teches.*'
+                                )
+                                ->where('tech_id', $tech->id)
+                                ->delete();
+
+//* Delete tech_image gallery
+
+                                $image_count =   $objs = DB::table('tech_galleries')
+                                      ->select(
+                                         'tech_galleries.*'
+                                         )
+                                      ->where('tech_id', $tech->id)
+                                      ->count();
+
+
+                               if($image_count > 0){
+
+                                 $image_all = DB::table('tech_galleries')
+                                       ->select(
+                                          'tech_galleries.*'
+                                          )
+                                       ->where('tech_id', $tech->id)
+                                       ->get();
+
+                                       foreach($image_all as $img){
+
+                                         $file_path = 'assets/tech_img/'.$img->image;
+                                         unlink($file_path);
+
+                                       }
+
+
+                                            DB::table('tech_galleries')
+                                             ->select(
+                                                'tech_galleries.*'
+                                                )
+                                             ->where('tech_id', $tech->id)
+                                             ->delete();
+
+                               }else{
+
+                                 $image_all = null;
+
+                               }
+
+
+//* End Delete tech_image gallery
+
+
+                                /*      $file_path = 'assets/job_img/'.$objs->image;
+                                      unlink($file_path);
+
+                                      DB::table('tech_job_imgs')->where('id', $objs->id)->delete(); */
+
+                                    //  dd($s);
+
+//* Delete tech_jobs
+
+                                $tech_job_count = DB::table('tech_jobs')->select(
+                                      'tech_jobs.*'
+                                      )
+                                      ->where('tech_id', $tech->id)
+                                      ->count();
+
+
+                                if($tech_job_count > 0){
+
+                                  $tech_job = DB::table('tech_jobs')->select(
+                                        'tech_jobs.*'
+                                        )
+                                        ->where('tech_id', $tech->id)
+                                        ->get();
+
+                                        foreach($tech_job as $job){
+
+                                          $tech_job_imgs = DB::table('tech_job_imgs')->select(
+                                                'tech_job_imgs.*'
+                                                )
+                                                ->where('job_id', $job->id)
+                                                ->get();
+
+                                                foreach ($tech_job_imgs as $user) {
+                                                $file_path = 'assets/job_img/'.$user->image;
+                                                unlink($file_path);
+                                              }
+
+                                        }
+
+                                            DB::table('tech_job_imgs')->select(
+                                              'tech_job_imgs.*'
+                                              )
+                                              ->where('job_id', $job->id)
+                                              ->delete();
+
+
+                                        DB::table('tech_jobs')
+                                         ->where('tech_id', $tech->id)
+                                         ->delete();
+
+                                }
+
+//* End Delete tech_jobs
+
+
+      DB::table('teches')->select(
+      'teches.*'
+      )
+      ->where('id', $id)
+      ->delete();
+
+      return redirect(url('admin/tech_list/'))->with('delete','คุณทำการลบอสังหา สำเร็จ');
+
+          //    dd($tech_job);
     }
+
+
+
+
+
+
+
+
+
 }
