@@ -82,23 +82,7 @@
 					<a href="{{url('about')}}" class="sign-in hidden-sm hidden-xs"> เกี่ยวกับเรา</a>
 					<a href="{{url('contact')}}" class="sign-in hidden-sm hidden-xs"> ติดต่อเรา</a>
 
-					@if (Auth::guest())
-					<a href="{{url('login')}}" class="sign-in hidden-sm hidden-xs"> Sign In</a>
-					@else
-
-					<!-- User Menu -->
-					<div class="user-menu">
-						@if(Auth::user()->provider == 'email')
-						<div class="user-name" style="color:#fff"><span><img src="{{url('assets/images/avatar/'.Auth::user()->avatar)}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
-						@else
-						<div class="user-name" style="color:#fff"><span><img src="{{Auth::user()->avatar}}" alt=""></span>Hi, {{ Auth::user()->name }}!</div>
-						@endif
-						<ul>
-
-							<li><a href="{{url('logout')}}"><i class="sl sl-icon-power"></i> Logout</a></li>
-						</ul>
-					</div>
-					@endif
+				
 
 					<a href="{{url('regis_tech')}}" class="button with-icon" style="border-radius: 2px;font-size: 16px;"> สมัครเป็นผู้รับเหมา </a>
 				</div>
@@ -446,7 +430,7 @@ function mainMap() {
           } else {
             bounds.extend(place.geometry.location);
           }
-          map.fitBounds(bounds);
+        //  map.fitBounds(bounds);
 
 
 

@@ -42,7 +42,9 @@
 
                     <td >
 
-                      <button type="button" style="float: left;padding: 10px;" onclick="window.location.href='{{url('admin/category/'.$u->id.'/edit')}}'"  class="btn btn-icons btn-rounded btn-outline-warning"><i class="icon-settings"></i></button>
+
+                      <button type="button" style="float: left;padding: 10px;" onclick="window.location.href='{{url('admin/tech_search/?_token='.csrf_token().'&search='.$u->name_cat)}}'" class="btn btn-icons btn-rounded btn-outline-success"><i class="icon-people "></i></button>
+                      <button type="button" style="float: left;padding: 10px; margin-left: 10px;" onclick="window.location.href='{{url('admin/category/'.$u->id.'/edit')}}'"  class="btn btn-icons btn-rounded btn-outline-warning"><i class="icon-settings"></i></button>
                       <form  action="{{url('admin/category/'.$u->id)}}" method="post" onsubmit="return(confirm('Do you want Delete'))">
                           <input type="hidden" name="_method" value="DELETE">
                            <input type="hidden" name="_token" value="{{ csrf_token() }}">

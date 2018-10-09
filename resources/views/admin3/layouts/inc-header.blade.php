@@ -47,7 +47,7 @@
           <a href="{{url('admin/skill/')}}" class="nav-link"><i class="link-icon icon-calculator"></i><span class="menu-title">ความเชี่ยวชาญ</span></a>
         </li>
 
-        <li class="nav-item {{ (Request::is('admin/tech_list*') ? 'mega-menu active' : '') }}">
+        <li class="nav-item {{ (Request::is('admin/tech_list*') ? 'mega-menu active' : '') }} {{ (Request::is('admin/tech_search*') ? 'mega-menu active' : '') }}">
           <a href="{{url('admin/tech_list/')}}" class="nav-link"><i class="link-icon icon-people"></i><span class="menu-title">ช่างในระบบ</span></a>
         </li>
 

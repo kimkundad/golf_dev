@@ -25,7 +25,7 @@
                <form class="form-horizontal" action="{{url('admin/tech_search')}}" method="GET" enctype="multipart/form-data">
                  {{ csrf_field() }}
                <div class="input-group">
-                 <input type="text" class="form-control" name="search" placeholder="ค้นหา.." aria-label="Recipient's username">
+                 <input type="text" class="form-control" name="search" value="{{$search}}" placeholder="ค้นหา.." aria-label="Recipient's username">
                  <div class="input-group-append">
                    <button class="btn btn-sm btn-primary" type="submit">Search</button>
                  </div>
@@ -120,8 +120,7 @@
               </tbody>
             </table>
 
-              <br />
-            @include('admin3.pagination.default', ['paginator' => $objs])
+
           </div>
         </div>
       </div>

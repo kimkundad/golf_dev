@@ -43,7 +43,7 @@ class TechController extends Controller
               'teches.id as id_te'
               )
               ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
-              ->get();
+              ->paginate(15);
 
           foreach ($cat as $obj) {
 
@@ -110,6 +110,153 @@ class TechController extends Controller
     ]);
 
     }
+
+
+    public function tech_search(Request $request){
+
+      $this->validate($request, [
+        'search' => 'required'
+      ]);
+
+      $search = $request->get('search');
+
+      $count_tech = DB::table('teches')
+                      ->select(
+                      'teches.*',
+                      'teches.id as id_te',
+                      'province_ths.*'
+                      )
+                      ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
+                      ->where('teches.tech_fname', 'like', "%$search%")
+                      ->orWhere('province_ths.province_name', 'like', "%$search%")
+                      ->count();
+
+                  //    dd($count_tech);
+
+      if($count_tech > 0){
+
+        $cat = DB::table('teches')
+                        ->select(
+                        'teches.*',
+                        'teches.id as id_te',
+                        'province_ths.*'
+                        )
+                        ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
+                        ->where('teches.tech_fname', 'like', "%$search%")
+                        ->orWhere('province_ths.province_name', 'like', "%$search%")
+                        ->get();
+
+                        foreach ($cat as $obj) {
+
+                          $option = DB::table('cat_teches')->select(
+                                'cat_teches.*',
+                                'categories.*'
+                                )
+                                ->leftjoin('categories', 'categories.id',  'cat_teches.cat_id')
+                                ->where('cat_teches.tech_id', $obj->id)
+                                ->get();
+
+                          $obj->options = $option;
+
+                        }
+
+                        $data['objs'] = $cat;
+
+      }else{
+
+
+        $cat_count = DB::table('categories')->select(
+              'categories.*'
+              )
+              ->where('categories.name_cat', 'like', "%$search%")
+              ->count();
+
+
+        if($cat_count > 0){
+
+
+
+
+                $cat_2 = DB::table('categories')->select(
+                      'categories.*'
+                      )
+                      ->where('categories.name_cat', 'like', "%$search%")
+                      ->first();
+
+
+                        $option_t = DB::table('cat_teches')->select(
+                              'cat_teches.*',
+                              'categories.*'
+                              )
+                              ->leftjoin('categories', 'categories.id',  'cat_teches.cat_id')
+                              ->where('categories.id', $cat_2->id)
+                              ->get();
+
+
+                          //    dd($option_t);
+
+                            $option_z = [];
+
+                              foreach ($option_t as $u) {
+
+
+                                $cat_z = DB::table('teches')
+                                                ->select(
+                                                'teches.*',
+                                                'teches.id as id_te',
+                                                'province_ths.*'
+                                                )
+                                                ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
+                                                ->where('teches.id', $u->tech_id)
+                                                ->first();
+
+                                    $option_z[] = $cat_z;
+
+
+                              }
+
+                              $option_t->options = $option_z;
+
+                          //    dd($option_z);
+
+
+
+                              $data['objs'] = $option_z;
+
+        }else{
+
+
+          $data['objs'] = null;
+
+        }
+
+
+
+
+
+
+
+
+
+
+      // dd($option);
+
+      }
+
+
+                      $data['datahead'] = "ช่างในระบบ";
+                      $data['search'] = $search;
+
+
+
+
+
+                      return view('admin3.tech.search', $data);
+
+    }
+
+
+
     public function store(Request $request)
     {
         //

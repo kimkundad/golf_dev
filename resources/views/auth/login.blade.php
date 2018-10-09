@@ -71,10 +71,7 @@ Login | ช่างตกแต่งคอนกรีต เว็บไซ�
 
             <a href="javascript:{}" onclick="document.getElementById('my_form_login').submit();" class="button book-now fullwidth margin-top-5">Sign In</a>
           </div>
-          <br />
-          <p>
-            ยังไม่มีบัญชีผู้ใช้? <a href="{{url('register')}}"><span style="color:#00a948; float:right">สร้างบัญชีผู้ใช้งานใหม่</span> </a>
-          </p>
+          
         </form>
       </div>
 
