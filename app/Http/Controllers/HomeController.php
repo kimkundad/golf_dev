@@ -11,6 +11,7 @@ use App\province_th;
 use App\tech;
 use App\cat_tech;
 use App\contact;
+use Response;
 
 class HomeController extends Controller
 {
@@ -361,6 +362,55 @@ class HomeController extends Controller
 
     }
 
+
+    public function search_data2(Request $request){
+
+      $this->validate($request, [
+       'field3' => 'required'
+      ]);
+
+      $field2= $request['field3'];
+
+
+      $get_user_count = DB::table('categories')->select(
+            'categories.*'
+            )
+            ->where('categories.name_cat', 'LIKE', '%'.$field2.'%')
+            ->count();
+
+
+            if($get_user_count > 0){
+
+
+              $get_user = DB::table('categories')->select(
+                    'categories.*'
+                    )
+                    ->where('categories.name_cat', 'LIKE', '%'.$field2.'%')
+                    ->get();
+
+
+              foreach($get_user as $x){
+                $admin[] =
+                    $x->name_cat
+                ;
+              }
+
+
+
+
+            }else{
+              $admin = null;
+            }
+
+
+            return Response::json(['data' => $admin]);
+
+
+    }
+
+
+
+
     public function about(){
       return view('about');
     }
@@ -386,7 +436,7 @@ class HomeController extends Controller
     public function search(Request $request){
       $cat_id = $request['cat_id'];
 
-
+      $search = $request['search'];
 
       $category = DB::table('categories')
           ->get();
@@ -452,6 +502,8 @@ class HomeController extends Controller
 
 
         if($cat_id[0] == 0){
+
+
 
           $tech = DB::table('teches')
               ->select(
@@ -537,6 +589,15 @@ class HomeController extends Controller
       }else{
 
 
+        if($location == null){
+          $radius = 5000;
+          $lat = 13.7211075;
+          $lon = 100.5904873;
+        }else{
+
+        }
+
+
         $tech_1 = tech::select( DB::raw('id, ( 6367 * acos( cos( radians('.$lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('.$lon.') ) + sin( radians('.$lat.') ) * sin( radians( lat ) ) ) ) AS distance'))
         ->having('distance', '<', $radius)
         ->orderBy('distance')
@@ -553,106 +614,350 @@ class HomeController extends Controller
 
 
 
+          if($search == null){
+
+            $tech = DB::table('teches')
+                  ->select(
+                  'teches.id',
+                  'teches.tech_fname',
+                  'teches.tech_lname',
+                  'teches.tech_image',
+                  'teches.tech_status_show',
+                  'teches.tech_view',
+                  'teches.tech_view',
+                  'teches.tech_rating',
+                  'teches.tech_detail',
+                  'teches.province_id',
+                  'teches.district',
+                  'teches.lat',
+                  'teches.lng',
+                  'teches.id as id_tech',
+                  'teches.tech_status'
+                  )
+                  ->whereIn('id', $get_id)
+                  ->where('teches.tech_status', 1)
+                  ->paginate(20);
+
+
+                  $tech_count = DB::table('teches')
+                    ->whereIn('id', $get_id)
+                    ->where('teches.tech_status', 1)
+                    ->count();
+
+          }else{
 
 
 
-    $tech = DB::table('teches')
-          ->select(
-          'teches.id',
-          'teches.tech_fname',
-          'teches.tech_lname',
-          'teches.tech_image',
-          'teches.tech_status_show',
-          'teches.tech_view',
-          'teches.tech_view',
-          'teches.tech_rating',
-          'teches.tech_detail',
-          'teches.province_id',
-          'teches.district',
-          'teches.lat',
-          'teches.lng',
-          'teches.id as id_tech',
-          'teches.tech_status'
-          )
-          ->whereIn('id', $get_id)
-          ->where('teches.tech_status', 1)
-          ->paginate(20);
+            $cat_count = DB::table('categories')->select(
+                  'categories.*'
+                  )
+                  ->where('categories.name_cat', 'like', "%$search%")
+                  ->count();
 
-        /*  $tech = DB::table('teches')  7.3287780772285
-              ->select(
-              'teches.id',
-              'teches.tech_fname',
-              'teches.tech_lname',
-              'teches.tech_image',
-              'teches.tech_status_show',
-              'teches.tech_view',
-              'teches.tech_view',
-              'teches.tech_rating',
-              'teches.tech_detail',
-              'teches.province_id',
-              'teches.district',
-              'teches.lat',
-              'teches.lng',
-              'teches.id as id_tech',
-              'teches.tech_status'
-              )
-              ->whereBetween('lat', [$min_lat, $max_lat])
-              ->whereBetween('lng', [$min_lon, $max_lon])
-              ->where('teches.tech_status', 1)
-              ->paginate(10); */
+              //    dd($cat_count);
 
-          $tech_count = DB::table('teches')
-            ->whereIn('id', $get_id)
-            ->where('teches.tech_status', 1)
-            ->count();
+                  if($cat_count > 0){
 
-          //    dd($lat);
 
-          //  dd($tech_count);
+
+                    $cat_2 = DB::table('categories')->select(
+                          'categories.*'
+                          )
+                          ->where('categories.name_cat', 'like', "%$search%")
+                          ->first();
+
+
+                            $option_t = DB::table('cat_teches')->select(
+                                  'cat_teches.*',
+                                  'categories.*'
+                                  )
+                                  ->leftjoin('categories', 'categories.id',  'cat_teches.cat_id')
+                                  ->where('categories.id', $cat_2->id)
+                                  ->get();
+
+                                  $option_z = [];
+
+                                  foreach ($option_t as $u) {
+                                    $option_z[] = $u->tech_id;
+                                  }
+
+                            //      dd($option_z);
+
+
+                    $tech = DB::table('teches')
+                          ->select(
+                          'teches.id',
+                          'teches.tech_fname',
+                          'teches.tech_lname',
+                          'teches.tech_image',
+                          'teches.tech_status_show',
+                          'teches.tech_view',
+                          'teches.tech_view',
+                          'teches.tech_rating',
+                          'teches.tech_detail',
+                          'teches.province_id',
+                          'teches.district',
+                          'teches.lat',
+                          'teches.lng',
+                          'teches.id as id_tech',
+                          'teches.tech_status'
+                          )
+                          ->whereIn('id', $option_z)
+                          ->whereIn('id', $get_id)
+                          ->where('teches.tech_status', 1)
+                          ->paginate(20);
+
+
+                          $tech_count = DB::table('teches')
+                            ->whereIn('id', $option_z)
+                            ->whereIn('id', $get_id)
+                            ->where('teches.tech_status', 1)
+                            ->count();
+
+                  }else{
+
+                    $tech = DB::table('teches')
+                          ->select(
+                          'teches.id',
+                          'teches.tech_fname',
+                          'teches.tech_lname',
+                          'teches.tech_image',
+                          'teches.tech_status_show',
+                          'teches.tech_view',
+                          'teches.tech_view',
+                          'teches.tech_rating',
+                          'teches.tech_detail',
+                          'teches.province_id',
+                          'teches.district',
+                          'teches.lat',
+                          'teches.lng',
+                          'teches.id as id_tech',
+                          'teches.tech_status'
+                          )
+                          ->whereIn('id', $get_id)
+                          ->where('teches.tech_status', 2)
+                          ->paginate(20);
+
+
+                          $tech_count = DB::table('teches')
+                            ->whereIn('id', $get_id)
+                            ->where('teches.tech_status', 2)
+                            ->count();
+
+
+
+                  }
+
+
+
+
+          }
+
+
+
+
+
+
+
+
+
         }else{
 
-          $tech = DB::table('teches')
-              ->select(
-              'teches.id',
-              'teches.tech_fname',
-              'teches.tech_lname',
-              'teches.tech_image',
-              'teches.tech_status_show',
-              'teches.tech_view',
-              'teches.tech_view',
-              'teches.tech_rating',
-              'teches.tech_detail',
-              'teches.province_id',
-              'teches.district',
-              'teches.lat',
-              'teches.lng',
-              'teches.id as id_tech',
-              'teches.tech_status',
-              'cat_teches.tech_id'
-              )
-              ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
-              ->whereIn('teches.id', $get_id)
-              ->whereIn('cat_teches.cat_id', $cat_id)
-              ->where('teches.tech_status', 1)
-              ->groupBy('teches.id')
-              ->paginate(20);
 
-              $tech_count1 = DB::table('teches')
+
+
+          if($search == null){
+
+
+            $tech = DB::table('teches')
                 ->select(
                 'teches.id',
+                'teches.tech_fname',
+                'teches.tech_lname',
+                'teches.tech_image',
+                'teches.tech_status_show',
+                'teches.tech_view',
+                'teches.tech_view',
+                'teches.tech_rating',
+                'teches.tech_detail',
+                'teches.province_id',
+                'teches.district',
+                'teches.lat',
+                'teches.lng',
+                'teches.id as id_tech',
                 'teches.tech_status',
-                'cat_teches.tech_id',
-                'cat_teches.cat_id'
+                'cat_teches.tech_id'
                 )
                 ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
-                ->whereIn('cat_teches.cat_id', $cat_id)
                 ->whereIn('teches.id', $get_id)
-
+                ->whereIn('cat_teches.cat_id', $cat_id)
                 ->where('teches.tech_status', 1)
                 ->groupBy('teches.id')
-                ->get();
+                ->paginate(20);
 
-              $tech_count = sizeof($tech_count1);
+              //  dd($tech);
+
+                $tech_count1 = DB::table('teches')
+                  ->select(
+                  'teches.id',
+                  'teches.tech_status',
+                  'cat_teches.tech_id',
+                  'cat_teches.cat_id'
+                  )
+                  ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                  ->whereIn('cat_teches.cat_id', $cat_id)
+                  ->whereIn('teches.id', $get_id)
+
+                  ->where('teches.tech_status', 1)
+                  ->groupBy('teches.id')
+                  ->get();
+
+                $tech_count = sizeof($tech_count1);
+
+
+
+          }else{
+
+
+            $cat_count = DB::table('categories')->select(
+                  'categories.*'
+                  )
+                  ->where('categories.name_cat', 'like', "%$search%")
+                  ->count();
+
+              //    dd($cat_count);
+
+                  if($cat_count > 0){
+
+
+                    $cat_2 = DB::table('categories')->select(
+                          'categories.*'
+                          )
+                          ->where('categories.name_cat', 'like', "%$search%")
+                          ->first();
+
+
+                            $option_t = DB::table('cat_teches')->select(
+                                  'cat_teches.*',
+                                  'categories.*'
+                                  )
+                                  ->leftjoin('categories', 'categories.id',  'cat_teches.cat_id')
+                                  ->where('categories.id', $cat_2->id)
+                                  ->get();
+
+                                  $option_z = [];
+
+                                  foreach ($option_t as $u) {
+                                    $option_z[] = $u->tech_id;
+                                  }
+
+
+
+
+                                  $tech = DB::table('teches')
+                                      ->select(
+                                      'teches.id',
+                                      'teches.tech_fname',
+                                      'teches.tech_lname',
+                                      'teches.tech_image',
+                                      'teches.tech_status_show',
+                                      'teches.tech_view',
+                                      'teches.tech_view',
+                                      'teches.tech_rating',
+                                      'teches.tech_detail',
+                                      'teches.province_id',
+                                      'teches.district',
+                                      'teches.lat',
+                                      'teches.lng',
+                                      'teches.id as id_tech',
+                                      'teches.tech_status',
+                                      'cat_teches.tech_id'
+                                      )
+                                      ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                                      ->whereIn('teches.id', $get_id)
+                                      ->whereIn('teches.id', $option_z)
+                                      ->whereIn('cat_teches.cat_id', $cat_id)
+                                      ->where('teches.tech_status', 1)
+                                      ->groupBy('teches.id')
+                                      ->paginate(20);
+
+                                    //  dd($tech);
+
+                                      $tech_count1 = DB::table('teches')
+                                        ->select(
+                                        'teches.id',
+                                        'teches.tech_status',
+                                        'cat_teches.tech_id',
+                                        'cat_teches.cat_id'
+                                        )
+                                        ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                                        ->whereIn('cat_teches.cat_id', $cat_id)
+                                        ->whereIn('teches.id', $get_id)
+                                        ->whereIn('teches.id', $option_z)
+                                        ->where('teches.tech_status', 1)
+                                        ->groupBy('teches.id')
+                                        ->get();
+
+                                      $tech_count = sizeof($tech_count1);
+
+
+                  }else{
+
+
+
+                    $tech = DB::table('teches')
+                        ->select(
+                        'teches.id',
+                        'teches.tech_fname',
+                        'teches.tech_lname',
+                        'teches.tech_image',
+                        'teches.tech_status_show',
+                        'teches.tech_view',
+                        'teches.tech_view',
+                        'teches.tech_rating',
+                        'teches.tech_detail',
+                        'teches.province_id',
+                        'teches.district',
+                        'teches.lat',
+                        'teches.lng',
+                        'teches.id as id_tech',
+                        'teches.tech_status',
+                        'cat_teches.tech_id'
+                        )
+                        ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                        ->whereIn('teches.id', $get_id)
+                        ->whereIn('cat_teches.cat_id', $cat_id)
+                        ->where('teches.tech_status', 1)
+                        ->groupBy('teches.id')
+                        ->paginate(20);
+
+                    //    dd($tech);
+
+                        $tech_count1 = DB::table('teches')
+                          ->select(
+                          'teches.id',
+                          'teches.tech_status',
+                          'cat_teches.tech_id',
+                          'cat_teches.cat_id'
+                          )
+                          ->leftjoin('cat_teches', 'cat_teches.tech_id', 'teches.id')
+                          ->whereIn('cat_teches.cat_id', $cat_id)
+                          ->whereIn('teches.id', $get_id)
+
+                          ->where('teches.tech_status', 1)
+                          ->groupBy('teches.id')
+                          ->get();
+
+                        $tech_count = sizeof($tech_count1);
+
+
+
+                  }
+
+
+          }
+
+
 
           //    dd($tech_count);
 
@@ -717,6 +1022,10 @@ class HomeController extends Controller
           $u->cat_tech = $tech_cat;
         }
 
+        if($search == null){
+          $search = "";
+        }
+
       //  dd($cat_id);
           $data['cat_id'] = $cat_id;
           $data['lat'] = $lat;
@@ -725,6 +1034,7 @@ class HomeController extends Controller
           $data['radius'] = $radius;
           $data['tech_count'] = $tech_count;
           $data['location'] = $location;
+          $data['search'] = $search;
       return view('search', $data);
     }
 

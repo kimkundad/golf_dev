@@ -35,7 +35,7 @@ return "$strDay $strMonthThai $strYear";
             <div class="d-flex justify-content-between border-right card-statistics-item">
               <div>
                 <h1>{{number_format($count_tech)}}</h1>
-                <p class="text-muted mb-0">ยอดสมัครช่างใหม่</p>
+                <p class="text-muted mb-0"><a href="{{url('admin/new_tech')}}">ยอดสมัครช่างใหม่</a></p>
               </div>
               <i class="icon-people text-primary icon-lg"></i>
             </div>
@@ -86,7 +86,7 @@ return "$strDay $strMonthThai $strYear";
   <div class="col-md-9 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">สมัครช่างใหม่ล่าสุด</h4>
+                  <h4 class="card-title">สมัครช่างใหม่ล่าสุด <span style="font-size:14px;"><a href="{{url('admin/new_tech')}}">(ดูทั้งหมด)</a></span></h4>
                   <table class="table">
                     <tbody>
                       @if($get_tech)

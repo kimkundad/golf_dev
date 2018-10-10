@@ -47,8 +47,14 @@
           <a href="{{url('admin/skill/')}}" class="nav-link"><i class="link-icon icon-calculator"></i><span class="menu-title">ความเชี่ยวชาญ</span></a>
         </li>
 
-        <li class="nav-item {{ (Request::is('admin/tech_list*') ? 'mega-menu active' : '') }} {{ (Request::is('admin/tech_search*') ? 'mega-menu active' : '') }}">
-          <a href="{{url('admin/tech_list/')}}" class="nav-link"><i class="link-icon icon-people"></i><span class="menu-title">ช่างในระบบ</span></a>
+        <li class="nav-item {{ (Request::is('admin/tech_list*') ? ' active' : '') }} {{ (Request::is('admin/tech_search*') ? ' active' : '') }} {{ (Request::is('admin/new_tech*') ? ' active' : '') }}">
+          <a href="{{url('admin/tech_list/')}}" class="nav-link"><i class="link-icon icon-people "></i><span class="menu-title">ช่างในระบบ</span><i class="menu-arrow"></i></a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <li class="nav-item"><a class="nav-link" href="{{url('admin/new_tech')}}">สมัครช่างใหม่</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{url('admin/tech_list')}}">ช่างในระบบ</a></li>
+            </ul>
+          </div>
         </li>
 
         <li class="nav-item {{ (Request::is('admin/contact_admin*') ? 'mega-menu active' : '') }}">

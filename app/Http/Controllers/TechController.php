@@ -65,6 +65,46 @@ class TechController extends Controller
           return view('admin3.tech.index', $data);
     }
 
+
+
+    public function new_tech()
+    {
+        //
+        $count_tech = DB::table('teches')->select(
+              'teches.*'
+              )
+              ->count();
+
+
+        $cat = DB::table('teches')->select(
+              'teches.*',
+              'province_ths.*',
+              'teches.id as id_te'
+              )
+              ->leftjoin('province_ths', 'province_ths.id',  'teches.province_id')
+              ->where('teches.tech_status', 0)
+              ->paginate(15);
+
+          foreach ($cat as $obj) {
+
+            $option = DB::table('cat_teches')->select(
+                  'cat_teches.*',
+                  'categories.*'
+                  )
+                  ->leftjoin('categories', 'categories.id',  'cat_teches.cat_id')
+                  ->where('cat_teches.tech_id', $obj->id)
+                  ->get();
+
+            $obj->options = $option;
+
+          }
+          //
+          $data['datahead'] = "ช่างในระบบ";
+          $data['count_tech'] = $count_tech;
+          $data['objs'] = $cat;
+          return view('admin3.tech.new_tech', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

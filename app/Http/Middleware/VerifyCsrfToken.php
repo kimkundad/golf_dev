@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         //
         'file/post',
         'admin/tech_list*',
+        'search/data2*',
         'admin/add_gallery'
     ];
 }

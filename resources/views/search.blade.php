@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/colors/green.css" id="colors">
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
-
+<link rel="stylesheet" href="{{url('assets/autoComplete/auto-complete.css')}}">
 </head>
 
 <body>
@@ -82,7 +82,7 @@
 					<a href="{{url('about')}}" class="sign-in hidden-sm hidden-xs"> เกี่ยวกับเรา</a>
 					<a href="{{url('contact')}}" class="sign-in hidden-sm hidden-xs"> ติดต่อเรา</a>
 
-				
+
 
 					<a href="{{url('regis_tech')}}" class="button with-icon" style="border-radius: 2px;font-size: 16px;"> สมัครเป็นผู้รับเหมา </a>
 				</div>
@@ -123,7 +123,7 @@
 								<div class="col-fs-6">
 									<div class="input-with-icon">
 										<i class="sl sl-icon-magnifier"></i>
-										<input type="text" placeholder="ค้นหาช่าง" value=""/>
+										<input type="text" placeholder="ค้นหาช่าง" id="hero-demo2" name="search" value="{{$search}}"/>
 									</div>
 								</div>
 
@@ -390,7 +390,25 @@
 <script type="text/javascript" src="assets/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="assets/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="assets/scripts/custom.js"></script>
+<script src="{{url('assets/autoComplete/auto-complete.js')}}"></script>
+<script>
 
+
+    var xhr3;
+    new autoComplete({
+        selector: 'input[name="search"]',
+        minChars: 1,
+        source: function(term, response){
+
+            xhr3 = $.getJSON('{{url('/search/data2/')}}', { field3: term }, function(data){
+              //secure_url
+              response(data.data);
+            });
+        }
+    });
+
+
+</script>
 
 <!-- Google Autocomplete -->
 <script>

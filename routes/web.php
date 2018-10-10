@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
+Route::get('search/data2', 'HomeController@search_data2');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
@@ -60,6 +61,8 @@ Route::group(['middleware' => 'admin'], function() {
   Route::get('admin/tech_gallery/{id}', 'TechController@tech_gallery');
   Route::get('admin/tech_job/{id}', 'TechController@tech_job');
   Route::post('admin/add_gallery/', 'TechController@add_gallery');
+  Route::get('admin/new_tech/', 'TechController@new_tech');
+
   Route::post('api/api_tech_status', 'TechController@api_tech_status');
   Route::post('admin/file/posts', 'TechController@imagess');
   Route::resource('admin/contact_admin', 'ContactAdController');
