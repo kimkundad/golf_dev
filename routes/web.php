@@ -27,6 +27,7 @@ Route::get('/regis_tech', 'HomeController@regis_tech')->name('regis_tech');
 Route::post('/search', 'HomeController@search')->name('search');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('single_tech/{id}', 'HomeController@single_tech')->name('single_tech');
+Route::get('search_tag/{id}', 'HomeController@search_tag');
 
 Route::get('/terms_conditions', 'HomeController@terms_conditions')->name('terms_conditions');
 Route::get('/privacy', 'HomeController@privacy')->name('privacy');

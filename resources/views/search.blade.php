@@ -21,8 +21,8 @@
 
 <!-- CSS
 ================================================== -->
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/colors/green.css" id="colors">
+<link rel="stylesheet" href="{{url('assets/css/style.css')}}">
+<link rel="stylesheet" href="{{url('assets/css/colors/green.css')}}" id="colors">
 <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <link rel="stylesheet" href="{{url('assets/autoComplete/auto-complete.css')}}">
 </head>
@@ -379,17 +379,17 @@
 
 <!-- Scripts
 ================================================== -->
-<script type="text/javascript" src="assets/scripts/jquery-2.2.0.min.js"></script>
-<script type="text/javascript" src="assets/scripts/mmenu.min.js"></script>
-<script type="text/javascript" src="assets/scripts/chosen.min.js"></script>
-<script type="text/javascript" src="assets/scripts/slick.min.js"></script>
-<script type="text/javascript" src="assets/scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="assets/scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="assets/scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="assets/scripts/counterup.min.js"></script>
-<script type="text/javascript" src="assets/scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="assets/scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="assets/scripts/custom.js"></script>
+<script type="text/javascript" src="{{url('assets/scripts/jquery-2.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/mmenu.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/chosen.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/slick.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/rangeslider.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/magnific-popup.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/waypoints.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/counterup.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/tooltips.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/custom.js')}}"></script>
 <script src="{{url('assets/autoComplete/auto-complete.js')}}"></script>
 <script>
 
@@ -846,9 +846,9 @@ function CustomMarker(latlng, map, args, markerIco) {
 
 <!-- Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places&callback=initAutocomplete"></script>
-<script type="text/javascript" src="assets/scripts/infobox.min.js"></script>
-<script type="text/javascript" src="assets/scripts/markerclusterer.js"></script>
-<script type="text/javascript" src="assets/scripts/maps.js"></script>
+<script type="text/javascript" src="{{url('assets/scripts/infobox.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/markerclusterer.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/maps.js')}}"></script>
 
 
 </body>

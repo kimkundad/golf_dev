@@ -231,11 +231,13 @@ class HomeController extends Controller
 
                       $cat_for = DB::table('categories')
                           ->select(
-                          'categories.name_cat'
+                          'categories.name_cat',
+                          'categories.id as id_catt'
                           )
                           ->where('id', $j->cat_id)
                           ->first();
                       $j->name_cat_for = $cat_for->name_cat;
+                      $j->name_cat_id = $cat_for->id_catt;
                     }
 
                   }
@@ -433,7 +435,144 @@ class HomeController extends Controller
       return view('regis_tech', $data);
     }
 
+    public function search_tag($id){
+
+      $cat_id = $id;
+
+      $category = DB::table('categories')
+          ->get();
+
+      foreach ($category as $k) {
+
+        for($s = 0; $s < count($cat_id); $s++ ){
+
+          if($k->id == $cat_id[$s]){
+            $k->option = 1;
+          }
+        }
+        // code...
+
+      }
+
+      $data['category'] = $category;
+
+
+      $tech = DB::table('teches')
+          ->select(
+          'teches.id',
+          'teches.tech_fname',
+          'teches.tech_lname',
+          'teches.tech_image',
+          'teches.tech_status_show',
+          'teches.tech_view',
+          'teches.tech_view',
+          'teches.tech_rating',
+          'teches.tech_detail',
+          'teches.province_id',
+          'teches.district',
+          'teches.lat',
+          'teches.lng',
+          'teches.id as id_tech',
+          'teches.tech_status'
+          )
+          ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
+          ->where('cat_teches.cat_id', $cat_id)
+          ->where('teches.tech_status', 1)
+          ->groupBy('teches.id')
+          ->paginate(20);
+
+
+
+
+          $tech_count = DB::table('teches')
+            ->select(
+            'teches.id',
+            'cat_teches.tech_id'
+            )
+            ->leftjoin('cat_teches', 'teches.id', '=','cat_teches.tech_id')
+            ->where('cat_teches.cat_id', $cat_id)
+            ->where('teches.tech_status', 1)
+            ->groupBy('teches.id')
+            ->count();
+
+
+          //  dd($tech);
+
+
+            foreach($tech as $u){
+
+              $tech_img = DB::table('tech_galleries')
+                  ->select(
+                  'image'
+                  )
+                  ->where('tech_id', $u->id)
+                  ->first();
+
+                  $tech_prov = DB::table('province_ths')
+                      ->select(
+                      'province_name'
+                      )
+                      ->where('id', $u->province_id)
+                      ->first();
+
+              $tech_cat = DB::table('cat_teches')
+                  ->where('tech_id', $u->id)
+                  ->get();
+
+                  $tech_cat_count = DB::table('cat_teches')
+                      ->where('tech_id', $u->id)
+                      ->count();
+
+                      if($tech_cat_count > 0){
+                  foreach($tech_cat as $j){
+
+                    $cat_for = DB::table('categories')
+                        ->select(
+                        'categories.name_cat'
+                        )
+                        ->where('id', $j->cat_id)
+                        ->first();
+                    $j->name_cat_for = $cat_for->name_cat;
+                  }
+                }
+
+              $u->tech_prov = $tech_prov->province_name;
+
+
+              if(empty($tech_img->image)){
+                $u->tech_imgs = 'listing-item-03.jpg';
+              }else{
+                $u->tech_imgs = $tech_img->image;
+              }
+
+
+              $u->cat_tech = $tech_cat;
+            }
+
+
+            $lat = 13.7211075;
+            $lon = 100.5904873;
+
+
+
+
+      //  dd($cat_id);
+          $data['cat_id'] = $cat_id;
+          $data['search'] = "";
+          $data['lat'] = $lat;
+          $data['lon'] = $lon;
+          $data['location'] = "";
+          $data['tech'] = $tech;
+          $data['radius'] = 50;
+          $data['tech_count'] = $tech_count;
+
+
+      return view('search', $data);
+
+    }
+
     public function search(Request $request){
+
       $cat_id = $request['cat_id'];
 
       $search = $request['search'];

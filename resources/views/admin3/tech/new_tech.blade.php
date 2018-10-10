@@ -18,7 +18,7 @@
       <div class="card-body">
         <div class="row">
 
-          <h4 class="card-title col-sm-6">{{$datahead}} <button type="button" onclick="window.location.href='{{url('admin/tech_list/create')}}'"
+          <h4 class="card-title col-sm-6">{{$datahead}} ({{$count_tech}}) <button type="button" onclick="window.location.href='{{url('admin/tech_list/create')}}'"
              class="btn btn-outline-success btn-rounded btn-fw" style="margin-left:15px;"><i class="icon-plus"></i> New</button></h4>
 
              <div class="form-group col-sm-6">

@@ -51,7 +51,7 @@
 						@if($tech_cat)
 							@if($tech_cat_count > 0)
 							@foreach($tech_cat as $j)
-								<span class="listing-tag">{{$j->name_cat_for}}</span>
+								<a href="{{url('search_tag/'.$j->name_cat_id)}}"><span class="listing-tag">{{$j->name_cat_for}}</span></a>
 							@endforeach
 							@endif
 						@endif

@@ -73,6 +73,7 @@ class TechController extends Controller
         $count_tech = DB::table('teches')->select(
               'teches.*'
               )
+              ->where('teches.tech_status', 0)
               ->count();
 
 
@@ -283,7 +284,7 @@ class TechController extends Controller
 
       }
 
-
+                      $data['count_tech'] = $count_tech;
                       $data['datahead'] = "ช่างในระบบ";
                       $data['search'] = $search;
 
