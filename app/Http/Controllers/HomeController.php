@@ -251,9 +251,16 @@ class HomeController extends Controller
               ->where('tech_id', $id)
               ->first();
 
+              if($tech_img_fb == null){
+                $data['tech_imgs'] = "blog-post-03.jpg";
+
+              }else{
+                $data['tech_imgs'] = $tech_img_fb->image;
+              }
+
           //    dd($tech_img);
 
-          $data['tech_imgs'] = $tech_img_fb;
+
 
           $data['tech_cat_count'] = $tech_cat_count;
           $data['tech_prov'] = $tech_prov->province_name;
