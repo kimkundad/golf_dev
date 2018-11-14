@@ -30,8 +30,8 @@
                     <th>เบอร์ติดต่อ</th>
 
                     <th>email</th>
-                    <th>status</th>
-                    <th>Actions</th>
+                    <th>สถานะ</th>
+                    <th>จัดการ</th>
 
                 </tr>
               </thead>

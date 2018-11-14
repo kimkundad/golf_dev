@@ -27,7 +27,7 @@
                     <th>ชื่อหัวข้อ</th>
                     <th>จำนวนช่าง</th>
 
-                    <th>Actions</th>
+                    <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody>

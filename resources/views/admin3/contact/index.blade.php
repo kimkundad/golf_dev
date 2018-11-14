@@ -28,9 +28,9 @@
 
                   <th>email</th>
                   <th>วันที่</th>
-                  <th>status</th>
+                  <th>สถานะ</th>
 
-                    <th>Actions</th>
+                    <th>จัดการ</th>
 
                 </tr>
               </thead>

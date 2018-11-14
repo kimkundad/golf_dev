@@ -27,7 +27,7 @@
                     <th>ชื่อหมวดหมู่</th>
                     <th>จำนวนช่าง</th>
 
-                    <th>Actions</th>
+                    <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody>
