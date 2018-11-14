@@ -28,8 +28,8 @@
                     <th>ชื่อผู้ใช้งาน</th>
                     <th>อีเมล</th>
                     <th>วันที่สมัคร</th>
-                    <th>status</th>
-                    <th>Actions</th>
+                    <th>สถานะ</th>
+                    <th>จัดการ</th>
 
                 </tr>
               </thead>

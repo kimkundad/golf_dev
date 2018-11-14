@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item {{ (Request::is('admin/skill*') ? 'mega-menu active' : '') }}">
-          <a href="{{url('admin/skill/')}}" class="nav-link"><i class="link-icon icon-calculator"></i><span class="menu-title">ความเชี่ยวชาญ</span></a>
+          <a href="{{url('admin/skill/')}}" class="nav-link"><i class="link-icon icon-calculator"></i><span class="menu-title">คุณสมบัติ</span></a>
         </li>
 
         <li class="nav-item {{ (Request::is('admin/tech_list*') ? ' active' : '') }} {{ (Request::is('admin/tech_search*') ? ' active' : '') }} {{ (Request::is('admin/new_tech*') ? ' active' : '') }}">
