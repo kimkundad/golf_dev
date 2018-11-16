@@ -31,7 +31,7 @@
 
                     <th>email</th>
                     <th>สถานะ</th>
-                    <th>จัดการ</th>
+                    <th style="width: 106px;">จัดการ</th>
 
                 </tr>
               </thead>
