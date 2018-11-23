@@ -200,6 +200,25 @@
     position: fixed;
 		top: 500px;
   }
+	input, input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
+    height: 41px;
+    line-height: 51px;
+    padding: 0 20px;
+    outline: none;
+    font-size: 15px;
+    color: #808080;
+    margin: 0 0 16px 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+    opacity: 1;
+    border-radius: 3px;
+}
 		</style>
 
 		<!-- Sidebar
@@ -215,7 +234,7 @@
 			</div>
 
 			<!-- Book Now -->
-			<div class="boxed-widget booking-widget margin-top-35">
+			<div class="boxed-widget booking-widget margin-top-25" style="padding: 18px 25px 18px 25px;">
 
 				<div class="row with-forms  margin-top-0">
 
@@ -224,7 +243,7 @@
 
 					<!-- Panel Dropdown -->
 					<div class="col-lg-12">
-							<div class="pull-left">
+					<!--		<div class="pull-left">
 								<h5 >ชื่อผู้รับเหมา</h3>
 								<h4 style="font-size: 16px;">{{$tech->tech_fname}} {{$tech->tech_lname}}</h4>
 
@@ -233,15 +252,15 @@
 							<img class="pull-right" style="border-radius: 50%; height:60px;" src="{{url('assets/tech_img/'.$tech->tech_image)}}" alt="">
 							<div style="padding-top:60px;">
 								<hr />
-							</div>
+							</div> -->
 
 
 
-            	<h4 style="margin-bottom:0px;">ข้อมูลผู้ว่าจ้าง</h4>
+            	<h4 style="margin-bottom:0px;margin-top: 0px;">ข้อมูลผู้ว่าจ้าง</h4>
 
             <form action="{{url('post_to_tech')}}" id="my_form" method="post" class="register">
 							{{ csrf_field() }}
-            <p class="form-row form-row-wide">.
+            <p class="form-row form-row-wide" style="margin: 0 0 13px;">.
 							@if($errors->has('name'))
 							<span class="text-danger">*กรอก ชื่อ-นามสกุล</span>
 							@endif
@@ -250,7 +269,7 @@
 
             </p>
 
-            <p class="form-row form-row-wide">
+            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
 							@if($errors->has('phone'))
 							<span class="text-danger">*กรอก เบอร์โทรติดต่อ</span>
 							@endif
@@ -258,7 +277,7 @@
 
             </p>
 
-            <p class="form-row form-row-wide">
+            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
 							@if($errors->has('email'))
 							<span class="text-danger">*กรอก อีเมล์</span>
 							@endif
@@ -266,7 +285,7 @@
 
             </p>
 
-            <p class="form-row form-row-wide">
+            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
 							@if($errors->has('comments'))
 							<span class="text-danger">*กรอก ข้อมูลเบื้องต้น</span>
 							@endif
@@ -341,7 +360,7 @@ $(window).scroll(function(){
 console.log(wrap)
 
 			if($(window).scrollTop() > elementPosition.top){
-						$('#navigation-fix').css('position','fixed').css('width','24.5%').css('top','120px');
+						$('#navigation-fix').css('position','fixed').css('width','24.5%').css('top','100px');
 			} else {
 					$('#navigation-fix').css('position','static').css('width','100%');
 			}
