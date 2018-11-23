@@ -225,7 +225,7 @@
 		================================================== -->
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
-			<div class="" id="navigation-fix">
+			<div class="hidden-sm hidden-xs" id="navigation-fix">
 
 
 			<!-- Verified Badge -->
@@ -312,6 +312,97 @@
 			</div>
 			<!-- Book Now / End -->
 
+
+			</div>
+
+
+
+
+			<div class="visible-sm visible-xs">
+
+				<!-- Verified Badge -->
+				<div class="verified-badge " >
+					 ติดต่อช่าง
+				</div>
+
+				<!-- Book Now -->
+				<div class="boxed-widget booking-widget margin-top-25" style="padding: 18px 25px 18px 25px;">
+
+					<div class="row with-forms  margin-top-0">
+
+						<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+
+
+						<!-- Panel Dropdown -->
+						<div class="col-lg-12">
+						<!--		<div class="pull-left">
+									<h5 >ชื่อผู้รับเหมา</h3>
+									<h4 style="font-size: 16px;">{{$tech->tech_fname}} {{$tech->tech_lname}}</h4>
+
+
+								</div>
+								<img class="pull-right" style="border-radius: 50%; height:60px;" src="{{url('assets/tech_img/'.$tech->tech_image)}}" alt="">
+								<div style="padding-top:60px;">
+									<hr />
+								</div> -->
+
+
+
+	            	<h4 style="margin-bottom:0px;margin-top: 0px;">ข้อมูลผู้ว่าจ้าง</h4>
+
+	            <form action="{{url('post_to_tech')}}" id="my_form" method="post" class="register">
+								{{ csrf_field() }}
+	            <p class="form-row form-row-wide" style="margin: 0 0 13px;">.
+								@if($errors->has('name'))
+								<span class="text-danger">*กรอก ชื่อ-นามสกุล</span>
+								@endif
+	                <input type="text" class="input-text" name="name" placeholder="ชื่อ-นามสกุล"  required/>
+									<input type="hidden" class="input-text" name="tech_id" value="{{$tech->id_tech}}"  required/>
+
+	            </p>
+
+	            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
+								@if($errors->has('phone'))
+								<span class="text-danger">*กรอก เบอร์โทรติดต่อ</span>
+								@endif
+	                <input type="text" class="input-text" name="phone" placeholder="เบอร์โทรติดต่อ"  required/>
+
+	            </p>
+
+	            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
+								@if($errors->has('email'))
+								<span class="text-danger">*กรอก อีเมล์</span>
+								@endif
+	                <input type="text" class="input-text" name="email" placeholder="อีเมล์"  required/>
+
+	            </p>
+
+	            <p class="form-row form-row-wide" style="margin: 0 0 13px;">
+								@if($errors->has('comments'))
+								<span class="text-danger">*กรอก ข้อมูลเบื้องต้น</span>
+								@endif
+	                <textarea name="comments" rows="3" id="comments" placeholder="สถานที่และรายละเอียดงาน ที่ท่านต้องการว่าจ้าง" spellcheck="true" required="required" class="error" ></textarea>
+
+							</p>
+
+
+	            <div class="text-center">
+	              <a href="javascript:{}" onclick="document.getElementById('my_form').submit();" class="button medium "><i class="fa fa-envelope-o" style="font-size:16px;"></i> ส่งข้อความ</a>
+	            </div>
+
+
+
+	            </form>
+
+						</div>
+						<!-- Panel Dropdown / End -->
+
+					</div>
+
+					<!-- progress button animation handled via custom.js -->
+
+				</div>
+				<!-- Book Now / End -->
 
 			</div>
 
