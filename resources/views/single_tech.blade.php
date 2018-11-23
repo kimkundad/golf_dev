@@ -39,7 +39,7 @@
 
 <!-- Content
 ================================================== -->
-<div class="container">
+<div class="container" id="wrap">
 	<div class="row sticky-wrapper">
 		<div class="col-lg-8 col-md-8 padding-right-30">
 
@@ -195,10 +195,18 @@
 
 		</div>
 
+		<style>
+		.fix-search {
+    position: fixed;
+		top: 500px;
+  }
+		</style>
 
 		<!-- Sidebar
 		================================================== -->
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
+
+			<div class="" id="navigation-fix">
 
 
 			<!-- Verified Badge -->
@@ -286,7 +294,7 @@
 			<!-- Book Now / End -->
 
 
-
+			</div>
 
 
 
@@ -324,6 +332,21 @@ this.$('#booking-time').timeDropper({
 	minutesInterval: '15'
 });
 
+
+
+var elementPosition = $('#wrap').offset();
+
+$(window).scroll(function(){
+
+console.log(wrap)
+
+			if($(window).scrollTop() > elementPosition.top){
+						$('#navigation-fix').css('position','fixed').css('top','0');
+			} else {
+					$('#navigation-fix').css('position','static');
+			}
+
+});
 
 </script>
 
