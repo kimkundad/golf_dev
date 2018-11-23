@@ -237,7 +237,7 @@
 
 
 
-            	<h4 style="margin-bottom:20px;">ข้อมูลผู้ว่าจ้าง</h4>
+            	<h4 style="margin-bottom:0px;">ข้อมูลผู้ว่าจ้าง</h4>
 
             <form action="{{url('post_to_tech')}}" id="my_form" method="post" class="register">
 							{{ csrf_field() }}
@@ -341,9 +341,9 @@ $(window).scroll(function(){
 console.log(wrap)
 
 			if($(window).scrollTop() > elementPosition.top){
-						$('#navigation-fix').css('position','fixed').css('top','0');
+						$('#navigation-fix').css('position','fixed').css('width','24.5%').css('top','120px');
 			} else {
-					$('#navigation-fix').css('position','static');
+					$('#navigation-fix').css('position','static').css('width','100%');
 			}
 
 });
