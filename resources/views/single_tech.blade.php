@@ -475,7 +475,7 @@ console.log(wrap)
 
 <!-- Maps -->
 
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&sensor=false&amp;language=en"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{env('google_map')}}&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="{{url('assets/scripts/infobox.min.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/scripts/markerclusterer.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/scripts/maps2.js')}}"></script>
