@@ -845,7 +845,7 @@ function CustomMarker(latlng, map, args, markerIco) {
 
 
 <!-- Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&libraries=places&callback=initAutocomplete"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&libraries=places&callback=initAutocomplete&signed_in=true"></script>
 <script type="text/javascript" src="{{url('assets/scripts/infobox.min.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/scripts/markerclusterer.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/scripts/maps.js')}}"></script>
