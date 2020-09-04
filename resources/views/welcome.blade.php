@@ -315,7 +315,7 @@
 	}
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&libraries=places&callback=initAutocomplete"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&signed_in=true&libraries=places&callback=initialize"></script>
 
 
 @stop('scripts')
