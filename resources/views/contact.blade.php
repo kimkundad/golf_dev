@@ -212,7 +212,7 @@
 @section('scripts')
 
 <!-- Maps -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA89Rb8Kz1ArY3ks6sSvz2cNrn66CHKDiA&sensor=false&amp;language=en"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{env('google_map')}}&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="assets/scripts/infobox.min.js"></script>
 <script type="text/javascript" src="assets/scripts/markerclusterer.js"></script>
 <script type="text/javascript" >
