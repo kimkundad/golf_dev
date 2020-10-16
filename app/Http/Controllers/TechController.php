@@ -725,7 +725,7 @@ class TechController extends Controller
 
 
             $path = 'assets/tech_img/';
-            $filename = time()."-".$gallary->getClientOriginalName();
+            $filename = time().'-'.(\random_int(1000, 9999)).'.'.$gallary->getClientOriginalExtension();
             $gallary->move($path, $filename);
             $admins[] = [
                 'image' => $filename,
