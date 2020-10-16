@@ -296,7 +296,7 @@ $("#commentForm").validate({
 });
 
 </script>
-<script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDpN7ALbslkRAqQEdaS1Bz0J-Tu7e8rzy8&libraries=places'></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{env('google_map')}}&libraries=places&sensor=false"></script>
 <script type="text/javascript">
       var map;
       var geocoder;
