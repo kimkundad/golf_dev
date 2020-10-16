@@ -123,11 +123,18 @@
                   {{$job->detail_job}}
                 </p>
                 <div class="review-images mfp-gallery-container">
-									@if($job->img)
+				<div class="row">
+				@if($job->img)
 									@foreach($job->img as $job_img)
-  									      <a href="{{url('assets/job_img/'.$job_img->image)}}" class="mfp-gallery"><img src="{{url('assets/job_img/'.$job_img->image)}}" alt=""></a>
-													@endforeach
-                          @endif
+					<div class="col-md-2">
+					<a href="{{url('assets/job_img/'.$job_img->image)}}" class="mfp-gallery"><img src="{{url('assets/job_img/'.$job_img->image)}}" alt=""></a>
+					</div>
+					@endforeach
+                          			@endif
+				</div>
+									
+  									      
+									
   								</div>
                   <hr />
 									@endforeach
