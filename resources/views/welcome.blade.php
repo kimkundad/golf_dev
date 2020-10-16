@@ -214,6 +214,28 @@
     font-weight: 400;
     margin-bottom: 0px;
 }
+.category-box-content {
+    position: absolute;
+    bottom: 50px;
+    left: 16px;
+    width: calc(100% - 68px);
+    z-index: 50;
+    box-sizing: border-box;
+}
+.category-box-btn {
+    position: absolute;
+    right: 16px;
+    bottom: 32px;
+    z-index: 111;
+    background-color: #00a948;
+    border: 1px solid #00a948;
+    color: #fff;
+    padding: 8px 0px;
+    text-align: center;
+    min-width: 70px;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
 </style>
 
 
