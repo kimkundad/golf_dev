@@ -194,6 +194,9 @@
 					<div>
 						<textarea name="comments" cols="40" rows="3" id="comments" placeholder="ข้อความ" spellcheck="true" required="required">{{ old('comments') }}</textarea>
 					</div>
+					<div>
+					<div class="g-recaptcha" data-sitekey="6LdQnlkUAAAAAOfsIz7o-U6JSgrSMseulLvu7lI8"></div>
+					</div>
 
 					<input type="submit" class="submit button" id="submit" value="ส่งข้อความ" />
 
@@ -210,7 +213,7 @@
 @endsection
 
 @section('scripts')
-
+<script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
 <!-- Maps -->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{env('google_map')}}&sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="assets/scripts/infobox.min.js"></script>

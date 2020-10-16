@@ -273,6 +273,24 @@ class HomeController extends Controller
 
     public function contact_us(Request $request){
 
+      $secret="6LdQnlkUAAAAADW2xY5YauDvYTlGfrzlg-X1la3k";
+
+      $captcha = "";
+    if (isset($request["g-recaptcha-response"]))
+      $captcha = $request["g-recaptcha-response"];
+
+  //  $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response");
+    $response = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$captcha."&remoteip=".$_SERVER["REMOTE_ADDR"]), true);
+    //$captcha_success=json_decode($verify);
+
+  //  dd($captcha_success);
+
+  if($response["success"] == false) {
+
+    return redirect(url('contact'));
+
+  }else{
+
       $this->validate($request, [
            'name' => 'required',
            'email' => 'required',
@@ -290,6 +308,8 @@ class HomeController extends Controller
       // dd($package);
 
        return redirect(url('email_success'))->with('add_success','คุณทำการเพิ่มอสังหา สำเร็จ');
+
+      }
 
 
 
