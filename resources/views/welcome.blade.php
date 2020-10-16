@@ -190,7 +190,31 @@
 <!-- Categories Carousel / End -->
 
 
-
+<style>
+.listing-item-content {
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    padding: 0 20px;
+    padding-right: 20px;
+    width: 100%;
+    z-index: 50;
+    box-sizing: border-box;
+}
+.listing-item-container.list-layout span.tag, .listing-item-content span.tag {
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    font-weight: 60;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50px;
+    padding: 2px 10px;
+    line-height: 18px;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+</style>
 
 
 <!-- Fullwidth Section -->
@@ -223,10 +247,10 @@
 									<span class="tag">{{$j->name_cat_for}}</span>
 									@endforeach
 									@endif
-									<h3 style="font-size: 16px; line-height: 21px;">{{$u->tech_detail}} </h3>
+									<h3 style="font-size: 13px; line-height: 21px;">{{$u->tech_detail}} </h3>
 									<span>{{$u->tech_prov}} </span>
 								</div>
-								<span class="like-icon"></span>
+							<!--	<span class="like-icon"></span> -->
 							</div>
 							<div class="star-rating" data-rating="{{$u->tech_rating}}.0" style="height: 90px; padding: 15px 5px 15px 15px;">
 								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
