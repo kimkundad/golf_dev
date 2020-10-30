@@ -391,6 +391,11 @@
 <script type="text/javascript" src="{{url('assets/scripts/tooltips.min.js')}}"></script>
 <script type="text/javascript" src="{{url('assets/scripts/custom.js')}}"></script>
 <script src="{{url('assets/autoComplete/auto-complete.js')}}"></script>
+<!-- Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&libraries=places&callback=initAutocomplete&signed_in=true"></script>
+<script type="text/javascript" src="{{url('assets/scripts/infobox.min.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/markerclusterer.js')}}"></script>
+<script type="text/javascript" src="{{url('assets/scripts/maps.js')}}"></script>
 <script>
 
 
@@ -844,11 +849,7 @@ function CustomMarker(latlng, map, args, markerIco) {
 
 
 
-<!-- Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key={{env('google_map')}}&libraries=places&callback=initAutocomplete&signed_in=true"></script>
-<script type="text/javascript" src="{{url('assets/scripts/infobox.min.js')}}"></script>
-<script type="text/javascript" src="{{url('assets/scripts/markerclusterer.js')}}"></script>
-<script type="text/javascript" src="{{url('assets/scripts/maps.js')}}"></script>
+
 
 
 </body>
