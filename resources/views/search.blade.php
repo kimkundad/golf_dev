@@ -499,7 +499,7 @@ if ($('.main-search-input-item')[0]) {
 
 		@if($tech)
 			@foreach($tech as $u)
-    [ locationData('single_tech/{{$u->id_tech}}','{{url('assets/tech_img/'.$u->tech_imgs)}}',"{{$u->tech_fname}} {{$u->tech_lname}}",'{{$u->tech_detail}}', '{{$u->tech_rating}}', '{{$u->tech_view}}'),
+    [ locationData('single_tech/{{$u->id_tech}}','{{url('assets/tech_img/'.$u->tech_imgs)}}',"{{$u->tech_fname}} {{$u->tech_lname}}", '{{$u->tech_rating}}', '{{$u->tech_view}}'),
 		{{$u->lat}}, {{$u->lng}}, {{$u->id_tech}}, '<img src="{{url('assets/tech_img/'.$u->tech_image)}}" style="height: 36px; width:36px; border-radius: 50%;">'],
 			@endforeach
 		@endif
