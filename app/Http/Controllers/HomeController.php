@@ -142,9 +142,12 @@ class HomeController extends Controller
 
     public function single_tech($id){
 
+
+
       $tech_skill = DB::table('tech_skills')
           ->where('tech_id', $id)
           ->get();
+
           foreach($tech_skill as $k){
 
             $skill = DB::table('skills')
@@ -197,6 +200,10 @@ class HomeController extends Controller
           ->where('tech_status', 1)
           ->where('id', $id)
           ->first();
+
+          DB::table('teches')
+            ->where('id', $id)
+            ->update(['tech_view' => $tech->tech_view+1]);
 
 
 

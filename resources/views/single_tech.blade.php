@@ -59,14 +59,12 @@
 
 					</h2>
 					<span>
-						<a href="#listing-location" class="listing-address">
+						<a href="#listing-location" class="listing-address" style="color:#efba04">
 							<i class="fa fa-map-marker"></i>
-							จังหวัด : {{$tech->province_ths->province_name}}
+							จังหวัด : {{$tech->province_ths->province_name}} <span style="color:#888; font-size: 14px;">({{$tech->tech_view}} เข้าดู)</span> 
 						</a>
 					</span>
-					<div class="star-rating" data-rating="5">
-						<div class="rating-counter"></div>
-					</div>
+					
 				</div>
 			</div>
 

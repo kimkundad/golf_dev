@@ -270,16 +270,15 @@
 									@endforeach
 									@endif
 									<h3 style="font-size: 13px; line-height: 21px;">{{$u->tech_detail}} </h3>
-									<span>{{$u->tech_prov}} </span>
 								</div>
 							<!--	<span class="like-icon"></span> -->
 							</div>
-							<div class="star-rating" data-rating="{{$u->tech_rating}}.0" style="height: 90px; padding: 15px 5px 15px 15px;">
+							<div class="star-rating"  style="height: 90px; padding: 15px 5px 15px 15px;">
 								<div class="avatar" style="position: inherit; padding: 0 10px 0 0;">
 									<img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="" style="height: 60px;">
 								</div>
 								<span>{{$u->tech_fname}} {{$u->tech_lname}}</span><br />
-								<div class="rating-counter">({{$u->tech_view}} รีวิว)</div>
+								<div class="rating-counter"><span style="color:#efba04"><i class="fa fa-map-marker"></i> {{$u->tech_prov}} </span> ({{$u->tech_view}} เข้าดู)</div>
 							</div>
 						</a>
 					</div>

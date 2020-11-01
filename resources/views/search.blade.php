@@ -248,6 +248,32 @@
 
 			</div>
 
+<style>
+@media (max-width: 767px){
+  .listing-item-content span {
+    font-size: 14px;
+}
+.listing-item-content h3{
+  font-size: 14px;
+}
+.tech_avatar{
+  bottom: -35px;
+}
+}
+@media (min-width: 992px) {
+  .tech_avatar{
+  bottom: 20px;
+}
+@media (min-width: 1240px) {
+	.tech_avatar{
+  bottom: 20px;
+}
+}
+
+}
+
+
+</style>
 
 			<!-- Listings -->
 			<div class="row fs-listings">
@@ -277,15 +303,15 @@
 
 								<div class="listing-item-inner">
 									<h3 style="line-height: 25px;">{{$u->tech_detail}} </h3>
-									<span style="font-size: 14px;"> {{$u->tech_prov}}</span>
+									<span style="font-size: 14px; color:#efba04"><i class="fa fa-map-marker"></i> {{$u->tech_prov}} <span style="color:#888; font-size: 14px;">({{$u->tech_view}} เข้าดู)</span> </span>
 
 								</div>
 
-                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" data-rating="{{$u->tech_rating}}">
-                  <div class="rating-counter" style="font-size:12px;">({{$u->tech_view}} วิว)</div>
+                <div class="star-rating pull-right" style="margin-right:10px; padding-top:18px;" >
+                  <div class="rating-counter" style="font-size:12px;"></div>
                 </div>
 
-                <div class="avatar" style="position: inherit; padding: 0 10px 0 0;bottom: 20px;  position: absolute; padding-left:25px;">
+                <div class="avatar tech_avatar" style="position: inherit; padding: 0 10px 0 0;  position: absolute; padding-left:25px;">
 									<img src="{{url('assets/tech_img/'.$u->tech_image)}}" alt="" style="height: 60px; width: 60px;border-radius: 50%;">
 
                   <span style="color:#000">{{$u->tech_fname}} {{$u->tech_lname}}</span><br />
